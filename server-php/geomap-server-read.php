@@ -39,8 +39,10 @@ $messages = load_json(messages_file($mission));
 
 /* Build message index by userid */
 $msg_by_user = array();
+$msg_time_by_user = array();
 foreach ($messages as $m) {
 	$msg_by_user[$m['userid']] = $m['message'];
+	$msg_time_by_user[$m['userid']] = intval($m['time']);
 }
 
 /* Filter out stale users (no ping for 1 hour) */
@@ -75,6 +77,7 @@ foreach ($users as $u) {
 		'active' => intval($u['active']),
 		'frequency' => intval($u['frequency']),
 		'message' => isset($msg_by_user[$u['userid']]) ? $msg_by_user[$u['userid']] : null,
+		'message_time' => isset($msg_time_by_user[$u['userid']]) ? $msg_time_by_user[$u['userid']] : null,
 		'time' => intval($u['time'])
 	);
 }

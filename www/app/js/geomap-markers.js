@@ -287,7 +287,7 @@ var accuracy_layer = null;
 
 					if( (item['message'] != null) && (item['message'] != "") )
 					{
-						marker_exist.PrintMessage(item['message'], item['time']);
+						marker_exist.PrintMessage(item['message'], item['message_time']);
 						/*
 						 * Ca ne marche pas su deux messages existes sur les markers qui sont offline -> toogle
 						 * */
@@ -859,20 +859,23 @@ var accuracy_layer = null;
  *  getTime -> (JAVASCRIPT) Returns the number of milliseconds since midnight Jan 1, 1970
  * */	
 
+			var noGps = (!mylastaccuracy || mylastaccuracy <= 0 || mylastaccuracy >= GLOBAL_MINIMUM_ACCURAY);
+			var labelSuffix = noGps ? '<br><span style="font-size:9px;opacity:0.6;">(no GPS)</span>' : '';
+
 			if( gps_date > 0 )
 			{
-				if( format_speed > 5 )
+				if( !noGps && format_speed > 5 )
 				{
 					marker.updateLabelContent( myname + '<br>' + format_user_date + ' ' + unit_user_date + '<br>' + format_speed + ' km/h' );
 				}
 				else
 				{
-					marker.updateLabelContent( myname + '<br>' + format_user_date + ' ' + unit_user_date );
+					marker.updateLabelContent( myname + '<br>' + format_user_date + ' ' + unit_user_date + labelSuffix );
 				}
 			}
 			else
 			{
-				marker.updateLabelContent( myname );
+				marker.updateLabelContent( myname + labelSuffix );
 			}
 				
 			/* il FAUT absolument séparer le temps de réponse et la précision */

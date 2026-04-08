@@ -497,6 +497,16 @@ var airbot = null;
 		return(gmap);
 	}
 
+	this.destroy=function()
+	{
+		this.stop();
+		if( gmap != null )
+		{
+			gmap.remove();
+			gmap = null;
+		}
+	}
+
 	this.SaveState=function()
 	{
 		if( gmap == null ) return null;

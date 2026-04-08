@@ -264,6 +264,7 @@
 			{
 				path: '/map/',
 				pageName: 'map',
+				keepAlive: true,
 				on: {
 					pageInit: function(e, page) {
 						console.log("#map pageInit");
@@ -277,25 +278,21 @@
 						geometrychanged();
 					},
 					pageAfterIn: function(e, page) {
-						console.log("#map pageAfterIn");
-						var mapCanvas = document.getElementById('map_canvas');
-						/* Clean up stale Leaflet container after ABORT */
-						if( mapCanvas && mapCanvas._leaflet_id && geomap == null )
+						if( geomap != null )
 						{
-							mapCanvas._leaflet_id = null;
-							mapCanvas.innerHTML = '';
+							console.log("[GeoMap] Map resume");
+							var map = geomap.GetMap();
+							if( map ) map.invalidateSize();
 						}
-						if( geomap == null || !mapCanvas || !mapCanvas._leaflet_id )
+						else
 						{
-							console.log("#map creating new geomap instance");
-							var savedState = (geomap != null) ? geomap.SaveState() : null;
-							if( geomap != null ) { geomap.stop(); geomap = null; }
-							if( savedState ) Class_GeoMap.skipLocate = true;
+							console.log("[GeoMap] Map create");
+							var mapCanvas = document.getElementById('map_canvas');
+							if( mapCanvas ) { mapCanvas.innerHTML = ''; delete mapCanvas._leaflet_id; }
 							geomap = new Class_GeoMap("map_canvas", GLOBAL_SERVER);
 							geomap.SetNetworkDelay(get_netdelay());
 							geomap.SetSoundsOffOn(get_sound());
 							geomap.start(team, handle, username);
-							if( savedState ) geomap.RestoreState(savedState);
 						}
 						jQuery('#map_title_id').html(username + '@' + team);
 						geometrychanged();
@@ -547,7 +544,7 @@
 		var sep = '?';
 		if(sv && sv !== '.') { url += sep + 'server=' + encodeURIComponent(sv); sep = '&'; }
 		if(ch) { url += sep + 'channel=' + encodeURIComponent(ch); }
-		jQuery('#share-url-link').attr('href', url).text(url);
+		jQuery('#share-url-link').attr('href', url).text(decodeURIComponent(url));
 		jQuery('#share-qrcode').empty();
 		new QRCode(document.getElementById('share-qrcode'), {
 			text: url,
@@ -578,8 +575,8 @@
 		e.preventDefault();
 		if( geomap != null )
 		{
-			geomap.stop();
 			geomap.logout();
+			geomap.destroy();
 		}
 		geomap = null;
 		window.location.hash = '';
