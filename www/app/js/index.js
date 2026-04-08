@@ -8,8 +8,7 @@
  * 
  * 
  * */
-console.log('Loading index.js');
- 
+
 /* HTML5 : storage : recall */
 
 var geomap = null;
@@ -18,8 +17,6 @@ var team = null;
 var handle = null;
 var netdelay = null;
 var sound = null;
-
-document.addEventListener('deviceready', onDeviceReady); // Possible uniquement avec le plugin PhoneGap présent
 
 /* Sound Manager */
  
@@ -55,20 +52,13 @@ function get_storage()
 	handle = get_userid();
 	netdelay = get_netdelay();
 	sound = get_sound();
+	GLOBAL_SERVER = get_server();
 }
 
 function BodyOnLoad()
 {
-	console.log('BodyOnLoad');
 	get_storage();
 }
-
-/* If phonegap present */
-function onDeviceReady()
-{
- GLOBAL_USE_PHONEGAP_ADDON = true;
- console.log("PhoneGap/Cordova present");
-} 
 
 /* Tools */
 

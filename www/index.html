@@ -182,7 +182,7 @@
 										<div class="item-inner">
 											<div class="item-title item-label">CALLSIGN</div>
 											<div class="item-input-wrap">
-												<input type="text" id="username-id" value="NEW" maxlength="8" placeholder="Agent name" />
+												<input type="text" id="username-id" value="NEWBIE" maxlength="8" placeholder="Agent name" />
 											</div>
 										</div>
 									</li>
@@ -194,10 +194,18 @@
 											</div>
 										</div>
 									</li>
+									<li class="item-content item-input">
+										<div class="item-inner">
+											<div class="item-title item-label">SERVER</div>
+											<div class="item-input-wrap">
+												<input type="text" id="server-url-id" value="" placeholder="https://example.com/server-php" />
+											</div>
+										</div>
+									</li>
 								</ul>
 							</div>
 							<div style="text-align:center; margin-top:24px;">
-								<a href="/map/" class="button button-fill button-large color-green" id="submit-id" style="width:100%;">
+								<a href="/map/" class="button button-fill button-large color-green disabled" id="submit-id" style="width:100%;">
 									<span id="blinker-id">ENGAGE</span>
 								</a>
 							</div>
@@ -267,13 +275,19 @@
 					pageAfterIn: function(e, page) {
 						console.log("#map pageAfterIn");
 						var mapCanvas = document.getElementById('map_canvas');
+						/* Clean up stale Leaflet container after ABORT */
+						if( mapCanvas && mapCanvas._leaflet_id && geomap == null )
+						{
+							mapCanvas._leaflet_id = null;
+							mapCanvas.innerHTML = '';
+						}
 						if( geomap == null || !mapCanvas || !mapCanvas._leaflet_id )
 						{
 							console.log("#map creating new geomap instance");
 							var savedState = (geomap != null) ? geomap.SaveState() : null;
 							if( geomap != null ) { geomap.stop(); geomap = null; }
 							if( savedState ) Class_GeoMap.skipLocate = true;
-							geomap = new Class_GeoMap("map_canvas", ".");
+							geomap = new Class_GeoMap("map_canvas", GLOBAL_SERVER);
 							geomap.SetNetworkDelay(get_netdelay());
 							geomap.SetSoundsOffOn(get_sound());
 							geomap.start(team, handle, username);
@@ -320,6 +334,11 @@
 			init: function() {
 				console.log('Framework7 initialized');
 				get_storage();
+				jQuery('#username-id').val( get_username() );
+				jQuery('#select-choice-mission-id').val( get_channel() );
+				var sv = get_server();
+				jQuery('#server-url-id').val( (sv === '.') ? '' : sv );
+				validateEngageButton();
 			}
 		}
 	});
@@ -327,11 +346,29 @@
 	var mainView = app.views.main;
 
 	/* Page HOME events */
+	function get_server_display() {
+		var s = get_server();
+		return (s === '.') ? '' : s;
+	}
+
+	function validateEngageButton() {
+		var u = jQuery('#username-id').val().trim();
+		var c = jQuery('#select-choice-mission-id').val().trim();
+		var s = jQuery('#server-url-id').val().trim();
+		if(u !== '' && c !== '' && s !== '') {
+			jQuery('#submit-id').removeClass('disabled');
+		} else {
+			jQuery('#submit-id').addClass('disabled');
+		}
+	}
+
 	app.on('pageInit', function(page) {
 		if( page.name === 'home' )
 		{
 			jQuery('#username-id').val( get_username() );
 			jQuery('#select-choice-mission-id').val( get_channel() );
+			jQuery('#server-url-id').val( get_server_display() );
+			validateEngageButton();
 		}
 	});
 
@@ -340,16 +377,24 @@
 		{
 			jQuery('#username-id').val( get_username() );
 			jQuery('#select-choice-mission-id').val( get_channel() );
+			jQuery('#server-url-id').val( get_server_display() );
+			validateEngageButton();
 		}
 	});
 
+	jQuery(document).on('input', '#username-id, #select-choice-mission-id, #server-url-id', validateEngageButton);
+
 	jQuery(document).on('click', '#submit-id', function() {
-		username = jQuery('#username-id').val();
-		team = jQuery('#select-choice-mission-id').val();
-		if(username == '') username = 'NEW';
+		username = jQuery('#username-id').val().trim();
+		team = jQuery('#select-choice-mission-id').val().trim();
+		var serverUrl = jQuery('#server-url-id').val().trim().replace(/\/+$/, '');
+		if(username == '') username = 'NEWBIE';
 		if(team == '') team = '1234';
+		if(serverUrl == '') serverUrl = '.';
 		set_username(username);
 		set_channel(team);
+		set_server(serverUrl);
+		GLOBAL_SERVER = serverUrl;
 		if(typeof soundManager !== 'undefined') soundManager.play('player_digital_beep_id');
 	});
 
@@ -429,14 +474,16 @@
 	jQuery(document).on('click', '#button_network', function() { CleanUpMessage(); });
 
 	/* Abort mission — stop map and return to home */
-	jQuery(document).on('click', '#quit_map-id', function() {
+	jQuery(document).on('click', '#quit_map-id', function(e) {
+		e.preventDefault();
 		if( geomap != null )
 		{
 			geomap.stop();
 			geomap.logout();
 		}
 		geomap = null;
-		app.views.main.router.navigate('/');
+		window.location.hash = '';
+		window.location.reload();
 	});
 
 	function ZoomToFitAllMarkers()

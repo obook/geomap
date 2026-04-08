@@ -6,7 +6,7 @@
  * Date: April 2026
  * License: MIT
  */
-console.log('Loading geomap-gps.');
+
 /*
  * Public
  * 
@@ -56,7 +56,7 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 	 * 
 	 */
 	
-	console.log('geomap-gps create for ['+user_name+"]");
+	console.log('[GeoMap] GPS init: ' + user_name);
 	
 	/* jquery mobile button */
 
@@ -71,7 +71,7 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 	 	
 	this.start=function()
 	{
-		console.log('geomap-gps started for ['+user_name+"]");
+		console.log('[GeoMap] GPS started: ' + user_name);
 
 		if( gps_lastposition_status != STATE_POSITION_OK )
 		{
@@ -90,7 +90,7 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 	function private_timer()
 	{
 		if (!navigator.geolocation) {
-			console.log('navigator.geolocation not supported');
+			console.warn('[GeoMap] Geolocation not supported');
 			return;
 		}
 
@@ -136,12 +136,12 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 		gps_lastposition_heading = currposition.coords.heading;
 		gps_lastposition_date = new Date();
 				
-		console.log('geomap-gps private_GetPosition_Success AT= '+gps_lastposition_date+' LAT= '+gps_lastposition_latitude+' LONG= '+gps_lastposition_longitude+' SPEED='+gps_lastposition_speed+' ACC= '+gps_lastposition_accuracy);
+		console.log('[GeoMap] GPS fix: lat=' + gps_lastposition_latitude + ' lon=' + gps_lastposition_longitude + ' acc=' + gps_lastposition_accuracy + 'm');
 	}
 	
 	function private_GetPosition_Error(error)
 	{
-		console.log('ERROR geomap-gps.private_GetPosition_Error for ' + guser_name + " = " + error.message);
+		console.error('[GeoMap] GPS error: ' + error.message);
 		gps_lastposition_date = new Date();	
 		switch(error.code)
 		{
@@ -185,22 +185,22 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 		switch(error.code)
 		{
 			case error.PERMISSION_DENIED:
-				console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++ geomap-GPS : private_watchPosition_Error STATE_PERMISSION_DENIED for ' + guser_name);		
+				console.warn('[GeoMap] GPS watch: permission denied');
 				gps_lastposition_status = STATE_PERMISSION_DENIED;	
 			break;
 			
 			case error.POSITION_UNAVAILABLE:
-				console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++ geomap-GPS : private_watchPosition_Error STATE_POSITION_UNAVAILABLE for ' + guser_name);	
+				console.warn('[GeoMap] GPS watch: position unavailable');
 				gps_lastposition_status = STATE_POSITION_UNAVAILABLE;	
 			break;
 			
 			case error.TIMEOUT:
-				console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++ geomap-GPS : private_watchPosition_Error STATE_POSITION_TIMEOUT for ' + guser_name);	
+				console.warn('[GeoMap] GPS watch: timeout');
 				gps_lastposition_status = STATE_POSITION_TIMEOUT;	
 			break;
 			
 			default:		
-				console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++ geomap-GPS : private_watchPosition_Error STATE_POSITION_UNKNOWN '+error.code+' for ' + guser_name);	
+				console.warn('[GeoMap] GPS watch: unknown error ' + error.code);
 				gps_lastposition_status = STATE_POSITION_ERROR;	
 			break;
 		}
@@ -238,7 +238,7 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 		}
 		else
 		{
-			console.log("geomap-gps update() bad conditions : gps_lastposition_accuracy="+gps_lastposition_accuracy+" meters, gps_lastposition_status="+gps_lastposition_status);
+			console.warn('[GeoMap] GPS bad conditions: acc=' + gps_lastposition_accuracy + 'm status=' + gps_lastposition_status);
 			if( toogle_animation != 2 )
 			{
 
@@ -257,7 +257,6 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 		
 	this.stop=function() /*  Called only then 'Quit' button is pressed */
 	{
-		console.log('****************** geomap-GPS.js : this.stop=function called.');
 		if( GetPositionID != -1 )
 		{
 			window.clearInterval(GetPositionID);

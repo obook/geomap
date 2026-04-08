@@ -8,7 +8,6 @@
  *
  * Migrated from Google Maps to Leaflet
  * */
-console.log('Loading geomap-bots.');
 
 function Class_AirBot(map)
 {

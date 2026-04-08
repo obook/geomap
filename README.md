@@ -49,7 +49,7 @@ geomap/
 │       ├── jquery/          # jQuery 1.9
 │       ├── font-awesome/   # Icon font
 │       └── soundmanager/   # SoundManager2 audio engine
-├── server/                 # Back-end PHP API (requires a separate host)
+├── server-sql/             # Back-end PHP + MySQL (original)
 │   ├── geomap-server-config-sample.php  # Database config template
 │   ├── geomap-server-read.php           # Read users and messages
 │   ├── geomap-server-write.php          # Write user position
@@ -60,6 +60,17 @@ geomap/
 │   ├── geomap-server-info.php           # Server diagnostics
 │   ├── install.sql                      # Database schema
 │   └── index.php                        # Legacy admin panel
+├── server-php/             # Back-end PHP + JSON files (no database)
+│   ├── geomap-server-config-sample.php  # Data directory config
+│   ├── geomap-json-storage.php          # JSON file storage helpers
+│   ├── geomap-server-read.php           # Read users and messages
+│   ├── geomap-server-write.php          # Write user position
+│   ├── geomap-server-message-write.php  # Post a message
+│   ├── geomap-server-logout.php         # Disconnect a user
+│   ├── geomap-server-stats.php          # Usage statistics
+│   ├── geomap-server-maintenance.php    # Cleanup inactive sessions
+│   ├── geomap-server-info.php           # Server diagnostics
+│   └── data/                            # Runtime JSON storage
 └── .github/workflows/pages.yml  # GitHub Pages deployment
 ```
 
@@ -71,32 +82,48 @@ The `www/` directory is a static site deployed automatically to GitHub Pages on 
 
 ### Full stack (with server)
 
-To enable multi-user position sharing and messaging, you need:
+Two server implementations are available. Both expose the same API endpoints and are interchangeable from the front-end perspective.
+
+#### Option A: PHP + JSON files (`server-php/`) - recommended for simple deployments
+
+- **PHP** 5.3+ (no database required)
+- A web server (Apache, Nginx) with write access to the `data/` directory
+
+#### Option B: PHP + MySQL (`server-sql/`) - for high-traffic deployments
 
 - **PHP** 5.3+ with the `mysqli` extension
 - **MySQL** 5.x or compatible (MariaDB)
-- A web server (Apache, Nginx) serving the `server/` directory
 
 ## Setup
 
-### Database
+### Option A: PHP + JSON files (server-php)
 
-1. Create a MySQL database.
-2. Run the schema script:
-
-```bash
-mysql -u root -p your_database < server/install.sql
-```
-
-### Server configuration
-
-1. Copy the sample configuration:
+1. Deploy the `server-php/` directory on your web server.
+2. Ensure the `data/` subdirectory is writable by the web server:
 
 ```bash
-cp server/geomap-server-config-sample.php server/geomap-server-config.php
+chmod 755 server-php/data
 ```
 
-2. Edit `server/geomap-server-config.php` with your database credentials:
+3. The `data/.htaccess` file blocks direct HTTP access to JSON files. If you use Nginx, add an equivalent rule to deny access to `server-php/data/`.
+
+That's it - no database, no configuration file to edit.
+
+### Option B: PHP + MySQL (server-sql)
+
+1. Create a MySQL database and run the schema script:
+
+```bash
+mysql -u root -p your_database < server-sql/install.sql
+```
+
+2. Copy the sample configuration:
+
+```bash
+cp server-sql/geomap-server-config-sample.php server-sql/geomap-server-config.php
+```
+
+3. Edit `server-sql/geomap-server-config.php` with your database credentials:
 
 ```php
 define('DB_HOST', 'localhost');
@@ -104,8 +131,6 @@ define('DB_NAME', 'geomap');
 define('DB_USER', 'your_user');
 define('DB_PASSWORD', 'your_password');
 ```
-
-3. Ensure `server/geomap-server-config.php` is listed in `.gitignore` (it is by default).
 
 ### Front-end
 
@@ -135,7 +160,7 @@ Point `GLOBAL_SERVER` in the JavaScript to the URL where your PHP server is host
 
 The front-end deploys to GitHub Pages automatically via the workflow in `.github/workflows/pages.yml`. Only the `www/` directory is published.
 
-The PHP server must be hosted separately on any LAMP-compatible environment.
+The PHP server (`server-php/` or `server-sql/`) must be hosted separately on any PHP-compatible environment.
 
 ## License
 

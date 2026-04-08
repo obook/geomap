@@ -8,7 +8,6 @@
  * 
  * 
  * */
-console.log('Loading geomap-latlnctrl.');
 
 function LatLngControl(map)
 {

@@ -6,7 +6,6 @@
  * Date: April 2026
  * License: MIT
  */
-console.log('Loading geomap-main.');
 
 function Class_GeoMap(map_id,server_url)
 {
@@ -44,7 +43,7 @@ var airbot = null;
 		*
 		* */
 
-		console.log('geomap-main create for map_id ['+map_id+"]");
+		console.log('[GeoMap] Map init: ' + map_id);
 
 		GLOBAL_SERVER = server_url;
 
@@ -216,7 +215,7 @@ var airbot = null;
 
 	this.start=function(mission_id, user_id, user_name)
 	{
-		console.log('geomap-main start for ['+user_name+"]");
+		console.log('[GeoMap] Start session: ' + user_name);
 
 		gmission_id = mission_id;
 		guser_id = user_id;
@@ -391,13 +390,13 @@ var airbot = null;
 		}
 		else
 		{
-			console.log('geomap-main : ERROR SendMessage airuser=null or message is empty [' + text + "].");
+			console.error('[GeoMap] SendMessage failed: no user or empty message');
 		}
 	}
 
 	this.stop=function()
 	{
-		console.log('geomap-main : this.stop=function called.');
+		console.log('[GeoMap] Stopping...');
 
 		if( gps != null )
 		{
@@ -423,7 +422,7 @@ var airbot = null;
 		/* random value = force NO cache via http-caches
 		var random_id  = GetRandomID();
 
-		$.post("./server/geomap-server-logout.php", { mission:gmission_id, userid:guser_id },
+		$.post(GLOBAL_SERVER + "/geomap-server-logout.php", { mission:gmission_id, userid:guser_id },
 		function(data)
 		{
 			console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++ geomap.js : this.stop : geomap-server-logout.php post function = '+data);
@@ -447,22 +446,22 @@ var airbot = null;
 	{
 		var random_id  = GetRandomID();
 
-		$.post("./server/geomap-server-logout.php", { mission:gmission_id, userid:guser_id },
+		$.post(GLOBAL_SERVER + "/geomap-server-logout.php", { mission:gmission_id, userid:guser_id },
 		function(data)
 		{
-			console.log('geomap-main : this.stop : geomap-server-logout.php post function');
+			console.log('[GeoMap] Logout response received');
 		})
 		.success(function()
 		{;
-			console.log('geomap-main : this.stop : geomap-server-logout.php post success');
+			console.log('[GeoMap] Logout success');
 		})
 		.error(function(data)
 		{
-			console.log('geomap-main : this.stop : geomap-server-logout.php post error : ');
+			console.error('[GeoMap] Logout failed');
 		})
 		.complete(function()
 		{
-			console.log('geomap-main : this.stop : geomap-server-logout.php post complete');
+			console.log('[GeoMap] Logout complete');
 		});
 	}
 

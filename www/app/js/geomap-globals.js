@@ -8,13 +8,10 @@
  * 
  * 
  * */
-console.log('Loading geomap-globals.');
 
 var GLOBAL_APPNAME	=	'GEOMAP';
 
 var GLOBAL_SERVER 	= 	'.';
-
-var GLOBAL_USE_PHONEGAP_ADDON		= false;
 
 var STATE_POSITION_ERROR			=  -4 ; /* unkwnown error */
 var STATE_POSITION_TIMEOUT			= -3 ; /* = le probleme quand ça se place en Afrique : je met l'icone sur la map alors qu'on est en -3 ! */

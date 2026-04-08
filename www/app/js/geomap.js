@@ -8,7 +8,7 @@
  * 
  * 
  * */
-console.log('Loading geomap parts.');
+
 /*
  * Under chromium, document.write crash for file not found (06/2013) with the message :
  * "Unknown chromium error: -6"

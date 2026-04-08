@@ -8,7 +8,7 @@
  * 
  * 
  * */
-console.log('Loading geomap-user.');
+
 function Class_AirUser(map,mission,id,name)
 {
 var gmap = map;
@@ -40,7 +40,7 @@ var elapsedTime = 0;
 	 * 
 	 */
 	
-	console.log('geomap-user create for ['+name+"]");
+	console.log('[GeoMap] User init: ' + name);
 	
 	var d = new Date();
 	var label = ""+d.getHours()+d.getMinutes()+d.getSeconds();
@@ -54,7 +54,7 @@ var elapsedTime = 0;
 	 	
 	this.start=function()
 	{
-		console.log('geomap-user start for ['+name+"]");					
+		console.log('[GeoMap] User started: ' + name);
 		/* Fait TROP tot car GPS pas pret : */
 		// je me gourait de variables (ordre) ci dessous ???? -> oui GLOBAL_NETWORK_SENDATA_MAXITIME mais je le laisse inhibé quand même
 		// private_store_to_server(1,GLOBAL_NETWORK_SENDATA_MAXITIME,gmission,guser_id,guser_name,gps_lastposition_status, gps_lastposition_latitude,gps_lastposition_longitude,gps_lastposition_accuracy,gps_lastposition_speed,gps_lastposition_altitude,gps_lastposition_altitudeAccuracy,gps_lastposition_heading);
@@ -104,7 +104,7 @@ var elapsedTime = 0;
 	{
 		if( store_active == true ) /* Pas sur quand ça empeche les LOOPS !!! si je crois que c'est bien .. */
 		{
-			console.log('geomap-user : private_store_to_server for ' + guser_name + ' can not store ( store_active )');
+			console.warn('[GeoMap] Write skipped: previous request pending');
 			return;
 		}
 			
@@ -130,7 +130,7 @@ var elapsedTime = 0;
 		// console.log("Call ajax for geomap-server-write.php");
 		var obj = { active:active, frequency:frequency, mission:missionid, userid:id, username:name, state:state, latitude:latitude, longitude:longitude, accuracy:accuracy, speed:speed, altitude:altitude, altitudeAccuracy:altitudeAccuracy, heading:heading, battery:batterylevel, clsid:random_id };
 		$.ajax({
-			url: GLOBAL_SERVER +"/server/geomap-server-write.php",
+			url: GLOBAL_SERVER +"/geomap-server-write.php",
 			crossDomain: true,
 			cache: false,
 			type:"POST",
@@ -138,20 +138,20 @@ var elapsedTime = 0;
 			data:obj,
 			success: function(json) {
 				elapsedTime = new Date().getTime() - startTime;
-				console.log( "geomap-user : call ajax for geomap-server-write data : " + JSON.stringify(json) + ", in " + (elapsedTime/1000) +" sec");
+				console.log('[GeoMap] Server write: ' + (elapsedTime/1000) + 's');
 				store_active = false;
 			},
 			error : function(json){
 				/* Pas besoin de JSON.stringify car le retour est du html ! */
-				console.log( "geomap-user private_store_to_server ERROR : " + JSON.stringify(json) );
+				console.error('[GeoMap] Server write failed: ' + JSON.stringify(json));
 				store_active = false; 
 			}
 		});
 				
 		
 				/*
-		//$.post("http://geo.lapetitesouris.net/server/geomap-server-write.php", { active:active, frequency:frequency, mission:missionid, userid:id, username:name, state:state, latitude:latitude, longitude:longitude, accuracy:accuracy, speed:speed, altitude:altitude, altitudeAccuracy:altitudeAccuracy, heading:heading, clsid:random_id },
-		$.post("./server/geomap-server-write.php", { active:active, frequency:frequency, mission:missionid, userid:id, username:name, state:state, latitude:latitude, longitude:longitude, accuracy:accuracy, speed:speed, altitude:altitude, altitudeAccuracy:altitudeAccuracy, heading:heading, clsid:random_id },
+		//$.post("http://geo.lapetitesouris.net/geomap-server-write.php", { active:active, frequency:frequency, mission:missionid, userid:id, username:name, state:state, latitude:latitude, longitude:longitude, accuracy:accuracy, speed:speed, altitude:altitude, altitudeAccuracy:altitudeAccuracy, heading:heading, clsid:random_id },
+		$.post("./geomap-server-write.php", { active:active, frequency:frequency, mission:missionid, userid:id, username:name, state:state, latitude:latitude, longitude:longitude, accuracy:accuracy, speed:speed, altitude:altitude, altitudeAccuracy:altitudeAccuracy, heading:heading, clsid:random_id },
 		function(data)
 		{	
 			// for stats we set LAST_TIME_WRITE
@@ -183,10 +183,10 @@ var elapsedTime = 0;
 		/* random value = force NO cache via http-caches */
 		var random_id = GetRandomID();	
 			
-		console.log("Call ajax for geomap-server-message-write.php");
+		console.log('[GeoMap] Sending message...');
 		var obj = { active:1, mission:gmission, userid:guser_id, username:guser_name, message:text, clsid:random_id };
 		$.ajax({
-			url: GLOBAL_SERVER + "/server/geomap-server-message-write.php",
+			url: GLOBAL_SERVER + "/geomap-server-message-write.php",
 			crossDomain: true,
 			cache: false,
 			type:"POST",
@@ -194,18 +194,18 @@ var elapsedTime = 0;
 			data:obj
 		}).done(function( arg )
 		{
-			console.log( "geomap-server-message-write Données : " + arg ); 
+			console.log('[GeoMap] Message sent');
 			// for stats we set LAST_TIME_WRITE
 			LAST_TIME_WRITE = new Date();
 		}).fail(function(jqXHR, textStatus)
 		{
-			console.log( "geomap-server-message-write error : " + textStatus ); 
+			console.error('[GeoMap] Message send failed: ' + textStatus);
 		});
 		
 		/* random value = force NO cache via http-caches
 		var random_id = GetRandomID();
 				
-		$.post("./server/geomap-server-message-write.php", { active:1, mission:gmission, userid:guser_id, username:guser_name, message:text, clsid:random_id },
+		$.post("./geomap-server-message-write.php", { active:1, mission:gmission, userid:guser_id, username:guser_name, message:text, clsid:random_id },
 		function(data)
 		{
 			console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++ geomap-user : SendMessage post function = '+data);		
@@ -233,7 +233,6 @@ var elapsedTime = 0;
 	
 	this.stop=function() /*  Called only then 'Quit' button is pressed */
 	{
-		console.log('****************** geomap-users.js : this.stop=function called.');
 
 		if( intervalDataID != null )
 		{

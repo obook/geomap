@@ -8,7 +8,6 @@
  * 
  * 
  * */
-console.log('Loading geomap-javascript-tools.');
 
 /* DOM helper functions for convenience */
 
@@ -184,7 +183,7 @@ var R = 6371; // km
 
 	if( (!lat1) || (!lon1) || (!lat2) || (!lon2))
 	{
-		console.log("GetDistance on null error")
+		console.error('[GeoMap] GetDistance: null coordinates')
 		return -1;
 	}
 	

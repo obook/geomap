@@ -8,7 +8,6 @@
  * 
  * 
  * */
-console.log('Loading geomap-markers.');
 
 var iColor = 1; /* 0 is reserved to local user */
 
@@ -41,7 +40,7 @@ var accuracy_layer = null;
 	 * 
 	 */
 	 
-	console.log('geomap-gps create for mission ['+mission+"]");
+	console.log('[GeoMap] Markers init: mission ' + mission);
 		
 	/* jquery mobile button */
 
@@ -91,7 +90,7 @@ var accuracy_layer = null;
 		var elapsedTime = 0;
 
 		jQuery.ajax({
-			url: GLOBAL_SERVER + "/server/geomap-server-read.php",
+			url: GLOBAL_SERVER + "/geomap-server-read.php",
 			crossDomain: true,
 			cache: false,
 			dataType: "json",
@@ -101,14 +100,14 @@ var accuracy_layer = null;
 				elapsedTime = new Date().getTime() - startTime;
 				if( json==null )
 				{
-					console.log('geomap-markers : call ajax for geomap-server-read ERROR getJSON==null');
+					console.error('[GeoMap] Server read: null response');
 					return;
 				}
-				console.log('geomap-markers : call ajax for geomap-server-read success in '+(elapsedTime/1000)+' sec');
+				console.log('[GeoMap] Server read: ' + (elapsedTime/1000) + 's');
 				private_request_data_process_done(json);
 			},
 			error : function(json){
-				console.log('geomap-markers : call ajax for geomap-server-read error : '+ JSON.stringify(json));
+				console.error('[GeoMap] Server read failed: ' + JSON.stringify(json));
 				if( toogle_animation != 3 )
 				{
 					toogle_animation = 3;
@@ -169,7 +168,7 @@ var accuracy_layer = null;
 			
 				if( (item['userid'] == null) ||	(item["time"] == null)  )
 				{
-					console.log('~~~~~~~~~~ Received bad datas');
+					console.warn('[GeoMap] Received incomplete data');
 					return;
 				}
 													
@@ -301,7 +300,7 @@ var accuracy_layer = null;
 						marker_exist.Remove();
 						markers_array.splice(existing_index,1);
 						marker_exist = null;   // free()?
-						console.log('Maker exist : %s DELETED because active = 0.',item["username"]);	
+						console.log('[GeoMap] Marker removed: ' + item["username"]);
 					}
 
 
@@ -316,7 +315,7 @@ var accuracy_layer = null;
 					
 					if( (item['active'] == 1) && (item["state"] == STATE_POSITION_OK) ) /* eg : 24 heures : 24x60x60 = 86400 */
 					{
-						console.log('Marker [' + item["username"] + '] NOT EXIST');
+						console.log('[GeoMap] New marker: ' + item["username"]);
 						
 						var position = new L.LatLng(item['latitude'],item['longitude']);
 						var newMarker = new Class_Marker(map,position,item["userid"],item["username"]);
@@ -348,9 +347,9 @@ var accuracy_layer = null;
 		var random_id  = GetRandomID();
 		
 		// console.log('----------------------------------------------------- geomap-markers.js : private_request_data : getJSON');
-		//var jqxhr = $.getJSON("http://geo.lapetitesouris.net/server/geomap-server-read.php?mission="+mission+"&clisd="+random_id,
+		//var jqxhr = $.getJSON("http://geo.lapetitesouris.net/geomap-server-read.php?mission="+mission+"&clisd="+random_id,
 		
-		var jqxhr = $.getJSON("./server/geomap-server-read.php?mission="+mission+"&clisd="+random_id,  
+		var jqxhr = $.getJSON("./geomap-server-read.php?mission="+mission+"&clisd="+random_id,  
 		function(json)
 		{
 
@@ -367,7 +366,7 @@ var accuracy_layer = null;
 		.error(function(json)
 		{ 
 			// $('#network_image').attr('src','./images/radar-red.png');
-			console.log('---------------------------------------- DEBUG - geomap-markers : error on  getJSON '+JSON.stringify(json));
+			console.error('[GeoMap] Server read failed: ' + JSON.stringify(json));
 			if( toogle_animation != 3 )
 			{
 				toogle_animation = 3;
@@ -468,7 +467,7 @@ var accuracy_layer = null;
 	
 	this.unfollow=function()
 	{
-		console.log('geomap-markers.unfollow');
+		console.log('[GeoMap] Unfollow marker');
 		if( (GLOBAL_PLAY_SOUNDS == 'on') && (follow_marker_id!=null) )
 		{
 			playaudio('player_follow_off_id','assets/sounds/ding-reverse.ogg');
@@ -518,7 +517,7 @@ var accuracy_layer = null;
 		}
 		else
 		{
-			console.log('geomap-markers.ZoomToUserMarker : can not zoom on null LatLon ');
+			console.warn('[GeoMap] Cannot zoom: no GPS position');
 		}
 		
 		this.unfollow();
@@ -731,7 +730,7 @@ var accuracy_layer = null;
 				if( GLOBAL_PLAY_SOUNDS == 'on' )
 				{
 					playaudio('player_follow_on_id','assets/sounds/ding.ogg');
-					console.log("Following ON for marker " + name)
+					console.log('[GeoMap] Following: ' + name)
 				}
 				
 				follow_marker_id = myid;;
@@ -744,7 +743,7 @@ var accuracy_layer = null;
 				if( GLOBAL_PLAY_SOUNDS == 'on' )
 				{
 					playaudio('player_follow_off_id','assets/sounds/ding-reverse.ogg');
-					console.log("Following OFF for marker " + name);
+					console.log('[GeoMap] Unfollowing: ' + name);
 				}
 				
 				follow_marker_id = null;
@@ -1048,7 +1047,7 @@ var accuracy_layer = null;
 					playaudio('player_newmessage_id', 'assets/sounds/ccir_small.ogg');
 				}
 				
-				console.log('geomap-markers : sound and Display for message ' + $("<div/>").html(current_message).text() );	
+				console.log('[GeoMap] New message: ' + $("<div/>").html(current_message).text());
 				
 				jQuery('#messages_id').html(current_message);
 				jQuery('#messages_toolbar').show(1000);
