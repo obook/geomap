@@ -13,44 +13,24 @@ header("Content-Type: text/plain");
 storage_init();
 
 $message_life = 3600;        // 1 hour
-$user_disconnected = 259200; // 72 hours: active=-2 -> active=0
-$user_unknown = 259200;      // 72 hours: active=1 -> active=-1
-$user_lost = 259200;         // 72 hours: active=-1 -> active=0
+$user_stale = 3600;          // 1 hour: no ping -> remove user and messages
 
 $now = time();
 echo "Maintenance at " . $now . "\n";
 
-/* Process all mission files */
+/* Remove stale users (no ping for 1 hour) */
 $user_files = glob(DATA_DIR . '/users_*.json');
 if ($user_files) {
 	foreach ($user_files as $filepath) {
 		$users = load_json($filepath);
-		$modified = false;
-
-		foreach ($users as &$u) {
-			$age = $now - $u['time'];
-
-			/* Step 1: disconnected (active=-2) older than threshold -> inactive */
-			if ($u['active'] == -2 && $age > $user_disconnected) {
-				$u['active'] = 0;
-				$modified = true;
-			}
-			/* Step 2: connected (active=1) older than threshold -> unknown */
-			elseif ($u['active'] == 1 && $age > $user_unknown) {
-				$u['active'] = -1;
-				$modified = true;
-			}
-			/* Step 3: unknown (active=-1) older than threshold -> inactive */
-			elseif ($u['active'] == -1 && $age > $user_lost) {
-				$u['active'] = 0;
-				$modified = true;
-			}
-		}
-		unset($u);
-
-		if ($modified) {
+		$before = count($users);
+		$users = array_values(array_filter($users, function($u) use ($now, $user_stale) {
+			return ($now - $u['time']) < $user_stale;
+		}));
+		if (count($users) !== $before) {
+			$removed = $before - count($users);
 			save_json($filepath, $users);
-			echo "Updated: " . basename($filepath) . "\n";
+			echo "Cleaned users: " . basename($filepath) . " (" . $removed . " removed)\n";
 		}
 	}
 }

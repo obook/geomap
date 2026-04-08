@@ -379,40 +379,19 @@ var accuracy_layer = null;
 		{
 
 					
-			/* Deboggage + essai d'effacement
-			
-			//console.log('** DEBUG - Liste des '+markers_array.length+' markers : ');
-			
-			for( var i = 0; i < markers_array.length; i++)
+			/* Remove stale markers not seen by server for over 1 hour */
+			for( var i = markers_array.length - 1; i >= 0; i--)
 			{
 				var marker = markers_array[i];
-				var marker_ttl = marker.GetMarkerTTL();
 				var server_ttl = marker.GetServerTTL();
-				
-				console.log('** DEBUG - Maker index %d = %s MarkerTTL = %d sec ServerTTL = %d sec', i, marker.GetId(), marker_ttl, server_ttl);
-				
-				/*
-				 * 
-				 * 
-				 *  Essai de suppression :
-				 * 
-				 * */
-				
-				/* Retiré pour l'instant
-				
-				if( ( marker_ttl > 60 ) && (server_ttl > 900)) // No information from client since 1 min and no information from server about client since 15 min (file deleted)
+
+				if( server_ttl > 3600 )
 				{
+					console.log('[GeoMap] Stale marker removed: ' + marker.GetUsername() + ' (' + Math.round(server_ttl/60) + 'min)');
 					marker.Remove();
 					markers_array.splice(i,1);
-					marker = null;   // free()?
-					console.log('*********** DEBUG - marker_ttl = ' + marker_ttl + '    ' + server_ttl + ' : REMOVE index %d', i);
 				}
-				
-			}		
-			
-			//console.log('** DEBUG - Liste des markers end. ');
-			
-			*/
+			}
 											
 		});		
 	}
@@ -561,16 +540,31 @@ var accuracy_layer = null;
 			var lat2 = gps_lastposition_latitude;
 			var lon2 = gps_lastposition_longitude;
 									
-			distance = Math.round(GetDistance(lat1,lon1,lat2,lon2));
-			
-			
-			if( accuracy > 1000 )
+			var distKm = GetDistance(lat1,lon1,lat2,lon2);
+			if( distKm < 0 || isNaN(distKm) )
 			{
-				accuracy = Math.round(accuracy/1000) + " Km";
+				distance = '-';
+			}
+			else if( distKm < 1 )
+			{
+				distance = Math.round(distKm * 1000) + " m";
 			}
 			else
 			{
-				accuracy = Math.round(accuracy) + " m";				
+				distance = Math.round(distKm * 10) / 10 + " km";
+			}
+
+			if( !accuracy || accuracy <= 0 )
+			{
+				accuracy = '-';
+			}
+			else if( accuracy > 1000 )
+			{
+				accuracy = Math.round(accuracy/1000) + " km";
+			}
+			else
+			{
+				accuracy = Math.round(accuracy) + " m";
 			}
 			
 			if( battery == -1 )
@@ -887,7 +881,15 @@ var accuracy_layer = null;
 			if( circle_accuracy != null )
 			{
 				circle_accuracy.setLatLng( new L.LatLng(mylastposition_latitude,mylastposition_longitude) );
-				circle_accuracy.setRadius(mylastaccuracy);
+				if( mylastaccuracy && mylastaccuracy > 0 && mylastaccuracy < GLOBAL_MINIMUM_ACCURAY )
+				{
+					circle_accuracy.setRadius(mylastaccuracy);
+					circle_accuracy.setStyle({opacity: 1, fillOpacity: 0.25});
+				}
+				else
+				{
+					circle_accuracy.setStyle({opacity: 0, fillOpacity: 0});
+				}
 			}
 
 			if( reception == 2 ) /* Très bonne : réponse dans les délais et avec une bonne précision */
@@ -924,7 +926,15 @@ var accuracy_layer = null;
 			if( circle_accuracy != null )
 			{
 				circle_accuracy.setLatLng(LatLng);
-				circle_accuracy.setRadius(accuracy);
+				if( accuracy && accuracy > 0 && accuracy < GLOBAL_MINIMUM_ACCURAY )
+				{
+					circle_accuracy.setRadius(accuracy);
+					circle_accuracy.setStyle({opacity: 1, fillOpacity: 0.25});
+				}
+				else
+				{
+					circle_accuracy.setStyle({opacity: 0, fillOpacity: 0});
+				}
 			}
 			marker.setLatLng(LatLng);
 			// marker.bindLabel(myLabeLText,{noHide: true});
@@ -973,9 +983,6 @@ var accuracy_layer = null;
 		
 		function SetVisible(val)
 		{
-			// console.log("Marker " + myname + " setvisibility " + val);
-
-			
 			if( visible != val )
 			{
 				visible = val;
@@ -983,12 +990,20 @@ var accuracy_layer = null;
 				if(val == true)
 				{
 					marker.setOpacity(1.0);
-					marker.showLabel();				
+					marker.showLabel();
+					if( circle_accuracy != null )
+					{
+						circle_accuracy.setStyle({opacity: 1, fillOpacity: 0.25});
+					}
 				}
 				else
 				{
 					marker.setOpacity(0.3);
 					marker.hideLabel();
+					if( circle_accuracy != null )
+					{
+						circle_accuracy.setStyle({opacity: 0, fillOpacity: 0});
+					}
 				}
 			}
 		}

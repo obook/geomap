@@ -43,6 +43,17 @@ foreach ($messages as $m) {
 	$msg_by_user[$m['userid']] = $m['message'];
 }
 
+/* Filter out stale users (no ping for 1 hour) */
+$stale_limit = 3600;
+$now = time();
+$clean_users = array_values(array_filter($users, function($u) use ($now, $stale_limit) {
+	return ($now - $u['time']) < $stale_limit;
+}));
+if (count($clean_users) !== count($users)) {
+	save_json(users_file($mission), $clean_users);
+	$users = $clean_users;
+}
+
 $data = array();
 foreach ($users as $u) {
 	if ($u['active'] != 1) {

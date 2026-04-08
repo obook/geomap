@@ -309,16 +309,19 @@ var airbot = null;
 				{
 					local_marker.setLatLng(latlng);
 				}
-				if( local_accuracy_circle == null )
+				if( gps_lastposition_accuracy && gps_lastposition_accuracy > 0 && gps_lastposition_accuracy < GLOBAL_MINIMUM_ACCURAY )
 				{
-					local_accuracy_circle = L.circle(latlng, gps_lastposition_accuracy, {
-						color: '#ffffff', fillColor: '#cccccc', fillOpacity: 0.25, weight: 2
-					}).addTo(accuracy_layer);
-				}
-				else
-				{
-					local_accuracy_circle.setLatLng(latlng);
-					local_accuracy_circle.setRadius(gps_lastposition_accuracy);
+					if( local_accuracy_circle == null )
+					{
+						local_accuracy_circle = L.circle(latlng, gps_lastposition_accuracy, {
+							color: '#ffffff', fillColor: '#cccccc', fillOpacity: 0.25, weight: 2
+						}).addTo(accuracy_layer);
+					}
+					else
+					{
+						local_accuracy_circle.setLatLng(latlng);
+						local_accuracy_circle.setRadius(gps_lastposition_accuracy);
+					}
 				}
 			}
 
