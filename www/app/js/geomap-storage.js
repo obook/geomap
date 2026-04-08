@@ -31,8 +31,10 @@ function get_username()
 var username = localStorage.getItem('username');
 	if(!username)
 	{
-		username='NEWBIE';
-		set_username(username);	
+		var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		username = '';
+		for(var i = 0; i < 4; i++) username += chars.charAt(Math.floor(Math.random() * chars.length));
+		set_username(username);
 	}
 return(username);
 }

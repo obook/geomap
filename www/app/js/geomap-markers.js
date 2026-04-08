@@ -287,7 +287,7 @@ var accuracy_layer = null;
 
 					if( (item['message'] != null) && (item['message'] != "") )
 					{
-						marker_exist.PrintMessage(item['message']);
+						marker_exist.PrintMessage(item['message'], item['time']);
 						/*
 						 * Ca ne marche pas su deux messages existes sur les markers qui sont offline -> toogle
 						 * */
@@ -525,7 +525,8 @@ var accuracy_layer = null;
 
 	this.CleanUpMessage=function()
 	{
-		jQuery('#messages_toolbar').hide(800);		
+		jQuery('#messages_toolbar').hide(800);
+		jQuery('#messages_id').empty();
 	}
 		
 	this.PrintUserlist=function(id)
@@ -1035,10 +1036,10 @@ var accuracy_layer = null;
 			return(mylastposition);
 		}
 		
-		function PrintMessage(text)
+		function PrintMessage(text, serverTime)
 		{
 		var current_message = myname + ": " + text;
-		
+
 			if( current_message != guser_lastmessage )
 			{
 				// Play sound
@@ -1046,14 +1047,14 @@ var accuracy_layer = null;
 				{
 					playaudio('player_newmessage_id', 'assets/sounds/ccir_small.ogg');
 				}
-				
+
 				console.log('[GeoMap] New message: ' + $("<div/>").html(current_message).text());
-				
-				var now = new Date();
-				var hh = ('0'+now.getHours()).slice(-2);
-				var mm = ('0'+now.getMinutes()).slice(-2);
-				var ss = ('0'+now.getSeconds()).slice(-2);
-				jQuery('#messages_id').html('<div style="font-size:9px;opacity:0.5;">' + hh+':'+mm+':'+ss + '</div>' + current_message);
+
+				var d = serverTime ? new Date(serverTime * 1000) : new Date();
+				var hh = ('0'+d.getHours()).slice(-2);
+				var mm = ('0'+d.getMinutes()).slice(-2);
+				var ss = ('0'+d.getSeconds()).slice(-2);
+				jQuery('#messages_id').prepend('<div style="margin-bottom:4px;"><span style="font-size:9px;opacity:0.5;">' + hh+':'+mm+':'+ss + '</span> ' + current_message + '</div>');
 				jQuery('#messages_toolbar').show(1000);
 				/* toast(current_message); */
 					

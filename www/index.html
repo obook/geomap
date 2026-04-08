@@ -181,8 +181,9 @@
 									<li class="item-content item-input">
 										<div class="item-inner">
 											<div class="item-title item-label">CALLSIGN</div>
-											<div class="item-input-wrap">
-												<input type="text" id="username-id" value="NEWBIE" maxlength="8" placeholder="Agent name" />
+											<div class="item-input-wrap" style="display:flex; align-items:center; gap:8px;">
+												<input type="text" id="username-id" value="NEWBIE" maxlength="8" placeholder="Agent name" style="flex:1;" />
+												<a href="#" id="random-callsign-id" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid var(--cyan-dim); border-radius:4px; color:var(--cyan); font-size:14px; text-decoration:none; opacity:0.6; transition:opacity 0.2s;" title="Random callsign">&#x21bb;</a>
 											</div>
 										</div>
 									</li>
@@ -397,6 +398,15 @@
 	});
 
 	jQuery(document).on('input', '#username-id, #select-choice-mission-id, #server-url-id', validateEngageButton);
+
+	jQuery(document).on('click', '#random-callsign-id', function(e) {
+		e.preventDefault();
+		var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		var name = '';
+		for(var i = 0; i < 4; i++) name += chars.charAt(Math.floor(Math.random() * chars.length));
+		jQuery('#username-id').val(name);
+		validateEngageButton();
+	});
 
 	jQuery(document).on('click', '#submit-id', function() {
 		username = jQuery('#username-id').val().trim();
