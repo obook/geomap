@@ -1,0 +1,117 @@
+@charset "utf-8";
+/*
+ * 
+ * 
+ * Last commit by $Author: obooklage $
+ * Date - $Date: 2012-01-24 10:09:02 +0100 (mar. 24 janv. 2012) $
+ * Revision - $Rev: 276 $
+ * Id : $Id: index.css 276 2012-01-24 09:09:02Z obooklage $ 
+ * 
+ * 
+ * */
+
+
+	
+	
+	/* Links */
+	
+	A:link {text-decoration: none; color: white;}
+	A:visited {text-decoration: none; color: white;}
+	A:active {text-decoration: none; color: white;}
+	A:hover {text-decoration: none; color: white;}
+	
+	/* No slider value 
+	
+	input.ui-slider-input {display: none;}
+*/
+	 /* Uniquement pour Android mais pas pour Apple iPhone ? */
+	
+	/* Map */
+	
+	#map_canvas
+	{
+		/* position: absolute; */
+		height: 100%;
+		width: 100%;
+	}
+	 
+	.footer-fixer
+	{
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+	}
+
+	input.ui-button
+	{
+		padding: 0;
+	}	
+	
+	.ui-icon-geomap
+	{
+		background-image: url('images/geomap-logo.png');
+		background-size: 24px 24px;
+	}
+	
+	/* Barre des messages */
+	
+	#messages_toolbar
+	{
+		position: absolute;
+		bottom: 1px;
+		right: 1px;
+		z-index: 100;
+		background-image: url('images/opbg.png');
+		color: #FFFFFF;
+		font: 12px Helvetica;
+		padding: 8px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+	}
+
+	#toolbar_up_left
+	{
+		position: absolute;
+		top: 1px;
+		left: 1px;
+		z-index: 100;
+		color: #FFFFFF;
+		padding: 8px;
+		font: 12px;
+		/* font-family: Monaco, "DejaVu Sans Mono", "Lucida Console", "Andale Mono", monospace; */
+		-moz-border-radius: 12px;
+		-webkit-border-radius: 12px;
+
+
+		background-color:#000000;
+		border:1px solid black;
+		opacity:0.7;
+		filter:alpha(opacity=75); /* For IE8 and earlier */
+	}
+
+	/* Class MarkerWithLabel */
+
+	.labels {
+	 color: white;
+	 background-color: #333333;
+	 font-family: monospace;
+	 font-size: 12px;
+	 text-align: center;
+	 /* width: 10px;     */
+	 white-space: nowrap;
+	}
+	
+	 /* Blink gadget */
+	
+	@-webkit-keyframes blink
+	{
+	  0%     { opacity: 0 } 50% { opacity: 0 }
+	  50.01% { opacity: 1 } 100% { opacity: 1 }
+	}
+
+	blink
+	{
+	  -webkit-animation: blink 0.7s infinite linear alternate;
+	  -webkit-font-smoothing: antialiased;
+	}
+

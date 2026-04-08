@@ -1,0 +1,90 @@
+<?php
+
+	require('geomap-server-config.php');
+
+/*
+ * Project : GeoMap
+ * Server give data to client
+ * Copyright (c) Olivier Booklage
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ * Last commit by $Author: obooklage $
+ * Date - $Date: 2012-01-09 14:28:18 +0100 (lun. 09 janv. 2012) $
+ * Revision - $Rev: 223 $
+ * Id : $Id: geomap-server-read.php 223 2012-01-09 13:28:18Z obooklage $
+ *
+ *
+ * */
+
+	if( isset( $_REQUEST['mission']) )
+	{
+		$mission = htmlentities($_REQUEST['mission'], ENT_QUOTES, 'UTF-8');
+	}
+	else
+	{
+		echo 'geomap-server-read : parm-error '.__LINE__.' ';
+		exit(1);
+	}
+
+	$connexion = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+	if( !$connexion )
+	{
+		echo "geomap-server-read : Le serveur de bases de données n'est pas actuellement disponible : ".mysqli_connect_error();
+		exit(1);
+	}
+
+	mysqli_set_charset($connexion, 'utf8');
+
+	/* Escape user input for SQL */
+	$mission = mysqli_real_escape_string($connexion, $mission);
+
+	$request = "SELECT *
+	FROM geomap_messages
+	RIGHT JOIN geomap_users
+	ON geomap_messages.userid = geomap_users.userid
+	WHERE geomap_users.mission='$mission'
+	GROUP BY geomap_users.userid
+	ORDER BY geomap_messages.time ASC;";
+
+	$result = mysqli_query( $connexion, $request );
+	if( !$result )
+	{
+		echo "geomap-server-read : Erreur dans l'exécution de la commande ".$request. " : ".mysqli_error($connexion);
+		mysqli_close($connexion);
+		exit(1);
+	}
+
+	$data_json = "";
+	$data_count = 0;
+
+	if(mysqli_num_rows($result)>0)
+	{
+		while($row = mysqli_fetch_object($result))
+		{
+			$cur_user_data = ','.json_encode(array(
+				'mission' => $row->mission,
+				'userid' => $row->userid,
+				'username' => $row->username,
+				'latitude' => floatval($row->latitude),
+				'state' => intval($row->state),
+				'longitude' => floatval($row->longitude),
+				'accuracy' => floatval($row->accuracy),
+				'speed' => floatval($row->speed),
+				'altitude' => floatval($row->altitude),
+				'altitudeAccuracy' => floatval($row->altitudeAccuracy),
+				'heading' => floatval($row->heading),
+				'active' => intval($row->active),
+				'message' => $row->message,
+				'time' => intval($row->time)
+			));
+			$data_json = $data_json.$cur_user_data;
+			$data_count++;
+		}
+	}
+
+	mysqli_close($connexion);
+
+echo '{"users":[ '.json_encode(array('userid'=>'master','username'=>'master','latitude'=>0,'longitude'=>0,'state'=>1,'message'=>'','time'=>time())).$data_json.' ],"hits":'.($data_count+1).',"type":"makers","pages":1,"date":'.time().'}';
+exit;
+?>

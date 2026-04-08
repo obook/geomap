@@ -1,0 +1,5 @@
+
+AddType text/cache-manifest appcache manifest .manifest
+
+# Application Firefox OS
+AddType application/x-web-app-manifest+json .webapp

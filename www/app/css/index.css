@@ -1,0 +1,129 @@
+@charset "utf-8";
+/*
+ * index.css
+ * Description: Core layout styles for GeoMap-Air — map canvas,
+ *              Leaflet control overrides, and UI widgets.
+ * Author: O. Booklage
+ * Date: April 2026
+ * License: MIT
+ */
+
+/* Screen orientation changed */
+
+@media screen and (orientation: landscape)
+{
+	html, body
+	{
+		width: 100%;
+	}
+
+	#map_canvas
+	{
+		height: 100%;
+		width: 100%;
+	}
+}
+
+@media screen and (orientation: portrait)
+{
+	html, body
+	{
+		width: 100%;
+	}
+
+	#map_canvas
+	{
+		height: 100%;
+		width: 100%;
+	}
+
+}
+
+/* Height of #map_canvas is computed dynamically by geometrychanged() */
+#map_canvas
+{
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+}
+
+/* Map page must not clip Leaflet controls (layer switcher dropdown) */
+.page[data-name="map"] .page-content {
+	overflow: visible !important;
+}
+
+/* Force Leaflet controls above Framework7 content */
+.leaflet-control-container {
+	z-index: 10000 !important;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+	z-index: 10000 !important;
+}
+
+/* Shift top Leaflet controls below the Framework7 navbar */
+.leaflet-top {
+	top: var(--f7-navbar-height, 44px) !important;
+}
+
+/* Ensure map container does not block pointer events on controls */
+#map_canvas .leaflet-control-container {
+	pointer-events: auto !important;
+}
+
+/* Class MarkerWithLabel */
+
+.labels {
+ color: white;
+ background-color: #333333;
+ font-family: monospace;
+ font-size: 12px;
+ text-align: center;
+ white-space: nowrap;
+}
+
+/* Blink gadget */
+
+#blinker-id
+{
+	display:block;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-duration: 1s;
+	animation-name: blinked;
+	color: white;
+}
+
+@keyframes blinked
+{
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+
+#blinker-id:hover
+{
+	animation-play-state: paused;
+}
+
+/* Data table for user list */
+
+.data-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+	padding: 4px 8px;
+	text-align: left;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.data-table th {
+	font-weight: 600;
+}

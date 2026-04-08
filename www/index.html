@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
+
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+
+	<!-- Theme: DARK OPS -->
+	<link rel="stylesheet" href="app/css/theme-darkops.css" />
+
+	<!-- Framework7 -->
+	<link rel="stylesheet" href="vendor/framework7/framework7-bundle.min.css" />
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+
+	<!-- Leaflet -->
+	<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+	<link rel="stylesheet" href="vendor/leaflet/leaflet.label.css" />
+	<link rel="stylesheet" href="vendor/leaflet/leaflet.awesome-markers.css">
+	<link rel="stylesheet" href="vendor/leaflet/MarkerCluster.css" />
+	<link rel="stylesheet" href="vendor/leaflet/MarkerCluster.Default.css" />
+	<link rel="stylesheet" href="vendor/leaflet/leaflet.draw.css" />
+	<link rel="stylesheet" href="vendor/leaflet/l.geosearch.css" />
+
+	<!-- Apple meta -->
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320"/>
+	<link rel="apple-touch-icon-precomposed" href="app/images/favicon.png">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="apple-touch-icon" type='image/png' href="app/images/geomap.png">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="app/css/index.css" />
+
+	<title>GeoMap-Air</title>
+
+	<style>
+		/* =============================================
+		   TACTICAL HUD ICONS — SVG inline, states
+		   ============================================= */
+
+		/* GPS icon — crosshair/target reticle */
+		.icon-gps-inactive,
+		.icon-gps-active,
+		.icon-gps-error,
+		.icon-gps-bad-conditions {
+			width: 22px; height: 22px;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			transition: filter 0.3s ease;
+		}
+
+		/* GPS : error — radar rouge, pulsant, pas de balayage */
+		.icon-gps-error {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23ff0000' stroke-width='1' stroke-opacity='0.3' fill='none'/%3E%3Ccircle cx='12' cy='12' r='6' stroke='%23ff0000' stroke-width='0.5' stroke-opacity='0.2' fill='none'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%23ff0000' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%23ff0000' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23ff0000'/%3E%3Cline x1='5' y1='5' x2='19' y2='19' stroke='%23ff0000' stroke-width='2' stroke-linecap='round' stroke-opacity='0.8'/%3E%3Cline x1='19' y1='5' x2='5' y2='19' stroke='%23ff0000' stroke-width='2' stroke-linecap='round' stroke-opacity='0.8'/%3E%3C/svg%3E");
+			filter: drop-shadow(0 0 10px rgba(255,0,0,1));
+			animation: hud-pulse-red 1s ease-in-out infinite;
+		}
+
+		/* GPS : inactive — radar cyan atténué, pas de balayage */
+		.icon-gps-inactive {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23007a82' stroke-width='1' stroke-opacity='0.3' fill='none'/%3E%3Ccircle cx='12' cy='12' r='6' stroke='%23007a82' stroke-width='0.5' stroke-opacity='0.2' fill='none'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%23007a82' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%23007a82' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23007a82'/%3E%3C/svg%3E");
+			filter: drop-shadow(0 0 3px rgba(0,240,255,0.2));
+		}
+
+		/* GPS : active — radar vert avec balayage tournant */
+		.icon-gps-active {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%2300ff41' stroke-width='1' stroke-opacity='0.3' fill='none'/%3E%3Ccircle cx='12' cy='12' r='6' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.2' fill='none'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%2300ff41'/%3E%3Cg%3E%3Cpath d='M12 12 L22 12 A10 10 0 0 1 15.42 21.40 Z' fill='%2300ff41' fill-opacity='0.2'/%3E%3Cpath d='M12 12 L20.5 12 A8.5 8.5 0 0 1 14.11 20.19 Z' fill='%2300ff41' fill-opacity='0.12'/%3E%3Cline x1='12' y1='12' x2='15.42' y2='21.40' stroke='%2300ff41' stroke-width='1.5' stroke-linecap='round' stroke-opacity='0.9'/%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 12 12' to='360 12 12' dur='3s' repeatCount='indefinite'/%3E%3C/g%3E%3C/svg%3E");
+			filter: drop-shadow(0 0 8px rgba(0,255,65,0.7));
+		}
+
+		/* GPS : bad conditions — radar ambre avec balayage lent */
+		.icon-gps-bad-conditions {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23ff9500' stroke-width='1' stroke-opacity='0.3' fill='none'/%3E%3Ccircle cx='12' cy='12' r='6' stroke='%23ff9500' stroke-width='0.5' stroke-opacity='0.2' fill='none'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%23ff9500' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%23ff9500' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23ff9500'/%3E%3Cg%3E%3Cpath d='M12 12 L22 12 A10 10 0 0 1 15.42 21.40 Z' fill='%23ff9500' fill-opacity='0.2'/%3E%3Cpath d='M12 12 L20.5 12 A8.5 8.5 0 0 1 14.11 20.19 Z' fill='%23ff9500' fill-opacity='0.12'/%3E%3Cline x1='12' y1='12' x2='15.42' y2='21.40' stroke='%23ff9500' stroke-width='1.5' stroke-linecap='round' stroke-opacity='0.9'/%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 12 12' to='360 12 12' dur='6s' repeatCount='indefinite'/%3E%3C/g%3E%3C/svg%3E");
+			filter: drop-shadow(0 0 6px rgba(255,149,0,0.7));
+			animation: hud-pulse-amber 1.2s ease-in-out infinite;
+		}
+
+		/* DATA/NETWORK icon — signal/antenna */
+		.icon-data-inactive,
+		.icon-data-active-senestre,
+		.icon-data-active-dextre,
+		.icon-data-error {
+			width: 22px; height: 22px;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			transition: filter 0.3s ease;
+		}
+
+		/* DATA/MESSAGES : error — terminal rouge avec X */
+		.icon-data-error {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' stroke='%23ff0000' stroke-width='1.5' fill='%23ff0000' fill-opacity='0.08'/%3E%3Cline x1='3' y1='8' x2='21' y2='8' stroke='%23ff0000' stroke-width='0.5' stroke-opacity='0.4'/%3E%3Cline x1='8' y1='12' x2='16' y2='18' stroke='%23ff0000' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='16' y1='12' x2='8' y2='18' stroke='%23ff0000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+			filter: drop-shadow(0 0 8px rgba(255,0,0,0.8));
+			animation: hud-pulse-red 1s ease-in-out infinite;
+		}
+
+		/* DATA/MESSAGES : inactive — terminal cyan éteint */
+		.icon-data-inactive {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' stroke='%23007a82' stroke-width='1.5' fill='%23007a82' fill-opacity='0.05'/%3E%3Cline x1='3' y1='8' x2='21' y2='8' stroke='%23007a82' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Cline x1='6' y1='11' x2='14' y2='11' stroke='%23007a82' stroke-width='1' stroke-linecap='round' stroke-opacity='0.4'/%3E%3Cline x1='6' y1='14' x2='11' y2='14' stroke='%23007a82' stroke-width='1' stroke-linecap='round' stroke-opacity='0.3'/%3E%3Cline x1='6' y1='17' x2='9' y2='17' stroke='%23007a82' stroke-width='1' stroke-linecap='round' stroke-opacity='0.2'/%3E%3C/svg%3E");
+			filter: drop-shadow(0 0 3px rgba(0,240,255,0.2));
+		}
+
+		/* DATA/MESSAGES : active senestre — terminal vert, flux entrant */
+		.icon-data-active-senestre {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' stroke='%2300ff41' stroke-width='1.5' fill='%2300ff41' fill-opacity='0.06'/%3E%3Cline x1='3' y1='8' x2='21' y2='8' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Cline x1='6' y1='11' x2='14' y2='11' stroke='%2300ff41' stroke-width='1' stroke-linecap='round'/%3E%3Cline x1='6' y1='14' x2='11' y2='14' stroke='%2300ff41' stroke-width='1' stroke-linecap='round' stroke-opacity='0.7'/%3E%3Cline x1='6' y1='17' x2='9' y2='17' stroke='%2300ff41' stroke-width='1' stroke-linecap='round' stroke-opacity='0.4'/%3E%3Cpath d='M17 13l2 2-2 2' stroke='%2300ff41' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.8'/%3E%3C/svg%3E");
+			filter: drop-shadow(0 0 8px rgba(0,255,65,0.7));
+			animation: hud-data-blink 0.6s ease-in-out infinite alternate;
+		}
+
+		/* DATA/MESSAGES : active dextre — terminal vert, flux sortant */
+		.icon-data-active-dextre {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' stroke='%2300ff41' stroke-width='1.5' fill='%2300ff41' fill-opacity='0.06'/%3E%3Cline x1='3' y1='8' x2='21' y2='8' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Cline x1='6' y1='11' x2='14' y2='11' stroke='%2300ff41' stroke-width='1' stroke-linecap='round'/%3E%3Cline x1='6' y1='14' x2='11' y2='14' stroke='%2300ff41' stroke-width='1' stroke-linecap='round' stroke-opacity='0.7'/%3E%3Cline x1='6' y1='17' x2='9' y2='17' stroke='%2300ff41' stroke-width='1' stroke-linecap='round' stroke-opacity='0.4'/%3E%3Cpath d='M19 13l-2 2 2 2' stroke='%2300ff41' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.8'/%3E%3C/svg%3E");
+			filter: drop-shadow(0 0 8px rgba(0,255,65,0.7));
+			animation: hud-data-blink 0.6s ease-in-out infinite alternate;
+		}
+
+		/* =============================================
+		   HUD ICON ANIMATIONS
+		   ============================================= */
+		@keyframes hud-pulse-red {
+			0%, 100% { filter: drop-shadow(0 0 6px rgba(255,0,0,0.6)); opacity: 0.6; }
+			50% { filter: drop-shadow(0 0 16px rgba(255,0,0,1)); opacity: 1; }
+		}
+
+		@keyframes hud-pulse-green {
+			0%, 100% { filter: drop-shadow(0 0 4px rgba(0,255,65,0.4)); }
+			50% { filter: drop-shadow(0 0 12px rgba(0,255,65,0.9)); }
+		}
+
+		@keyframes hud-radar-sweep {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		@keyframes hud-pulse-amber {
+			0%, 100% { filter: drop-shadow(0 0 4px rgba(255,149,0,0.4)); opacity: 0.6; }
+			50% { filter: drop-shadow(0 0 10px rgba(255,149,0,1)); opacity: 1; }
+		}
+
+		@keyframes hud-data-blink {
+			0% { filter: drop-shadow(0 0 4px rgba(0,255,65,0.4)); }
+			100% { filter: drop-shadow(0 0 12px rgba(0,255,65,0.9)); }
+		}
+	</style>
+</head>
+<body>
+
+	<div id="app">
+
+		<!-- Home page -->
+		<div class="view view-main view-init safe-areas" data-url="/">
+
+			<!-- Pages container -->
+			<div class="pages">
+
+				<!-- HOME PAGE -->
+				<div class="page" data-name="home">
+					<div class="navbar">
+						<div class="navbar-bg"></div>
+						<div class="navbar-inner">
+							<div class="left"><a href="/about/" class="link" style="font-size:10px;letter-spacing:2px;">INTEL</a></div>
+							<div class="title">GEOMAP-AIR</div>
+						</div>
+					</div>
+					<div class="page-content" style="display:flex; align-items:center; justify-content:center; min-height:100vh;">
+						<div class="classified-frame" style="width:100%; max-width:380px;">
+							<div style="text-align:center; margin-bottom:28px;">
+								<div style="font-family:var(--font-display); font-size:22px; font-weight:900; letter-spacing:6px; color:var(--cyan); text-shadow: 0 0 30px var(--cyan-glow-strong);">GEOMAP</div>
+								<div style="font-family:var(--font-mono); font-size:10px; letter-spacing:4px; color:var(--text-ghost); margin-top:6px;">SIGINT COMMAND TERMINAL v3.0</div>
+								<div style="width:60px; height:1px; background:var(--cyan-dim); margin:16px auto 0;"></div>
+							</div>
+							<div class="list inline-labels no-hairlines-md" style="margin:0;">
+								<ul>
+									<li class="item-content item-input">
+										<div class="item-inner">
+											<div class="item-title item-label">CALLSIGN</div>
+											<div class="item-input-wrap">
+												<input type="text" id="username-id" value="NEW" maxlength="8" placeholder="Agent name" />
+											</div>
+										</div>
+									</li>
+									<li class="item-content item-input">
+										<div class="item-inner">
+											<div class="item-title item-label">CHANNEL</div>
+											<div class="item-input-wrap">
+												<input type="number" id="select-choice-mission-id" value="1111" min="1111" max="99999" placeholder="Secure freq" />
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div style="text-align:center; margin-top:24px;">
+								<a href="/map/" class="button button-fill button-large color-green" id="submit-id" style="width:100%;">
+									<span id="blinker-id">ENGAGE</span>
+								</a>
+							</div>
+							<div style="text-align:center; margin-top:20px;">
+								<span style="font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text-ghost);">ENCRYPTED // ZERO FOOTPRINT // NO LOGS</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="vendor/jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Leaflet -->
+	<script src="vendor/leaflet/leaflet.js"></script>
+	<script src="vendor/leaflet/leaflet.label.js"></script>
+	<script src="vendor/leaflet/leaflet.markercluster.js"></script>
+	<script src="vendor/leaflet/leaflet.awesome-markers.js"></script>
+	<script src="vendor/leaflet/leaflet.draw.js"></script>
+	<script src="vendor/leaflet/gpx.js"></script>
+	<script src="vendor/leaflet/l.control.geosearch.js"></script>
+	<script src="vendor/leaflet/l.geosearch.provider.openstreetmap.js"></script>
+	<script src="vendor/leaflet/tile.stamen.js"></script>
+	<script src="vendor/leaflet/oms.min.js"></script>
+
+	<!-- Sound Manager -->
+	<script type="text/javascript" charset="utf-8" src="vendor/soundmanager/script/soundmanager2.js"></script>
+
+	<!-- Framework7 -->
+	<script src="vendor/framework7/framework7-bundle.min.js"></script>
+
+	<!-- Geomap -->
+	<script type="text/javascript" charset="utf-8" src="app/js/geomap.js"></script>
+	<script type="text/javascript" charset="utf-8" src="app/js/index.js"></script>
+
+	<script type="text/javascript">
+
+	var app = new Framework7({
+		el: '#app',
+		name: 'GeoMap',
+		theme: 'auto',
+		darkMode: true,
+		routes: [
+			{
+				path: '/',
+				pageName: 'home'
+			},
+			{
+				path: '/map/',
+				pageName: 'map',
+				on: {
+					pageInit: function(e, page) {
+						console.log("#map pageInit");
+						get_storage();
+						geometrychanged();
+					},
+					pageBeforeIn: function(e, page) {
+						console.log("#map pageBeforeIn");
+						get_storage();
+						document.title = username + '@' + team;
+						geometrychanged();
+					},
+					pageAfterIn: function(e, page) {
+						console.log("#map pageAfterIn");
+						var mapCanvas = document.getElementById('map_canvas');
+						if( geomap == null || !mapCanvas || !mapCanvas._leaflet_id )
+						{
+							console.log("#map creating new geomap instance");
+							var savedState = (geomap != null) ? geomap.SaveState() : null;
+							if( geomap != null ) { geomap.stop(); geomap = null; }
+							if( savedState ) Class_GeoMap.skipLocate = true;
+							geomap = new Class_GeoMap("map_canvas", ".");
+							geomap.SetNetworkDelay(get_netdelay());
+							geomap.SetSoundsOffOn(get_sound());
+							geomap.start(team, handle, username);
+							if( savedState ) geomap.RestoreState(savedState);
+						}
+						jQuery('#map_title_id').html(username + '@' + team);
+						geometrychanged();
+						/* Recalculer après le rendu complet */
+						setTimeout(geometrychanged, 100);
+						setTimeout(geometrychanged, 500);
+					}
+				}
+			},
+			{
+				path: '/about/',
+				url: './app/pages/mobile-about.html'
+			},
+			{
+				path: '/menu/',
+				url: './app/pages/mobile-menu.html'
+			},
+			{
+				path: '/options/',
+				url: './app/pages/mobile-options.html'
+			},
+			{
+				path: '/messages/',
+				url: './app/pages/mobile-messages.html'
+			},
+			{
+				path: '/connected/',
+				url: './app/pages/mobile-connected.html'
+			},
+			{
+				path: '/share/',
+				url: './app/pages/mobile-share.html'
+			},
+			{
+				path: '/tests/',
+				url: './app/pages/mobile-tests.html'
+			}
+		],
+		on: {
+			init: function() {
+				console.log('Framework7 initialized');
+				get_storage();
+			}
+		}
+	});
+
+	var mainView = app.views.main;
+
+	/* Page HOME events */
+	app.on('pageInit', function(page) {
+		if( page.name === 'home' )
+		{
+			jQuery('#username-id').val( get_username() );
+			jQuery('#select-choice-mission-id').val( get_channel() );
+		}
+	});
+
+	app.on('pageAfterIn', function(page) {
+		if( page.name === 'home' )
+		{
+			jQuery('#username-id').val( get_username() );
+			jQuery('#select-choice-mission-id').val( get_channel() );
+		}
+	});
+
+	jQuery(document).on('click', '#submit-id', function() {
+		username = jQuery('#username-id').val();
+		team = jQuery('#select-choice-mission-id').val();
+		if(username == '') username = 'NEW';
+		if(team == '') team = '1234';
+		set_username(username);
+		set_channel(team);
+		if(typeof soundManager !== 'undefined') soundManager.play('player_digital_beep_id');
+	});
+
+	/* MAP page template (injected dynamically) */
+	var mapPageTemplate = '\
+	<div class="page" data-name="map">\
+		<div class="navbar navbar-geomap">\
+			<div class="navbar-bg"></div>\
+			<div class="navbar-inner">\
+				<div class="left"><a href="/menu/" class="link"><span style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;"><span class="status-dot active"></span><span id="map_title_id"></span></span></a></div>\
+				<div class="title" style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--cyan);">TACTICAL</div>\
+				<div class="right">\
+					<a href="#" class="link" id="btn-users" title="Zoom on all users">\
+						<span id="usersnumbers" style="font-family:var(--font-mono);font-size:12px;color:var(--amber);">---</span>\
+					</a>\
+					<a href="#" class="link" id="button_GPS" title="Zoom on me">\
+						<i class="toolbar-icon icon-gps-error"></i>\
+					</a>\
+					<a href="#" class="link" id="button_network" title="Cleanup messages">\
+						<i class="toolbar-icon icon-data-error"></i>\
+					</a>\
+				</div>\
+			</div>\
+		</div>\
+		<div class="page-content" style="padding:0; overflow:visible !important; position:relative;">\
+			<div id="messages_toolbar"><span id="messages_id"></span></div>\
+			<div id="map_canvas"></div>\
+		</div>\
+		<div class="toolbar toolbar-bottom">\
+			<div class="toolbar-inner">\
+				<span id="map_speed_id" style="font-family:var(--font-mono);letter-spacing:3px;font-size:12px;">GEOMAP</span>\
+			</div>\
+		</div>\
+	</div>';
+
+	/* Inject map page template */
+	app.on('pageBeforeIn', function(page) {
+		if( page.name === 'map' )
+		{
+			/* Ensure template is there */
+		}
+	});
+
+	/* Register the map page as a component route */
+	app.routes[1].content = mapPageTemplate;
+
+	/* Geometry helper : map_canvas remplit tout le .page-content */
+	function geometrychanged()
+	{
+		var mapCanvas = document.getElementById('map_canvas');
+		if( !mapCanvas ) return;
+
+		var pageContent = mapCanvas.parentElement;
+		if( !pageContent ) return;
+
+		/* .page-content est déjà dimensionné par Framework7 (navbar + toolbar déduits) */
+		var h = pageContent.clientHeight;
+		mapCanvas.style.height = h + 'px';
+		mapCanvas.style.width = '100%';
+
+		/* Forcer Leaflet à recalculer sa taille */
+		if( geomap != null )
+		{
+			var map = geomap.GetMap();
+			if( map ) map.invalidateSize();
+		}
+
+		console.log("geometrychanged: map_canvas=" + mapCanvas.style.width + " x " + h + "px");
+	}
+
+	window.addEventListener('resize', geometrychanged);
+	window.addEventListener('orientationchange', geometrychanged);
+
+	/* Toolbar button actions */
+	jQuery(document).on('click', '#btn-users', function() { ZoomToFitAllMarkers(); });
+	jQuery(document).on('click', '#button_GPS', function() { ZoomToUserMarker(); });
+	jQuery(document).on('click', '#button_network', function() { CleanUpMessage(); });
+
+	/* Abort mission — stop map and return to home */
+	jQuery(document).on('click', '#quit_map-id', function() {
+		if( geomap != null )
+		{
+			geomap.stop();
+			geomap.logout();
+		}
+		geomap = null;
+		app.views.main.router.navigate('/');
+	});
+
+	function ZoomToFitAllMarkers()
+	{
+		if( geomap != null ) geomap.ZoomToFitAllMarkers();
+	}
+
+	function ZoomToUserMarker()
+	{
+		if( geomap != null ) geomap.ZoomToUserMarker();
+	}
+
+	function CleanUpMessage()
+	{
+		if( geomap != null ) geomap.CleanUpMessage();
+		if( typeof app !== 'undefined' ) app.toast.create({ text: 'Message cleaned', closeTimeout: 2000 }).open();
+	}
+
+	function toast(message)
+	{
+		if( typeof app !== 'undefined' ) app.toast.create({ text: message, closeTimeout: 2000 }).open();
+	}
+
+	</script>
+
+</body>
+</html>

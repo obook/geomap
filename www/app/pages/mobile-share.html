@@ -1,0 +1,27 @@
+<div class="page" data-name="share">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner">
+			<div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span>MAP</span></a></div>
+			<div class="title">SHARE COORDS</div>
+		</div>
+	</div>
+	<div class="page-content" style="display:flex; align-items:center; justify-content:center;">
+		<div class="classified-frame" style="width:100%; max-width:380px;">
+			<div style="font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--cyan-dim); margin-bottom:16px; text-align:center;">// EXFILTRATE POSITION</div>
+			<a id="sms_button" href="sms:?body=HELLO" class="button button-fill button-large external" style="margin-bottom:10px; width:100%;">SMS BURST</a>
+			<a id="mail_button" href="#" target="_blank" class="button button-fill button-large external" style="width:100%;">ENCRYPTED MAIL</a>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		app.on('pageAfterIn', function(page) {
+			if( page.name !== 'share' ) return;
+			if( GLOBAL_USE_PHONEGAP_ADDON == false )
+			{
+				jQuery('#sms_button').addClass('disabled');
+			}
+			jQuery('#mail_button').attr('href', 'mailto:?Subject=My%20GPS%20position%20'+gps_lastposition_date+'&body=Here%20https://maps.google.com/?daddr='+gps_lastposition_latitude+','+gps_lastposition_longitude+' accuracy: '+gps_lastposition_accuracy+' m.');
+		});
+	</script>
+</div>

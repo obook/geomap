@@ -1,0 +1,773 @@
+@charset "utf-8";
+/*
+ * GeoMap-Air — DARK OPS Theme
+ * Auteur : O. Booklage
+ * Date : Avril 2026
+ *
+ * Codename: SIGINT COMMAND TERMINAL
+ * Aesthetic: Covert operations satellite control room
+ */
+
+/* ========================================
+   FONTS
+   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap');
+
+/* ========================================
+   CSS VARIABLES
+   ======================================== */
+:root {
+  --bg-abyss: #050508;
+  --bg-deep: #0a0a0f;
+  --bg-panel: #0d0d14;
+  --bg-elevated: #12121c;
+  --bg-surface: #181824;
+
+  --cyan: #00f0ff;
+  --cyan-dim: #007a82;
+  --cyan-glow: rgba(0, 240, 255, 0.15);
+  --cyan-glow-strong: rgba(0, 240, 255, 0.4);
+
+  --green: #00ff41;
+  --green-dim: #00802a;
+  --green-glow: rgba(0, 255, 65, 0.12);
+
+  --amber: #ff9500;
+  --amber-dim: #804b00;
+  --amber-glow: rgba(255, 149, 0, 0.12);
+
+  --red: #ff2d55;
+  --red-dim: #801730;
+  --red-glow: rgba(255, 45, 85, 0.15);
+
+  --text-primary: #c8d6e5;
+  --text-secondary: #6b7a8d;
+  --text-ghost: #3a4556;
+
+  --border-subtle: rgba(0, 240, 255, 0.08);
+  --border-active: rgba(0, 240, 255, 0.3);
+
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+
+  --radius: 2px;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   BASE & SCANLINE OVERLAY
+   ======================================== */
+html, body {
+  background: var(--bg-abyss) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CRT scanline overlay — the signature effect */
+#app::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 240, 255, 0.015) 2px,
+    rgba(0, 240, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 99999;
+}
+
+/* Hex grid background for pages */
+.page-content::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.03;
+  background-image:
+    linear-gradient(30deg, var(--cyan) 12%, transparent 12.5%, transparent 87%, var(--cyan) 87.5%, var(--cyan)),
+    linear-gradient(150deg, var(--cyan) 12%, transparent 12.5%, transparent 87%, var(--cyan) 87.5%, var(--cyan)),
+    linear-gradient(30deg, var(--cyan) 12%, transparent 12.5%, transparent 87%, var(--cyan) 87.5%, var(--cyan)),
+    linear-gradient(150deg, var(--cyan) 12%, transparent 12.5%, transparent 87%, var(--cyan) 87.5%, var(--cyan)),
+    linear-gradient(60deg, rgba(0,240,255,0.5) 25%, transparent 25.5%, transparent 75%, rgba(0,240,255,0.5) 75%, rgba(0,240,255,0.5)),
+    linear-gradient(60deg, rgba(0,240,255,0.5) 25%, transparent 25.5%, transparent 75%, rgba(0,240,255,0.5) 75%, rgba(0,240,255,0.5));
+  background-size: 40px 70px;
+  background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========================================
+   FRAMEWORK7 OVERRIDES — NAVBAR
+   ======================================== */
+.navbar {
+  --f7-navbar-bg-color: var(--bg-deep) !important;
+  --f7-navbar-text-color: var(--cyan) !important;
+  --f7-navbar-link-color: var(--cyan) !important;
+  --f7-navbar-title-font-size: 11px !important;
+  --f7-navbar-height: 40px !important;
+  border-bottom: 1px solid var(--border-active) !important;
+  backdrop-filter: blur(12px);
+}
+
+.navbar-geomap .navbar-inner {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.navbar-geomap .navbar-inner .title {
+  position: static !important;
+  transform: none !important;
+  margin: 0 !important;
+}
+
+.navbar-bg {
+  background: linear-gradient(180deg, var(--bg-deep) 0%, rgba(10,10,15,0.95) 100%) !important;
+}
+
+.navbar .title {
+  font-family: var(--font-mono) !important;
+  font-weight: 400 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  text-shadow: 0 0 20px var(--cyan-glow-strong);
+}
+
+.navbar .link {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  color: var(--cyan) !important;
+  opacity: 1;
+  transition: var(--transition);
+}
+
+.navbar .link:hover,
+.navbar .link:active {
+  opacity: 1;
+  text-shadow: 0 0 12px var(--cyan);
+}
+
+.icon-back {
+  color: var(--cyan) !important;
+}
+
+/* ========================================
+   FRAMEWORK7 OVERRIDES — TOOLBAR / FOOTER
+   ======================================== */
+.toolbar {
+  --f7-toolbar-bg-color: var(--bg-deep) !important;
+  --f7-toolbar-text-color: var(--green) !important;
+  --f7-toolbar-height: 28px !important;
+  border-top: 1px solid var(--border-active) !important;
+}
+
+.toolbar-inner {
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 15px var(--green-glow);
+  justify-content: center !important;
+}
+
+/* ========================================
+   FRAMEWORK7 OVERRIDES — PAGE
+   ======================================== */
+.page {
+  --f7-page-bg-color: var(--bg-abyss) !important;
+  background: var(--bg-abyss) !important;
+}
+
+.view,
+.views,
+.pages,
+.page-next,
+.page-previous,
+.router-transition .page {
+  background: var(--bg-abyss) !important;
+}
+
+.page-content {
+  background: var(--bg-abyss) !important;
+  color: var(--text-primary) !important;
+}
+
+.block {
+  color: var(--text-primary) !important;
+}
+
+/* ========================================
+   BUTTONS — Tactical style
+   ======================================== */
+.button {
+  font-family: var(--font-display) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  border-radius: var(--radius) !important;
+  transition: all var(--transition) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,240,255,0.08), transparent);
+  transition: left 0.5s ease;
+}
+
+.button:hover::before,
+.button:active::before {
+  left: 100%;
+}
+
+.button-fill {
+  --f7-button-fill-bg-color: transparent !important;
+  --f7-button-fill-text-color: var(--cyan) !important;
+  border: 1px solid var(--cyan-dim) !important;
+  background: linear-gradient(180deg, rgba(0,240,255,0.06) 0%, rgba(0,240,255,0.02) 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(0,240,255,0.1), 0 0 20px rgba(0,240,255,0.05) !important;
+}
+
+.button-fill:hover,
+.button-fill:active {
+  border-color: var(--cyan) !important;
+  box-shadow: inset 0 1px 0 rgba(0,240,255,0.2), 0 0 30px rgba(0,240,255,0.15) !important;
+  text-shadow: 0 0 10px var(--cyan);
+}
+
+.button-fill.color-green,
+.button.color-green {
+  --f7-button-fill-text-color: var(--green) !important;
+  border-color: var(--green-dim) !important;
+  background: linear-gradient(180deg, rgba(0,255,65,0.08) 0%, rgba(0,255,65,0.02) 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(0,255,65,0.1), 0 0 20px rgba(0,255,65,0.05) !important;
+  color: var(--green) !important;
+}
+
+.button-fill.color-green:hover,
+.button-fill.color-green:active {
+  border-color: var(--green) !important;
+  box-shadow: inset 0 1px 0 rgba(0,255,65,0.2), 0 0 40px rgba(0,255,65,0.2) !important;
+  text-shadow: 0 0 15px var(--green);
+}
+
+.button-fill.color-blue {
+  --f7-button-fill-text-color: var(--cyan) !important;
+  border-color: var(--cyan-dim) !important;
+  color: var(--cyan) !important;
+}
+
+.button-fill.color-red,
+.button.color-red {
+  --f7-button-fill-text-color: var(--red) !important;
+  border-color: var(--red-dim) !important;
+  background: linear-gradient(180deg, rgba(255,45,85,0.08) 0%, rgba(255,45,85,0.02) 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,45,85,0.1), 0 0 20px rgba(255,45,85,0.05) !important;
+  color: var(--red) !important;
+}
+
+.button-fill.color-red:hover {
+  border-color: var(--red) !important;
+  box-shadow: inset 0 1px 0 rgba(255,45,85,0.2), 0 0 40px rgba(255,45,85,0.2) !important;
+}
+
+.button-outline {
+  border-color: var(--cyan-dim) !important;
+  color: var(--cyan) !important;
+}
+
+.button-outline:hover {
+  border-color: var(--cyan) !important;
+  background: var(--cyan-glow) !important;
+}
+
+.button-large {
+  height: 44px !important;
+  line-height: 42px !important;
+}
+
+/* ========================================
+   INPUTS — Terminal style
+   ======================================== */
+.list ul {
+  background: transparent !important;
+}
+
+.list .item-content {
+  --f7-list-item-border-color: var(--border-subtle) !important;
+}
+
+.item-label,
+.item-title {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  color: var(--cyan-dim) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="range"],
+select {
+  font-family: var(--font-mono) !important;
+  font-size: 16px !important;
+  color: var(--green) !important;
+  background: var(--bg-panel) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius) !important;
+  padding: 8px 12px !important;
+  caret-color: var(--cyan);
+  transition: var(--transition);
+}
+
+input:focus,
+select:focus {
+  border-color: var(--cyan) !important;
+  box-shadow: 0 0 15px var(--cyan-glow), inset 0 0 10px var(--cyan-glow) !important;
+  outline: none !important;
+}
+
+input::placeholder {
+  color: var(--text-ghost) !important;
+  font-style: italic;
+}
+
+select {
+  -webkit-appearance: menulist !important;
+  appearance: menulist !important;
+  min-height: 36px !important;
+  line-height: 36px !important;
+  padding: 0 12px !important;
+  overflow: visible !important;
+}
+
+select option {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+/* Range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--bg-surface) !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 1px;
+  background: var(--cyan);
+  border: 2px solid var(--bg-deep);
+  box-shadow: 0 0 10px var(--cyan-glow-strong);
+  cursor: pointer;
+  transform: rotate(45deg);
+}
+
+/* ========================================
+   MAP NAVBAR — Tactical HUD
+   ======================================== */
+.navbar-geomap .right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.navbar-geomap .toolbar-icon {
+  width: 24px !important;
+  height: 24px !important;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.navbar-geomap .toolbar-icon:hover {
+  transform: scale(1.2);
+}
+
+#usersnumbers {
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+  color: var(--amber) !important;
+  text-shadow: 0 0 8px var(--amber-glow);
+  letter-spacing: 1px;
+}
+
+#map_title_id {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  letter-spacing: 2px !important;
+}
+
+/* ========================================
+   MAP CANVAS
+   ======================================== */
+#map_canvas {
+  width: 100%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+
+/* ========================================
+   MESSAGES TOOLBAR — Intel overlay
+   ======================================== */
+#messages_toolbar {
+  position: absolute;
+  bottom: 50px;
+  right: 4px;
+  z-index: 100;
+  background: linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(5,5,8,0.92) 100%) !important;
+  border: 1px solid var(--cyan-dim);
+  color: var(--cyan) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  display: none;
+  box-shadow: 0 0 30px rgba(0,240,255,0.1);
+  backdrop-filter: blur(8px);
+  letter-spacing: 1px;
+}
+
+/* ========================================
+   LEAFLET OVERRIDES — Dark tactical map
+   ======================================== */
+.leaflet-control-container {
+  z-index: 10000 !important;
+  position: relative !important;
+}
+
+.leaflet-top, .leaflet-bottom {
+  z-index: 10000 !important;
+}
+
+/* Descendre les contrôles Leaflet du haut sous la navbar Framework7 */
+.leaflet-top {
+  top: var(--f7-navbar-height, 44px) !important;
+}
+
+.leaflet-control-layers {
+  background: var(--bg-panel) !important;
+  border: 1px solid var(--cyan) !important;
+  border-radius: var(--radius) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 10px var(--cyan-glow-strong) !important;
+}
+
+.leaflet-control-layers-toggle {
+  /* Remplacer l'image par un fond opaque + icone SVG inline cyan */
+  background-color: var(--bg-deep) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300f0ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'/%3E%3Cpolyline points='2 17 12 22 22 17'/%3E%3Cpolyline points='2 12 12 17 22 12'/%3E%3C/svg%3E") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px 20px !important;
+  border: 2px solid var(--cyan) !important;
+  border-radius: var(--radius) !important;
+  width: 40px !important;
+  height: 40px !important;
+  box-shadow: 0 0 15px var(--cyan-glow-strong), inset 0 0 8px rgba(0,240,255,0.1) !important;
+  opacity: 1 !important;
+}
+
+.leaflet-control-layers-toggle:hover {
+  background-color: var(--bg-elevated) !important;
+  box-shadow: 0 0 25px var(--cyan-glow-strong), 0 0 6px var(--cyan) !important;
+}
+
+.leaflet-control-layers-expanded {
+  padding: 8px 12px !important;
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  letter-spacing: 1px;
+}
+
+.leaflet-control-layers label {
+  color: var(--text-primary) !important;
+}
+
+.leaflet-control-zoom a {
+  background: var(--bg-panel) !important;
+  color: var(--cyan) !important;
+  border-color: var(--cyan-dim) !important;
+  font-weight: 700;
+}
+
+.leaflet-control-zoom a:hover {
+  background: var(--bg-elevated) !important;
+  color: var(--cyan) !important;
+  box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.leaflet-bar {
+  border: 1px solid var(--cyan-dim) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--bg-panel) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--cyan-dim) !important;
+  border-radius: var(--radius) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--bg-panel) !important;
+  border: 1px solid var(--cyan-dim) !important;
+}
+
+/* ========================================
+   MARKER LABELS
+   ======================================== */
+.labels {
+  color: var(--cyan) !important;
+  background: rgba(5, 5, 8, 0.85) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 10px !important;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid var(--cyan-dim);
+  padding: 2px 6px;
+  border-radius: var(--radius);
+  text-shadow: 0 0 6px var(--cyan-glow);
+  letter-spacing: 1px;
+}
+
+.leaflet-label {
+  background: rgba(5, 5, 8, 0.9) !important;
+  border: 1px solid var(--cyan-dim) !important;
+  border-radius: var(--radius) !important;
+  color: var(--cyan) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 10px !important;
+  padding: 2px 8px !important;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5) !important;
+  white-space: nowrap !important;
+  letter-spacing: 1px;
+}
+
+.leaflet-label-left:before,
+.leaflet-label-right:before {
+  border-right-color: var(--cyan-dim) !important;
+}
+
+/* ========================================
+   DATA TABLE — Intel report style
+   ======================================== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+}
+
+.data-table th {
+  color: var(--cyan) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 10px;
+  padding: 8px;
+  border-bottom: 1px solid var(--cyan-dim);
+  text-shadow: 0 0 8px var(--cyan-glow);
+}
+
+.data-table td {
+  padding: 6px 8px;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.data-table tr:hover td {
+  background: var(--cyan-glow);
+}
+
+.data-table a {
+  color: var(--amber) !important;
+  text-decoration: none;
+}
+
+.data-table a:hover {
+  text-shadow: 0 0 8px var(--amber);
+}
+
+/* ========================================
+   BLINKER — Pulse animation
+   ======================================== */
+#blinker-id {
+  display: block;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+  color: var(--green) !important;
+  font-family: var(--font-display) !important;
+  font-weight: 900 !important;
+  font-size: 16px !important;
+  letter-spacing: 6px !important;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 10px var(--green), 0 0 30px var(--green-glow);
+  }
+  50% {
+    opacity: 0.4;
+    text-shadow: 0 0 5px var(--green-glow);
+  }
+}
+
+#blinker-id:hover {
+  animation-play-state: paused;
+}
+
+/* ========================================
+   CODE BLOCK — Classified document style
+   ======================================== */
+code {
+  font-family: var(--font-mono) !important;
+  font-size: 10px !important;
+  color: var(--text-secondary) !important;
+  background: var(--bg-panel) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius) !important;
+  padding: 12px 16px !important;
+  display: block;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   TOAST — Encrypted comms style
+   ======================================== */
+.toast {
+  --f7-toast-bg-color: var(--bg-panel) !important;
+  --f7-toast-text-color: var(--cyan) !important;
+  border: 1px solid var(--cyan-dim) !important;
+  font-family: var(--font-mono) !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+}
+
+/* ========================================
+   SCROLLBAR — Minimal tactical
+   ======================================== */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-abyss);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cyan-dim);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
+}
+
+/* ========================================
+   PAGE TRANSITION — Classified entry
+   ======================================== */
+.page-current {
+}
+
+@keyframes page-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   SELECTION
+   ======================================== */
+::selection {
+  background: var(--cyan-dim);
+  color: var(--bg-abyss);
+}
+
+/* ========================================
+   CORNER BRACKETS — Classified frame on home
+   ======================================== */
+.classified-frame {
+  position: relative;
+  padding: 24px;
+}
+
+.classified-frame::before,
+.classified-frame::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--cyan-dim);
+  border-style: solid;
+}
+
+.classified-frame::before {
+  top: 0; left: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.classified-frame::after {
+  bottom: 0; right: 0;
+  border-width: 0 1px 1px 0;
+}
+
+/* ========================================
+   STATUS INDICATOR DOTS
+   ======================================== */
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+.status-dot.active {
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.status-dot.warning {
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber);
+}
+
+.status-dot.error {
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

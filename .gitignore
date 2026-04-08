@@ -1,0 +1,14 @@
+# Server configuration (contains credentials)
+www/server/geomap-server-config.php
+!www/server/geomap-server-config-sample.php
+
+# OS files
+.DS_Store
+Thumbs.db
+*~
+*.swp
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
