@@ -593,16 +593,13 @@ var airbot = null;
 
 	this.SetNetworkDelay=function(delay)
 	{
-		if( delay < 4 )
+		if( delay < 15 )
 		{
-			delay = 4;
+			delay = 15;
 		}
 
-		// a revoir
 		GLOBAL_NETWORK_SENDATA_MAXITIME = delay;
 		GLOBAL_NETWORK_GETDATA = delay;
-
-		/* Le delay pout etre en gris ne peut PAS être inférieur, mais par exemple le double avec reserve de 30 secondes : */
 
 		GLOBAL_LIMIT_TTL = (delay+30)*2;
 

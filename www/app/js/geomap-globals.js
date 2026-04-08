@@ -23,20 +23,20 @@ var STATE_POSITION_OK				=  1 ;
 var LAST_TIME_READ					= new Date();
 var LAST_TIME_WRITE					= new Date();
 
-/* In seconds, get data from server, good choice = 6 but messages will have same delay */
-var GLOBAL_NETWORK_GETDATA			= 6;
+/* In seconds, get data from server */
+var GLOBAL_NETWORK_GETDATA			= 15;
 
-/* In seconds, send data to server, good choice = 6 */
-var GLOBAL_NETWORK_SENDATA			= 6;
+/* In seconds, send data to server */
+var GLOBAL_NETWORK_SENDATA			= 15;
 
-/* In seconds, send data to server, good choice = 6 */
-var GLOBAL_NETWORK_SENDATA_MAXITIME	= 10;/* A REVOIR ... */
+/* In seconds, send data to server (configured by slider) */
+var GLOBAL_NETWORK_SENDATA_MAXITIME	= 30;
 
-/* In seconds, send a ping alive to the server, good choice = 20 */
-var GLOBAL_SERVER_PING				= 6;
+/* In seconds, send a ping alive to the server */
+var GLOBAL_SERVER_PING				= 15;
 
-/* In seconds, limit time before be a gost on map (gray LED), good choice = 30 */
-var GLOBAL_LIMIT_TTL				= 40;
+/* In seconds, limit time before ghost on map (gray LED) */
+var GLOBAL_LIMIT_TTL				= 90;
 
 /* In hours, maxi time to live in map, good choice = 5 or 8 or 24 */
 var GLOBAL_MAXI_TTL					= 8;

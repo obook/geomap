@@ -20,7 +20,7 @@ var glastposition_date = null; /* !!!! TODO !!! */
 var glastposition_zoom = null; /* !!!! TODO !!! */
 
 var intervalDataID = null;
-var TEMPORARY_GLOBAL_NETWORK_SENDATA_MAXITIME = 5; /* sec */
+var TEMPORARY_GLOBAL_NETWORK_SENDATA_MAXITIME = 10; /* sec */
 var send_data_number = 0;
 
 var geoOptions = { 

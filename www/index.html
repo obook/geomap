@@ -519,13 +519,17 @@
 	app.on('pageAfterIn', function(page) {
 		if( page.name !== 'options' ) return;
 		jQuery('#slider-network-id').val( get_netdelay() );
+		jQuery('#slider-network-value').text( get_netdelay() + 's' );
 		jQuery('#flipsound-id').val( get_sound() );
+	});
+	jQuery(document).on('input', '#slider-network-id', function() {
+		jQuery('#slider-network-value').text( jQuery(this).val() + 's' );
 	});
 	app.on('pageBeforeOut', function(page) {
 		if( page.name !== 'options' ) return;
 		var netdelay = jQuery('#slider-network-id').val();
 		var sound = jQuery('#flipsound-id').val();
-		if( netdelay < 10 ) netdelay = 10;
+		if( netdelay < 15 ) netdelay = 15;
 		set_netdelay(netdelay);
 		if( geomap != null ) geomap.SetNetworkDelay(netdelay);
 		set_sound(sound);

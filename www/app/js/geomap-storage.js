@@ -85,8 +85,8 @@ function set_netdelay(netdelay)
 {
 	if(!netdelay)
 		netdelay=30;
-	if(netdelay<10)
-		netdelay=10;
+	if(netdelay<15)
+		netdelay=15;
 		
 	localStorage.setItem('netdelay', netdelay);
 }

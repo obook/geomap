@@ -22,7 +22,7 @@ var follow_marker_id = null;
 
 var intervalID = null;
 /* var data_timer_refresh = 2000;  2 secondes -> see Class_AirUser for set the same value */
-TEMPORARY_GLOBAL_NETWORK_GETDATA = 5; /* seconds */
+TEMPORARY_GLOBAL_NETWORK_GETDATA = 10; /* seconds */
 var request_data_number = 0;
 
 var toogle_server_respond = false;
