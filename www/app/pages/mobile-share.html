@@ -3,22 +3,19 @@
 		<div class="navbar-bg"></div>
 		<div class="navbar-inner">
 			<div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span>MAP</span></a></div>
-			<div class="title">SHARE COORDS</div>
+			<div class="title">SHARE APP</div>
 		</div>
 	</div>
-	<div class="page-content" style="display:flex; align-items:center; justify-content:center;">
-		<div class="classified-frame" style="width:100%; max-width:380px;">
+	<div class="page-content">
+		<div class="classified-frame" style="width:100%; max-width:380px; margin:0 auto;">
 			<div style="font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--cyan-dim); margin-bottom:16px; text-align:center;">// EXFILTRATE POSITION</div>
-			<a id="sms_button" href="sms:?body=HELLO" class="button button-fill button-large external" style="margin-bottom:10px; width:100%;">SMS BURST</a>
-			<a id="mail_button" href="#" target="_blank" class="button button-fill button-large external" style="width:100%;">ENCRYPTED MAIL</a>
+			<div style="text-align:center; margin-bottom:16px;">
+				<div id="share-qrcode" style="display:inline-block; padding:8px; background:#fff; border-radius:4px;"></div>
+			</div>
+			<div style="text-align:center; margin-bottom:16px;">
+				<a id="share-url-link" href="#" target="_blank" class="external" style="font-family:var(--font-mono); font-size:11px; color:var(--cyan); word-break:break-all;"></a>
+			</div>
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		app.on('pageAfterIn', function(page) {
-			if( page.name !== 'share' ) return;
-			jQuery('#sms_button').attr('href', 'sms:?body=Position: https://maps.google.com/?daddr='+gps_lastposition_latitude+','+gps_lastposition_longitude+' accuracy: '+gps_lastposition_accuracy+'m');
-			jQuery('#mail_button').attr('href', 'mailto:?Subject=My%20GPS%20position%20'+gps_lastposition_date+'&body=Here%20https://maps.google.com/?daddr='+gps_lastposition_latitude+','+gps_lastposition_longitude+' accuracy: '+gps_lastposition_accuracy+' m.');
-		});
-	</script>
 </div>

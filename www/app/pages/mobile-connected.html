@@ -13,14 +13,4 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		app.on('pageAfterIn', function(page) {
-			if( page.name !== 'connected' ) return;
-			jQuery('#userlist-listview-id').html('');
-			if( geomap != null )
-			{
-				geomap.PrintUserlist('#userlist-listview-id');
-			}
-		});
-	</script>
 </div>

@@ -35,32 +35,4 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		app.on('pageAfterIn', function(page) {
-			if( page.name !== 'options' ) return;
-			jQuery('#slider-network-id').val( get_netdelay() );
-			jQuery('#flipsound-id').val( get_sound() );
-		});
-
-		app.on('pageBeforeOut', function(page) {
-			if( page.name !== 'options' ) return;
-
-			var netdelay = jQuery('#slider-network-id').val();
-			var sound = jQuery('#flipsound-id').val();
-
-			if( netdelay < 10 ) netdelay = 10;
-
-			set_netdelay(netdelay);
-			if( geomap != null ) geomap.SetNetworkDelay(netdelay);
-
-			set_sound(sound);
-			GLOBAL_PLAY_SOUNDS = sound;
-			if( geomap != null ) geomap.SetSoundsOffOn(sound);
-
-			if( GLOBAL_PLAY_SOUNDS == 'on' )
-			{
-				soundManager.play('player_dong_id');
-			}
-		});
-	</script>
 </div>

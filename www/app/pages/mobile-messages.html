@@ -20,7 +20,7 @@
 					</li>
 				</ul>
 			</div>
-			<a href="#" class="button button-fill color-green back" id="submit_message-id" style="margin-top:12px; width:100%;">TRANSMIT</a>
+			<a href="#" class="button button-fill color-green" id="submit_message-id" style="margin-top:12px; width:100%;">TRANSMIT</a>
 		</div>
 
 		<div class="block">
@@ -34,27 +34,4 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		jQuery(document).off('click', '#submit_message-id').on('click', '#submit_message-id', function() {
-			var message = jQuery('#text-id').val();
-			SendMessage(message);
-			jQuery('#text-id').val('');
-		});
-
-		jQuery(document).off('click', '#button-hello-id').on('click', '#button-hello-id', function() {
-			SendMessage('Bonjour à tous.');
-		});
-
-		jQuery(document).off('click', '#button-busy-id').on('click', '#button-busy-id', function() {
-			SendMessage('Je suis occupé.');
-		});
-
-		jQuery(document).off('click', '#button-later-id').on('click', '#button-later-id', function() {
-			SendMessage('Je reviens plus tard.');
-		});
-
-		jQuery(document).off('click', '#button-bye-id').on('click', '#button-bye-id', function() {
-			SendMessage('au revoir.');
-		});
-	</script>
 </div>

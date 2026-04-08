@@ -15,20 +15,4 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		jQuery(document).off('click', '#tests-play-sound-id').on('click', '#tests-play-sound-id', function() {
-			soundManager.play('player_digital_beep_id');
-			jQuery('#debug-play-message-id').html('OGG // OK');
-		});
-
-		jQuery(document).off('click', '#tests-play-sound-id-wav').on('click', '#tests-play-sound-id-wav', function() {
-			soundManager.play('player_digital_beep_id_wav');
-			jQuery('#debug-play-message-id').html('WAV // OK');
-		});
-
-		jQuery(document).off('click', '#tests-play-sound-id-mp3').on('click', '#tests-play-sound-id-mp3', function() {
-			soundManager.play('player_digital_beep_id_mp3');
-			jQuery('#debug-play-message-id').html('MP3 // OK');
-		});
-	</script>
 </div>

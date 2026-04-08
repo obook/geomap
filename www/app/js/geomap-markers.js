@@ -1049,7 +1049,11 @@ var accuracy_layer = null;
 				
 				console.log('[GeoMap] New message: ' + $("<div/>").html(current_message).text());
 				
-				jQuery('#messages_id').html(current_message);
+				var now = new Date();
+				var hh = ('0'+now.getHours()).slice(-2);
+				var mm = ('0'+now.getMinutes()).slice(-2);
+				var ss = ('0'+now.getSeconds()).slice(-2);
+				jQuery('#messages_id').html('<div style="font-size:9px;opacity:0.5;">' + hh+':'+mm+':'+ss + '</div>' + current_message);
 				jQuery('#messages_toolbar').show(1000);
 				/* toast(current_message); */
 					

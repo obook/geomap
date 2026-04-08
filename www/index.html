@@ -238,6 +238,9 @@
 	<!-- Sound Manager -->
 	<script type="text/javascript" charset="utf-8" src="vendor/soundmanager/script/soundmanager2.js"></script>
 
+	<!-- QR Code -->
+	<script type="text/javascript" src="vendor/qrcode.min.js"></script>
+
 	<!-- Framework7 -->
 	<script src="vendor/framework7/framework7-bundle.min.js"></script>
 
@@ -334,6 +337,17 @@
 			init: function() {
 				console.log('Framework7 initialized');
 				get_storage();
+				/* Check URL parameters ?server=&channel= */
+				var params = new URLSearchParams(window.location.search);
+				var urlServer = params.get('server');
+				var urlChannel = params.get('channel');
+				if(urlServer) {
+					set_server(urlServer);
+					GLOBAL_SERVER = urlServer;
+				}
+				if(urlChannel) {
+					set_channel(urlChannel);
+				}
 				jQuery('#username-id').val( get_username() );
 				jQuery('#select-choice-mission-id').val( get_channel() );
 				var sv = get_server();
@@ -472,6 +486,78 @@
 	jQuery(document).on('click', '#btn-users', function() { ZoomToFitAllMarkers(); });
 	jQuery(document).on('click', '#button_GPS', function() { ZoomToUserMarker(); });
 	jQuery(document).on('click', '#button_network', function() { CleanUpMessage(); });
+
+	/* Message actions */
+	jQuery(document).on('click', '#submit_message-id', function() {
+		var message = jQuery('#text-id').val();
+		if(message != '') { SendMessage(message); jQuery('#text-id').val(''); }
+		app.views.main.router.back('/map/', { force: true });
+	});
+	jQuery(document).on('click', '#button-hello-id', function() { SendMessage('Bonjour à tous.'); });
+	jQuery(document).on('click', '#button-busy-id', function() { SendMessage('Je suis occupé.'); });
+	jQuery(document).on('click', '#button-later-id', function() { SendMessage('Je reviens plus tard.'); });
+	jQuery(document).on('click', '#button-bye-id', function() { SendMessage('au revoir.'); });
+
+	/* Field agents (connected users list) */
+	app.on('pageAfterIn', function(page) {
+		if( page.name !== 'connected' ) return;
+		jQuery('#userlist-listview-id').html('');
+		if( geomap != null ) geomap.PrintUserlist('#userlist-listview-id');
+	});
+
+	/* Options page */
+	app.on('pageAfterIn', function(page) {
+		if( page.name !== 'options' ) return;
+		jQuery('#slider-network-id').val( get_netdelay() );
+		jQuery('#flipsound-id').val( get_sound() );
+	});
+	app.on('pageBeforeOut', function(page) {
+		if( page.name !== 'options' ) return;
+		var netdelay = jQuery('#slider-network-id').val();
+		var sound = jQuery('#flipsound-id').val();
+		if( netdelay < 10 ) netdelay = 10;
+		set_netdelay(netdelay);
+		if( geomap != null ) geomap.SetNetworkDelay(netdelay);
+		set_sound(sound);
+		GLOBAL_PLAY_SOUNDS = sound;
+		if( geomap != null ) geomap.SetSoundsOffOn(sound);
+		if( GLOBAL_PLAY_SOUNDS == 'on' ) soundManager.play('player_dong_id');
+	});
+
+	/* Share coords page */
+	app.on('pageAfterIn', function(page) {
+		if( page.name !== 'share' ) return;
+		var sv = get_server();
+		var ch = get_channel();
+		var url = window.location.origin + window.location.pathname;
+		var sep = '?';
+		if(sv && sv !== '.') { url += sep + 'server=' + encodeURIComponent(sv); sep = '&'; }
+		if(ch) { url += sep + 'channel=' + encodeURIComponent(ch); }
+		jQuery('#share-url-link').attr('href', url).text(url);
+		jQuery('#share-qrcode').empty();
+		new QRCode(document.getElementById('share-qrcode'), {
+			text: url,
+			width: 200,
+			height: 200,
+			colorDark: '#000000',
+			colorLight: '#ffffff',
+			correctLevel: QRCode.CorrectLevel.M
+		});
+	});
+
+	/* Diagnostics page */
+	jQuery(document).on('click', '#tests-play-sound-id', function() {
+		soundManager.play('player_digital_beep_id');
+		jQuery('#debug-play-message-id').html('OGG // OK');
+	});
+	jQuery(document).on('click', '#tests-play-sound-id-wav', function() {
+		soundManager.play('player_digital_beep_id_wav');
+		jQuery('#debug-play-message-id').html('WAV // OK');
+	});
+	jQuery(document).on('click', '#tests-play-sound-id-mp3', function() {
+		soundManager.play('player_digital_beep_id_mp3');
+		jQuery('#debug-play-message-id').html('MP3 // OK');
+	});
 
 	/* Abort mission — stop map and return to home */
 	jQuery(document).on('click', '#quit_map-id', function(e) {
