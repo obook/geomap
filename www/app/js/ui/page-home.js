@@ -54,6 +54,14 @@ jQuery(document).on('click', '#random-callsign-id', function (e) {
 	validateEngageButton();
 });
 
+/* Initial pass: the inline home page may have fired pageInit during the
+ * Framework7 constructor in app-init.js, before this file registered
+ * its handler. The Framework7 init callback already populated the
+ * fields from localStorage and URL parameters, so all we still owe is
+ * a single validation pass to refresh the disabled state of the
+ * Connect button now that validateEngageButton is reachable. */
+validateEngageButton();
+
 jQuery(document).on('click', '#submit-id', function () {
 	username = jQuery('#username-id').val().trim();
 	team = jQuery('#select-choice-mission-id').val().trim();
