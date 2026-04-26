@@ -18,7 +18,7 @@ The application follows a zero-footprint philosophy: no tracking, no persistent 
 
 - **Real-time geolocation** - positions update automatically via the browser Geolocation API
 - **Channel-based groups** - users on the same channel see each other; no cross-channel visibility
-- **Interactive map** - powered by Leaflet with six tile layers (OpenStreetMap, OpenTopoMap, Esri Satellite, CartoDB Dark, CartoDB Light, Stamen Watercolor)
+- **Interactive map** - powered by Leaflet with five tile layers (OpenStreetMap, OpenTopoMap, Esri Satellite, CartoDB Dark, CartoDB Light)
 - **Messaging** - short text messages shared between channel members
 - **Sound notifications** - audio alerts for new users joining and incoming messages
 - **Marker clustering** - overlapping markers are grouped for readability
@@ -113,7 +113,6 @@ Point `GLOBAL_SERVER` in the JavaScript to the URL where your PHP server is host
 | Hybrid (satellite) | Esri World Imagery |
 | Night | CartoDB Dark Matter |
 | Tactical | CartoDB Positron |
-| Watercolor | Stamen (via Stadia Maps) |
 
 ## Deployment
 

@@ -40,7 +40,6 @@ var GEOMAP_I18N = {
 			terrain: 'Terrain View',
 			tactical: 'Tactical View',
 			night: 'Night View',
-			watercolor: 'Watercolor View',
 			markers: 'Markers',
 			accuracy: 'Accuracy',
 			tools: 'Tools'
@@ -155,7 +154,6 @@ var GEOMAP_I18N = {
 			terrain: 'Vue terrain',
 			tactical: 'Vue tactique',
 			night: 'Vue nuit',
-			watercolor: 'Vue aquarelle',
 			markers: 'Marqueurs',
 			accuracy: 'Precision',
 			tools: 'Outils'

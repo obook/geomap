@@ -115,4 +115,4 @@ URL parameters `?server=<url>&channel=<code>` are read on init and override the 
 
 ## Tile providers
 
-Six base layers are available in `Class_GeoMap`: OpenStreetMap, OpenTopoMap, Esri World Imagery, CartoDB Dark Matter, CartoDB Positron, and Stadia Maps (Stamen Watercolor). Most are public tile servers that do not require API keys; Stadia may require attribution or a key for production.
+Five base layers are available in `Class_GeoMap`: OpenStreetMap, OpenTopoMap, Esri World Imagery, CartoDB Dark Matter, and CartoDB Positron. All are public tile servers that do not require API keys.

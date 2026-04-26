@@ -30,7 +30,7 @@ Two interchangeable implementations exposing the same five endpoints:
 - **Front-end origin:** `https://obook.github.io/geomap/` (HTTPS enforced by GitHub Pages)
 - **Back-end origin:** user-configured at runtime (in-app `SERVER` field, `?server=` URL parameter, or `localStorage`); not hardcoded in the repository
 - **CORS:** all PHP endpoints set `Access-Control-Allow-Origin: *` to allow the GitHub Pages front-end to reach a back-end on a different origin
-- **Tile providers:** OpenStreetMap, OpenTopoMap, Esri World Imagery, CartoDB, Stadia Maps. Each tile fetch leaks the user's IP to the provider; this is inherent to web map rendering and is documented in the user-facing UI (layer attribution)
+- **Tile providers:** OpenStreetMap, OpenTopoMap, Esri World Imagery, CartoDB. Each tile fetch leaks the user's IP to the provider; this is inherent to web map rendering and is documented in the user-facing UI (layer attribution)
 - **No third-party telemetry, no analytics, no CDN library load**
 
 ### Storage

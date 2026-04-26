@@ -71,7 +71,6 @@ var airbot = null;
 		var hybrid = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; Esri'});
 		var midnight = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {attribution: '&copy; CartoDB'});
 		var tactical = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; CartoDB'});
-		var wc = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg', {attribution: 'Map tiles by <a href="https://stamen.com">Stamen Design</a>, hosted by <a href="https://stadiamaps.com">Stadia Maps</a>. Data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors', minZoom: 1, maxZoom: 16});
 
 		/* Test */
 		var map_style =
@@ -113,7 +112,6 @@ var airbot = null;
 		baseMaps[t('layers.terrain')] = terrain;
 		baseMaps[t('layers.tactical')] = tactical;
 		baseMaps[t('layers.night')] = midnight;
-		baseMaps[t('layers.watercolor')] = wc;
 
 		var overlayMaps = {};
 		overlayMaps[t('layers.markers')] = markers_layer;
