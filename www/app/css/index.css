@@ -1,11 +1,11 @@
 @charset "utf-8";
 /*
- * index.css
- * Description: Core layout styles for GeoMap-Air — map canvas,
- *              Leaflet control overrides, and UI widgets.
- * Author: O. Booklage
+ * Project: GeoMap
+ * File: index.css
+ * Description: Core layout styles - map canvas, Leaflet control overrides, and UI widgets
+ * Author: Olivier Booklage
+ * License: GPL v3
  * Date: April 2026
- * License: MIT
  */
 
 /* Screen orientation changed */

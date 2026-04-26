@@ -5,13 +5,5 @@ server-sql/geomap-server-config.php
 # Runtime JSON data (server-php)
 server-php/data/*.json
 
-# OS files
-.DS_Store
-Thumbs.db
-*~
-*.swp
-
 # IDE
 .vscode/
-.idea/
-*.sublime-*

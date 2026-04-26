@@ -1,4 +1,4 @@
-# Security sheet - GeoMap-Air
+# Security sheet - GeoMap
 
 **Last updated:** 2026-04-26
 **Reference framework:** ANSSI-PA-073 (Secure development, 24/03/2022), OWASP Top 10 (2021)

@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: index.js
  * Description: Home page entry script (sound init, storage retrieval)
  * Author: Olivier Booklage

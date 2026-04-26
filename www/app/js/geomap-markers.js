@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-markers.js
  * Description: Marker rendering and updates (Class_AirMarkers)
  * Author: Olivier Booklage

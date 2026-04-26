@@ -1,6 +1,6 @@
 <?php
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-config-sample.php
  * Description: Data directory configuration template
  * Author: Olivier Booklage

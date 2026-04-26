@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-soundplayer.js
  * Description: SoundManager2 playback wrapper
  * Author: Olivier Booklage

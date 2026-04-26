@@ -1,6 +1,6 @@
 <?php
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-message-write.php
  * Description: Persist a chat message to JSON file
  * Author: Olivier Booklage

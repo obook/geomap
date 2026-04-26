@@ -1,6 +1,6 @@
 <?php
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: index.php
  * Description: Legacy admin panel
  * Author: Olivier Booklage
@@ -13,7 +13,7 @@
 	echo "<!DOCTYPE html>\n";
 	echo "<!--\n\n";
 	echo "/*\n";
-	echo "* GMA - GeoMap-Air (c) Olivier Booklage ".date("Y")." obooklage@free.fr all rights reserved.\n";
+	echo "* GMA - GeoMap (c) Olivier Booklage ".date("Y")." obooklage@free.fr all rights reserved.\n";
 	echo "* Licensed under the GNU General Public License v3.\n";
 	echo "*/\n\n-->\n";
 
@@ -64,7 +64,7 @@
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="index.css" />
 
-<title>GeoMap-Air © Manager</title>
+<title>GeoMap © Manager</title>
 	
 </head>
 <body>

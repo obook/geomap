@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-gps.js
  * Description: GPS geolocation wrapper (Class_GPS)
  * Author: Olivier Booklage

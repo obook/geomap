@@ -3,7 +3,7 @@
 	require('geomap-server-config.php');
 
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-stats.php
  * Description: Usage statistics endpoint
  * Author: Olivier Booklage

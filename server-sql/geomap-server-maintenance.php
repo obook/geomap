@@ -3,7 +3,7 @@
 require("geomap-server-config.php");
 
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-maintenance.php
  * Description: Cleanup inactive sessions and old messages (cron)
  * Author: Olivier Booklage

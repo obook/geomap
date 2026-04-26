@@ -1,6 +1,6 @@
 <?php
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-logout.php
  * Description: Mark a user inactive
  * Author: Olivier Booklage

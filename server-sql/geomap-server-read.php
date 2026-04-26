@@ -3,7 +3,7 @@
 require("geomap-server-config.php");
 
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-read.php
  * Description: Read users and messages from MySQL
  * Author: Olivier Booklage

@@ -3,7 +3,7 @@
 require("geomap-server-config.php");
 
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-message-write.php
  * Description: Persist a chat message to MySQL
  * Author: Olivier Booklage

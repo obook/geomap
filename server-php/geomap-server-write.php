@@ -1,6 +1,6 @@
 <?php
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-write.php
  * Description: Persist user position to JSON file
  * Author: Olivier Booklage

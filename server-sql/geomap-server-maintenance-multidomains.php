@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-maintenance-multidomains.php
  * Description: Multi-domain maintenance variant
  * Author: Olivier Booklage

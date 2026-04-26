@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap.js
  * Description: Module loader (document.write of all geomap-*.js scripts)
  * Author: Olivier Booklage

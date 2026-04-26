@@ -1,6 +1,6 @@
 <?php
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-read.php
  * Description: Read users and messages from JSON files
  * Author: Olivier Booklage

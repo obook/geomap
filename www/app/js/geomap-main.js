@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-main.js
  * Description: Main map controller (Class_GeoMap)
  * Author: Olivier Booklage

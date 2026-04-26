@@ -1,6 +1,6 @@
 <?php
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-json-storage.php
  * Description: JSON file storage helpers (atomic writes, sanitisation)
  * Author: Olivier Booklage

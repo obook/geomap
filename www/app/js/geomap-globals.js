@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-globals.js
  * Description: Global constants and timing knobs
  * Author: Olivier Booklage

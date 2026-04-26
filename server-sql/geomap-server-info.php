@@ -3,7 +3,7 @@
 require("geomap-server-config.php");
 
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-info.php
  * Description: Server diagnostics endpoint
  * Author: Olivier Booklage

@@ -1,7 +1,7 @@
-# GeoMap-Air
+# GeoMap
 
 <p align="center">
-  <img src="media/20260426_060042.png" alt="GeoMap-Air tactical map view with markers on an interactive Dark Ops themed map" width="480" />
+  <img src="media/20260426_060042.png" alt="GeoMap tactical map view with markers on an interactive Dark Ops themed map" width="480" />
 </p>
 
 Anonymous, real-time geolocation sharing on an interactive map. Join a channel, share your position, exchange messages - no account required, no data stored.
@@ -10,7 +10,7 @@ Anonymous, real-time geolocation sharing on an interactive map. Join a channel, 
 
 ## Overview
 
-GeoMap-Air lets users share their GPS position in real time with other participants on the same channel. Each session is identified by a callsign (username) and a numeric channel code (1111-99999). All users on the same channel see each other on an interactive map and can exchange short messages.
+GeoMap lets users share their GPS position in real time with other participants on the same channel. Each session is identified by a callsign (username) and a numeric channel code (1111-99999). All users on the same channel see each other on an interactive map and can exchange short messages.
 
 The application follows a zero-footprint philosophy: no tracking, no persistent records, no user accounts.
 

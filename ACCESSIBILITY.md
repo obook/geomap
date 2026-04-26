@@ -1,10 +1,10 @@
-# Accessibility statement - GeoMap-Air
+# Accessibility statement - GeoMap
 
 **Last updated:** 2026-04-26
 
 ## Conformance status
 
-GeoMap-Air is in **partial conformance** with the RGAA 4.1 (Referentiel General d'Amelioration de l'Accessibilite, version 4.1), level AA. The application is a real-time tactical map intended for mobile use; some criteria are inherently constrained by the interactive map experience and are documented below as accepted gaps.
+GeoMap is in **partial conformance** with the RGAA 4.1 (Referentiel General d'Amelioration de l'Accessibilite, version 4.1), level AA. The application is a real-time tactical map intended for mobile use; some criteria are inherently constrained by the interactive map experience and are documented below as accepted gaps.
 
 ## Technologies in use
 

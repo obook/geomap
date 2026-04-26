@@ -4,7 +4,7 @@ header("Refresh: 10; url=/index.php#bye"); /* in case of database pb */
 require("geomap-server-config.php");
 
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-logout.php
  * Description: Mark a user inactive
  * Author: Olivier Booklage

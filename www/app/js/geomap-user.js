@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-user.js
  * Description: User session and server sync (Class_AirUser)
  * Author: Olivier Booklage

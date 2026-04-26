@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-storage.js
  * Description: localStorage persistence helpers (callsign, channel, server URL, user id, network delay, sound)
  * Author: Olivier Booklage

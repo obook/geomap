@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-javascript-tools.js
  * Description: Generic JavaScript utility helpers
  * Author: Olivier Booklage

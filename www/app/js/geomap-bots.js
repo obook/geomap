@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-bots.js
  * Description: Bot / automation support (Class_AirBot)
  * Author: Olivier Booklage

@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-i18n.js
  * Description: Lightweight i18n module (FR / EN) with localStorage override and DOM attribute scanning
  * Author: Olivier Booklage
@@ -64,8 +64,8 @@ var GEOMAP_I18N = {
 		about: {
 			title: 'CLASSIFIED',
 			briefing_label: '// BRIEFING DOCUMENT',
-			paragraph_1: 'GeoMap-Air is an anonymous geolocation service. Your position is shared with other agents on the same channel. No data is stored on the server side.',
-			paragraph_2: 'Zero tracking. Zero records. Zero footprint. GeoMap-Air is an open-source project available under GNU GPL v3.'
+			paragraph_1: 'GeoMap is an anonymous geolocation service. Your position is shared with other agents on the same channel. No data is stored on the server side.',
+			paragraph_2: 'Zero tracking. Zero records. Zero footprint. GeoMap is an open-source project available under GNU GPL v3.'
 		},
 		menu: {
 			title: 'OPERATIONS',
@@ -112,7 +112,7 @@ var GEOMAP_I18N = {
 			label: '// ACTIVE OPERATIVES'
 		},
 		help: {
-			title: 'GEOMAP-AIR HELP',
+			title: 'GEOMAP HELP',
 			sections: [
 				{h: 'WHAT IS THIS', p: 'Anonymous real-time geolocation sharing. Your GPS position is broadcast to other users on the same channel. No account, no persistent logs.'},
 				{h: 'GETTING STARTED', p: 'Enter a callsign and a channel code on the home page, then ENGAGE. Anyone using the same channel code can see you on the map.'},
@@ -179,8 +179,8 @@ var GEOMAP_I18N = {
 		about: {
 			title: 'CLASSIFIE',
 			briefing_label: '// DOCUMENT DE BRIEFING',
-			paragraph_1: 'GeoMap-Air est un service de geolocalisation anonyme. Votre position est partagee avec les autres agents sur le meme canal. Aucune donnee n\'est conservee cote serveur.',
-			paragraph_2: 'Zero suivi. Zero enregistrement. Zero empreinte. GeoMap-Air est un projet open source disponible sous licence GNU GPL v3.'
+			paragraph_1: 'GeoMap est un service de geolocalisation anonyme. Votre position est partagee avec les autres agents sur le meme canal. Aucune donnee n\'est conservee cote serveur.',
+			paragraph_2: 'Zero suivi. Zero enregistrement. Zero empreinte. GeoMap est un projet open source disponible sous licence GNU GPL v3.'
 		},
 		menu: {
 			title: 'OPERATIONS',
@@ -227,7 +227,7 @@ var GEOMAP_I18N = {
 			label: '// AGENTS ACTIFS'
 		},
 		help: {
-			title: 'AIDE GEOMAP-AIR',
+			title: 'AIDE GEOMAP',
 			sections: [
 				{h: 'A QUOI CA SERT', p: 'Partage anonyme de geolocalisation en temps reel. Votre position GPS est diffusee aux autres utilisateurs du meme canal. Pas de compte, pas de journal persistant.'},
 				{h: 'POUR COMMENCER', p: 'Entrez un indicatif et un code de canal sur la page d\'accueil, puis ENGAGER. Toute personne utilisant le meme code de canal vous voit sur la carte.'},

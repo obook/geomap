@@ -3,7 +3,7 @@
 require("geomap-server-config.php");
 
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-write.php
  * Description: Persist user position to MySQL
  * Author: Olivier Booklage

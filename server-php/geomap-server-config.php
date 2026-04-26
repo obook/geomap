@@ -1,6 +1,6 @@
 <?php
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-server-config.php
  * Description: JSON file-based server configuration
  * Author: Olivier Booklage

@@ -1,5 +1,5 @@
 /*
- * Project: GeoMap-Air
+ * Project: GeoMap
  * File: geomap-latlngctrl.js
  * Description: Latitude / longitude coordinate display control
  * Author: Olivier Booklage
