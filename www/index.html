@@ -9,25 +9,9 @@
 	<link rel="icon" type="image/x-icon" href="favicon.ico" />
 	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
 
-	<!-- Theme (split by concern, each file < 200 lines) -->
-	<link rel="stylesheet" href="app/css/theme/variables.css" />
-	<link rel="stylesheet" href="app/css/theme/base.css" />
-	<link rel="stylesheet" href="app/css/theme/page-navbar.css" />
-	<link rel="stylesheet" href="app/css/theme/toolbar.css" />
-	<link rel="stylesheet" href="app/css/theme/buttons.css" />
-	<link rel="stylesheet" href="app/css/theme/forms.css" />
-	<link rel="stylesheet" href="app/css/theme/popup.css" />
-	<link rel="stylesheet" href="app/css/theme/data-display.css" />
-	<link rel="stylesheet" href="app/css/theme/leaflet.css" />
-	<link rel="stylesheet" href="app/css/theme/hud-icons.css" />
-
-	<!-- Framework7 -->
+	<!-- Vendor stylesheets first so the theme can override them -->
 	<link rel="stylesheet" href="vendor/framework7/framework7-bundle.min.css" />
-
-	<!-- Font Awesome -->
 	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
-
-	<!-- Leaflet -->
 	<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
 	<link rel="stylesheet" href="vendor/leaflet/leaflet.label.css" />
 	<link rel="stylesheet" href="vendor/leaflet/leaflet.awesome-markers.css">
@@ -44,7 +28,18 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<link rel="apple-touch-icon" type='image/png' href="app/images/geomap.png">
 
-	<!-- Layout -->
+	<!-- Theme (split by concern, each file < 200 lines). Loaded AFTER
+	     vendor sheets so its rules win on the cascade. -->
+	<link rel="stylesheet" href="app/css/theme/variables.css" />
+	<link rel="stylesheet" href="app/css/theme/base.css" />
+	<link rel="stylesheet" href="app/css/theme/page-navbar.css" />
+	<link rel="stylesheet" href="app/css/theme/toolbar.css" />
+	<link rel="stylesheet" href="app/css/theme/buttons.css" />
+	<link rel="stylesheet" href="app/css/theme/forms.css" />
+	<link rel="stylesheet" href="app/css/theme/popup.css" />
+	<link rel="stylesheet" href="app/css/theme/data-display.css" />
+	<link rel="stylesheet" href="app/css/theme/leaflet.css" />
+	<link rel="stylesheet" href="app/css/theme/hud-icons.css" />
 	<link rel="stylesheet" href="app/css/layout.css" />
 
 	<title>GeoMap</title>
