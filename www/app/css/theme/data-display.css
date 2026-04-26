@@ -55,20 +55,22 @@
 	font-family: var(--font-sans);
 }
 
-/* Message overlay shown on top of the map */
+/* Message overlay shown on top of the map. Position is offset by the
+ * navbar height so the pill sits below the channel/state header. The
+ * empty inner span renders nothing, so an idle toolbar takes no
+ * visible space even though it is in the document flow. Visibility is
+ * driven by jQuery .show / .hide animations from the markers module. */
 #messages_toolbar {
 	position: absolute;
 	left: 50%;
-	top: 12px;
+	top: calc(var(--f7-navbar-height, 48px) + 12px);
 	transform: translateX(-50%);
 	z-index: 999;
 	max-width: calc(100% - 24px);
-	display: none;
 }
 
-#messages_toolbar:not(:empty),
-#messages_toolbar[style*="display: block"] {
-	display: block;
+#messages_id:empty {
+	display: none;
 }
 
 #messages_id {

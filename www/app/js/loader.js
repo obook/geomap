@@ -22,3 +22,14 @@ document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/m
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/audio/sound-player.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/latlng-control.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/tools/tools.js"></script>');
+
+/* UI layer: home.js sets up SoundManager and reads the storage globals,
+ * then app-init.js creates the Framework7 instance and the routes. The
+ * page-* and helper files register handlers that depend on app being
+ * defined, so they load last. */
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/ui/home.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/ui/app-init.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/ui/helpers.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/ui/page-home.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/ui/page-map.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/ui/page-others.js"></script>');
