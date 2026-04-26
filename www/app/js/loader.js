@@ -15,7 +15,11 @@ document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/i18n/dict-fr.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/i18n/i18n.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/storage.js"></script>');
-document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/main.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/main/main.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/main/layers.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/main/timer.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/main/state.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/main/accessors.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/gps/gps.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/gps/handlers.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/gps/state-label.js"></script>');
