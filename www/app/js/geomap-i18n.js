@@ -109,7 +109,12 @@ var GEOMAP_I18N = {
 		},
 		connected: {
 			title: 'Connected users',
-			label: 'Active right now'
+			label: 'Active right now',
+			col_user: 'USER',
+			col_distance: 'DISTANCE',
+			col_acc: 'ACC.',
+			col_speed: 'SPEED',
+			col_time: 'TIME'
 		},
 		help: {
 			title: 'GeoMap help',
@@ -131,8 +136,8 @@ var GEOMAP_I18N = {
 			close: 'Fermer'
 		},
 		home: {
-			title_sub: 'Partage de position en temps reel',
-			intel_link: 'A propos',
+			title_sub: 'Partage de position en temps réel',
+			intel_link: 'À propos',
 			callsign_label: 'Nom d\'utilisateur',
 			callsign_placeholder: 'Choisir un nom',
 			channel_label: 'Canal',
@@ -167,31 +172,31 @@ var GEOMAP_I18N = {
 			lock: 'GPS LOCK',
 			ok: 'GPS OK',
 			weak: 'GPS FAIBLE',
-			denied: 'GPS REFUSE',
+			denied: 'GPS REFUSÉ',
 			unavail: 'GPS INDISPO',
 			timeout: 'GPS TIMEOUT',
 			error: 'GPS ERREUR',
-			toast_denied: 'Autorisation de localisation refusee. Activez les services de localisation pour ce site dans votre navigateur ou les reglages du systeme.',
+			toast_denied: 'Autorisation de localisation refusée. Activez les services de localisation pour ce site dans votre navigateur ou les réglages du système.',
 			toast_unavail: 'Localisation indisponible. Aucun signal.',
-			toast_timeout: 'Delai de localisation depasse. Essayez de vous placer a ciel ouvert.',
+			toast_timeout: 'Délai de localisation dépassé. Essayez de vous placer à ciel ouvert.',
 			toast_error: 'Erreur de localisation : ',
 			toast_watch_error: 'Erreur de suivi : ',
 			toast_unknown: 'inconnue'
 		},
 		about: {
-			title: 'A propos',
-			briefing_label: 'A propos de l\'application',
-			paragraph_1: 'GeoMap est un service de partage de position anonyme. Votre position est partagee en temps reel avec les autres utilisateurs du meme canal. Aucune donnee n\'est conservee cote serveur.',
+			title: 'À propos',
+			briefing_label: 'À propos de l\'application',
+			paragraph_1: 'GeoMap est un service de partage de position anonyme. Votre position est partagée en temps réel avec les autres utilisateurs du même canal. Aucune donnée n\'est conservée côté serveur.',
 			paragraph_2: 'Pas de suivi. Pas d\'enregistrement. Pas de compte. GeoMap est un logiciel libre sous licence GNU GPL v3.'
 		},
 		menu: {
 			title: 'Menu',
 			select_label: 'Choisir une action',
-			btn_options: 'Reglages',
+			btn_options: 'Réglages',
 			btn_messages: 'Envoyer un message',
-			btn_agents: 'Utilisateurs connectes',
+			btn_agents: 'Utilisateurs connectés',
 			btn_share: 'Partager',
-			btn_abort: 'Se deconnecter'
+			btn_abort: 'Se déconnecter'
 		},
 		messages: {
 			title: 'Envoyer un message',
@@ -199,45 +204,50 @@ var GEOMAP_I18N = {
 			input_placeholder: 'Saisir un message court',
 			transmit: 'Envoyer',
 			cleared_toast: 'MESSAGES EFFACÉS',
-			quick_codes_label: 'Reponses rapides',
+			quick_codes_label: 'Réponses rapides',
 			quick_hello: 'Salut',
-			quick_busy: 'Occupe',
+			quick_busy: 'Occupé',
 			quick_later: 'Je reviens',
 			quick_bye: 'Au revoir',
-			quick_hello_msg: 'Bonjour a tous.',
-			quick_busy_msg: 'Je suis occupe.',
+			quick_hello_msg: 'Bonjour à tous.',
+			quick_busy_msg: 'Je suis occupé.',
 			quick_later_msg: 'Je reviens plus tard.',
 			quick_bye_msg: 'Au revoir.'
 		},
 		options: {
-			title: 'Reglages',
-			params_label: 'Preferences',
-			net_delay: 'Intervalle reseau',
+			title: 'Réglages',
+			params_label: 'Préférences',
+			net_delay: 'Intervalle réseau',
 			audio: 'Son',
-			silent: 'Coupe',
+			silent: 'Coupé',
 			active: 'Actif',
 			language: 'Langue',
 			lang_auto: 'Auto',
 			lang_en: 'English',
-			lang_fr: 'Francais'
+			lang_fr: 'Français'
 		},
 		share: {
 			title: 'Partager',
 			label: 'Inviter d\'autres personnes sur ce canal'
 		},
 		connected: {
-			title: 'Utilisateurs connectes',
-			label: 'Actifs en ce moment'
+			title: 'Utilisateurs connectés',
+			label: 'Actifs en ce moment',
+			col_user: 'NOM',
+			col_distance: 'DISTANCE',
+			col_acc: 'PRÉC.',
+			col_speed: 'VITESSE',
+			col_time: 'DEPUIS'
 		},
 		help: {
 			title: 'Aide GeoMap',
 			sections: [
-				{h: 'A quoi ca sert', p: 'GeoMap partage votre position en temps reel avec les autres utilisateurs du meme canal. Aucun compte requis et rien n\'est conserve apres l\'arret de l\'application.'},
-				{h: 'Pour commencer', p: 'Sur la page d\'accueil, saisissez un nom et un code de canal, puis touchez Se connecter. Toute personne utilisant le meme code voit votre position sur la carte.'},
-				{h: 'En-tete de carte', p: 'En haut a gauche : le canal et votre nom. Au centre : etat GPS et qualite du signal. En haut a droite : nombre d\'utilisateurs connectes, boutons de centrage, et bouton d\'effacement des messages.'},
-				{h: 'Marqueurs', p: 'Chaque marqueur represente un autre utilisateur du canal. Touchez un marqueur pour voir le nom, la distance, la precision, et le dernier message envoye.'},
-				{h: 'Confidentialite', p: 'Aucun compte n\'est cree. Les enregistrements sont supprimes une heure apres l\'arret. Le code de canal est le seul identifiant de groupe ; choisissez-en un difficile a deviner pour un groupe prive.'},
-				{h: 'Licence', p: 'Logiciel libre sous licence GNU GPL v3. Code source sur le depot du projet.'}
+				{h: 'À quoi ça sert', p: 'GeoMap partage votre position en temps réel avec les autres utilisateurs du même canal. Aucun compte requis et rien n\'est conservé après l\'arrêt de l\'application.'},
+				{h: 'Pour commencer', p: 'Sur la page d\'accueil, saisissez un nom et un code de canal, puis touchez Se connecter. Toute personne utilisant le même code voit votre position sur la carte.'},
+				{h: 'En-tête de carte', p: 'En haut à gauche : le canal et votre nom. Au centre : état GPS et qualité du signal. En haut à droite : nombre d\'utilisateurs connectés, boutons de centrage, et bouton d\'effacement des messages.'},
+				{h: 'Marqueurs', p: 'Chaque marqueur représente un autre utilisateur du canal. Touchez un marqueur pour voir le nom, la distance, la précision, et le dernier message envoyé.'},
+				{h: 'Confidentialité', p: 'Aucun compte n\'est créé. Les enregistrements sont supprimés une heure après l\'arrêt. Le code de canal est le seul identifiant de groupe ; choisissez-en un difficile à deviner pour un groupe privé.'},
+				{h: 'Licence', p: 'Logiciel libre sous licence GNU GPL v3. Code source sur le dépôt du projet.'}
 			]
 		}
 	}

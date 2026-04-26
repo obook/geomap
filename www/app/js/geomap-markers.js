@@ -513,11 +513,11 @@ var accuracy_layer = null;
 		html = "<table id='table-column-toggle' class='data-table' style='width:100%;'>\
 		<thead>\
 		<tr>\
-		<th>USER</th>\
-		<th data-priority='1'>DISTANCE</th>\
-		<th data-priority='3'>ACC.</th>\
-		<th data-priority='4'>SPEED</th>\
-		<th data-priority='2'>TIME</th>\
+		<th>" + t('connected.col_user') + "</th>\
+		<th data-priority='1'>" + t('connected.col_distance') + "</th>\
+		<th data-priority='3'>" + t('connected.col_acc') + "</th>\
+		<th data-priority='4'>" + t('connected.col_speed') + "</th>\
+		<th data-priority='2'>" + t('connected.col_time') + "</th>\
 		</tr>\
 		</thead>\
 		<tbody>\
