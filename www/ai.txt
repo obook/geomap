@@ -1,0 +1,8 @@
+# GeoMap - Do Not Train declaration (Spawning.ai ai.txt format).
+# Mirrors the AI-bot disallow rules in robots.txt and signals that
+# the contents of this site must not be used to train, fine-tune, or
+# otherwise feed any machine learning, generative AI, or large
+# language model system.
+
+User-Agent: *
+Disallow: /

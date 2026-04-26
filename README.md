@@ -162,7 +162,6 @@ All third-party libraries are vendored locally under `www/vendor/`; no CDN is lo
 | SoundManager 2 | Audio playback | BSD 2-Clause | [schillmania.com/projects/soundmanager2](http://www.schillmania.com/projects/soundmanager2/) |
 | QRCode.js | QR code rendering | MIT | [github.com/davidshimjs/qrcodejs](https://github.com/davidshimjs/qrcodejs) |
 | Font Awesome 4 | Icon set | MIT (code), SIL OFL 1.1 (font) | [fontawesome.com](https://fontawesome.com/v4/) |
-| dateFormat 1.2.3 | Date formatting helper (embedded in `geomap-javascript-tools.js`) | MIT | [blog.stevenlevithan.com](https://blog.stevenlevithan.com/archives/date-time-format) |
 
 Map tiles are fetched at runtime from the providers listed in [Map layers](#map-layers); they are not part of this repository. Each provider has its own usage policy and attribution requirements which are surfaced in the Leaflet attribution control on the map.
 
