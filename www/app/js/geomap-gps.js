@@ -51,6 +51,7 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 30000, freq
 
 var first_fix_centered = false;
 var last_gps_error_shown = null;
+var gps_last_success_time = 0;
 
 function gps_show_toast(msg)
 {
@@ -159,6 +160,7 @@ function gps_clear_toast_state()
 		gps_lastposition_date = new Date();
 
 		console.log('[GeoMap] GPS fix: lat=' + gps_lastposition_latitude + ' lon=' + gps_lastposition_longitude + ' acc=' + gps_lastposition_accuracy + 'm');
+		gps_last_success_time = (new Date()).getTime();
 		gps_clear_toast_state();
 		private_center_on_first_fix();
 	}
@@ -182,6 +184,19 @@ function gps_clear_toast_state()
 	
 	function private_GetPosition_Error(error)
 	{
+		/* Suppress getCurrentPosition errors when watchPosition is still
+		 * delivering fresh fixes. The dual mechanism races: a periodic
+		 * getCurrentPosition timeout would otherwise overwrite the OK
+		 * status with TIMEOUT and stick the HUD on red until the next
+		 * full success, even though the live fix is good. */
+		if (gps_lastposition_status === STATE_POSITION_OK
+			&& gps_last_success_time
+			&& ((new Date()).getTime() - gps_last_success_time) < 60000)
+		{
+			console.warn('[GeoMap] Suppressed GPS error (watchPosition fresh): ' + error.message);
+			gps_lastposition_date = new Date();
+			return;
+		}
 		console.error('[GeoMap] GPS error: ' + error.message);
 		gps_lastposition_date = new Date();
 		var toast_msg = '';
@@ -222,6 +237,7 @@ function gps_clear_toast_state()
 		gps_lastposition_altitudeAccuracy = newposition.coords.altitudeAccuracy;
 		gps_lastposition_heading = newposition.coords.heading;
 		gps_lastposition_date = new Date();
+		gps_last_success_time = (new Date()).getTime();
 
 		gps_clear_toast_state();
 		private_center_on_first_fix();
@@ -229,6 +245,16 @@ function gps_clear_toast_state()
 
 	function private_watchPosition_Error(error)
 	{
+		/* Same race-suppression logic as private_GetPosition_Error: keep
+		 * the OK status when the live fix is still recent. */
+		if (gps_lastposition_status === STATE_POSITION_OK
+			&& gps_last_success_time
+			&& ((new Date()).getTime() - gps_last_success_time) < 60000)
+		{
+			console.warn('[GeoMap] Suppressed GPS watch error (recent fix): ' + error.message);
+			gps_lastposition_date = new Date();
+			return;
+		}
 		gps_lastposition_date = new Date();
 		var toast_msg = '';
 		switch(error.code)
