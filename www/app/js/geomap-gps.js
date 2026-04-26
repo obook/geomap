@@ -33,7 +33,6 @@ function Class_GPS(gmap,user_id,user_name)
 var guser_id = user_id;
 var guser_name = user_name;
 
-var GetPositionID = -1;
 var WatchPositionId = null;
 
 var shown_info_speed = false;
@@ -51,7 +50,6 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 30000, freq
 
 var first_fix_centered = false;
 var last_gps_error_shown = null;
-var gps_last_success_time = 0;
 
 function gps_show_toast(msg)
 {
@@ -96,48 +94,28 @@ function gps_clear_toast_state()
 	{
 		console.log('[GeoMap] GPS started: ' + user_name);
 
+		if (!navigator.geolocation)
+		{
+			console.warn('[GeoMap] Geolocation not supported');
+			gps_lastposition_status = STATE_POSITION_UNAVAILABLE;
+			return;
+		}
+
 		if( gps_lastposition_status != STATE_POSITION_OK )
 		{
 			gps_lastposition_status = STATE_POSITION_UNAVAILABLE;
 		}
-		private_getPosition();
-		GetPositionID = window.setInterval(private_timer, 1*1000);
+
+		/* One-shot initial fix to populate the position quickly. The
+		 * continuous watchPosition below then keeps the position fresh
+		 * on its own; no periodic getCurrentPosition is needed and would
+		 * only cause spurious timeouts on platforms without GPS hardware
+		 * (e.g. Chrome Linux relying on network-based geolocation). */
+		navigator.geolocation.getCurrentPosition(private_GetPosition_Success, private_GetPosition_Error, geoOptions);
 		WatchPositionId = navigator.geolocation.watchPosition(private_watchPosition_Success, private_watchPosition_Error, geoOptions);
-	
 	}
-	
-	/* Timer : get position and animate  */
-	
+
 	var toogle_animation = -1;
-
-	function private_timer()
-	{
-		if (!navigator.geolocation) {
-			console.warn('[GeoMap] Geolocation not supported');
-			return;
-		}
-
-		if( GetPositionID != -1 )
-		{
-			window.clearInterval(GetPositionID); /* DO NOT LOOP */
-			GetPositionID = -1;
-
-			private_getPosition();
-					
-			GetPositionID = window.setInterval(private_timer, GLOBAL_SERVER_PING*1000);					
-		}
-	}
-		
-	function private_getPosition()
-	{
-		// geo_position_js.getCurrentPosition(private_GetPosition_Success, private_GetPosition_Error, {maximumAge:3, timeout:10000} );
-		
-		/* Sous SAFARI : on passe pas là et c'est BLOQUé !!  */
-		// geo_position_js.getCurrentPosition(private_GetPosition_Success,private_GetPosition_Error);		
-		
-		navigator.geolocation.getCurrentPosition(private_GetPosition_Success,private_GetPosition_Error, geoOptions);
-
-	}
 	
 	/*
 	 * 
@@ -160,7 +138,6 @@ function gps_clear_toast_state()
 		gps_lastposition_date = new Date();
 
 		console.log('[GeoMap] GPS fix: lat=' + gps_lastposition_latitude + ' lon=' + gps_lastposition_longitude + ' acc=' + gps_lastposition_accuracy + 'm');
-		gps_last_success_time = (new Date()).getTime();
 		gps_clear_toast_state();
 		private_center_on_first_fix();
 	}
@@ -184,19 +161,6 @@ function gps_clear_toast_state()
 	
 	function private_GetPosition_Error(error)
 	{
-		/* Suppress getCurrentPosition errors when watchPosition is still
-		 * delivering fresh fixes. The dual mechanism races: a periodic
-		 * getCurrentPosition timeout would otherwise overwrite the OK
-		 * status with TIMEOUT and stick the HUD on red until the next
-		 * full success, even though the live fix is good. */
-		if (gps_lastposition_status === STATE_POSITION_OK
-			&& gps_last_success_time
-			&& ((new Date()).getTime() - gps_last_success_time) < 60000)
-		{
-			console.warn('[GeoMap] Suppressed GPS error (watchPosition fresh): ' + error.message);
-			gps_lastposition_date = new Date();
-			return;
-		}
 		console.error('[GeoMap] GPS error: ' + error.message);
 		gps_lastposition_date = new Date();
 		var toast_msg = '';
@@ -237,7 +201,6 @@ function gps_clear_toast_state()
 		gps_lastposition_altitudeAccuracy = newposition.coords.altitudeAccuracy;
 		gps_lastposition_heading = newposition.coords.heading;
 		gps_lastposition_date = new Date();
-		gps_last_success_time = (new Date()).getTime();
 
 		gps_clear_toast_state();
 		private_center_on_first_fix();
@@ -245,16 +208,6 @@ function gps_clear_toast_state()
 
 	function private_watchPosition_Error(error)
 	{
-		/* Same race-suppression logic as private_GetPosition_Error: keep
-		 * the OK status when the live fix is still recent. */
-		if (gps_lastposition_status === STATE_POSITION_OK
-			&& gps_last_success_time
-			&& ((new Date()).getTime() - gps_last_success_time) < 60000)
-		{
-			console.warn('[GeoMap] Suppressed GPS watch error (recent fix): ' + error.message);
-			gps_lastposition_date = new Date();
-			return;
-		}
 		gps_lastposition_date = new Date();
 		var toast_msg = '';
 		switch(error.code)
@@ -402,15 +355,12 @@ function gps_clear_toast_state()
 		}
 	}
 		
-	this.stop=function() /*  Called only then 'Quit' button is pressed */
+	this.stop=function() /*  Called only when 'Quit' button is pressed */
 	{
-		if( GetPositionID != -1 )
-		{
-			window.clearInterval(GetPositionID);
-		}
 		if( WatchPositionId != null )
 		{
 			navigator.geolocation.clearWatch(WatchPositionId);
+			WatchPositionId = null;
 		}
 	}
 	
