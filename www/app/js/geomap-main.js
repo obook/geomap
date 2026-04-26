@@ -107,20 +107,18 @@ var airbot = null;
 			provider: new L.GeoSearch.Provider.OpenStreetMap()
 		}).addTo(gmap);
  */
-		var baseMaps = {
-				"Normal View": normal,
-				"Hybrid View":hybrid,
-				"Terrain View": terrain,
-				"Tactical view":tactical,
-				"Night View": midnight,
-				"WaterColor View":wc
-		};
+		var baseMaps = {};
+		baseMaps[t('layers.normal')] = normal;
+		baseMaps[t('layers.hybrid')] = hybrid;
+		baseMaps[t('layers.terrain')] = terrain;
+		baseMaps[t('layers.tactical')] = tactical;
+		baseMaps[t('layers.night')] = midnight;
+		baseMaps[t('layers.watercolor')] = wc;
 
-		var overlayMaps = {
-			"Markers":markers_layer,
-			"Accuracy":accuracy_layer,
-			"Tools":draw_tools_layer
-		};
+		var overlayMaps = {};
+		overlayMaps[t('layers.markers')] = markers_layer;
+		overlayMaps[t('layers.accuracy')] = accuracy_layer;
+		overlayMaps[t('layers.tools')] = draw_tools_layer;
 
 		/* Layer control */
 		L.control.layers(baseMaps,overlayMaps).addTo(gmap);

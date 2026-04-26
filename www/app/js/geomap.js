@@ -12,6 +12,7 @@
  * "Unknown chromium error: -6"
  */
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/geomap-globals.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/geomap-i18n.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/geomap-storage.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/geomap-main.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/geomap-gps.js"></script>');

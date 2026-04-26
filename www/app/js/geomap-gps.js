@@ -189,22 +189,22 @@ function gps_clear_toast_state()
 		{
 			case error.PERMISSION_DENIED:
 				gps_lastposition_status = STATE_PERMISSION_DENIED;
-				toast_msg = 'GPS permission denied. Enable Location Services for Safari in iOS Settings.';
+				toast_msg = t('gps.toast_denied');
 			break;
 
 			case error.POSITION_UNAVAILABLE:
 				gps_lastposition_status = STATE_POSITION_UNAVAILABLE;
-				toast_msg = 'GPS position unavailable. No signal.';
+				toast_msg = t('gps.toast_unavail');
 			break;
 
 			case error.TIMEOUT:
 				gps_lastposition_status = STATE_POSITION_TIMEOUT;
-				toast_msg = 'GPS timeout. Move to open sky and retry.';
+				toast_msg = t('gps.toast_timeout');
 			break;
 
 			default:
 				gps_lastposition_status = STATE_POSITION_ERROR;
-				toast_msg = 'GPS error: ' + (error.message || 'unknown');
+				toast_msg = t('gps.toast_error') + (error.message || t('gps.toast_unknown'));
 			break;
 		}
 		gps_show_toast(toast_msg);
@@ -236,25 +236,25 @@ function gps_clear_toast_state()
 			case error.PERMISSION_DENIED:
 				console.warn('[GeoMap] GPS watch: permission denied');
 				gps_lastposition_status = STATE_PERMISSION_DENIED;
-				toast_msg = 'GPS permission denied. Enable Location Services for Safari in iOS Settings.';
+				toast_msg = t('gps.toast_denied');
 			break;
 
 			case error.POSITION_UNAVAILABLE:
 				console.warn('[GeoMap] GPS watch: position unavailable');
 				gps_lastposition_status = STATE_POSITION_UNAVAILABLE;
-				toast_msg = 'GPS position unavailable. No signal.';
+				toast_msg = t('gps.toast_unavail');
 			break;
 
 			case error.TIMEOUT:
 				console.warn('[GeoMap] GPS watch: timeout');
 				gps_lastposition_status = STATE_POSITION_TIMEOUT;
-				toast_msg = 'GPS timeout. Move to open sky and retry.';
+				toast_msg = t('gps.toast_timeout');
 			break;
 
 			default:
 				console.warn('[GeoMap] GPS watch: unknown error ' + error.code);
 				gps_lastposition_status = STATE_POSITION_ERROR;
-				toast_msg = 'GPS watch error: ' + (error.message || 'unknown');
+				toast_msg = t('gps.toast_watch_error') + (error.message || t('gps.toast_unknown'));
 			break;
 		}
 		if (toast_msg) gps_show_toast(toast_msg);
@@ -262,59 +262,60 @@ function gps_clear_toast_state()
 	
 	function private_update_state_label()
 	{
-		var text = 'GPS WAIT';
+		var text = t('gps.wait');
 		var color = 'var(--text-ghost)';
 		switch (gps_lastposition_status)
 		{
 			case STATE_POSITION_OK:
 				if (gps_lastposition_accuracy != null && gps_lastposition_accuracy < GLOBAL_MINIMUM_ACCURAY)
 				{
+					var acc = ' ' + Math.round(gps_lastposition_accuracy) + 'M';
 					if (gps_lastposition_accuracy < 50)
 					{
-						text = 'GPS LOCK ' + Math.round(gps_lastposition_accuracy) + 'M';
+						text = t('gps.lock') + acc;
 						color = 'var(--green, #00ff41)';
 					}
 					else if (gps_lastposition_accuracy < 200)
 					{
-						text = 'GPS OK ' + Math.round(gps_lastposition_accuracy) + 'M';
+						text = t('gps.ok') + acc;
 						color = 'var(--green, #00ff41)';
 					}
 					else
 					{
-						text = 'GPS WEAK ' + Math.round(gps_lastposition_accuracy) + 'M';
+						text = t('gps.weak') + acc;
 						color = 'var(--amber, #ff9500)';
 					}
 				}
 				else
 				{
-					text = 'GPS WEAK';
+					text = t('gps.weak');
 					color = 'var(--amber, #ff9500)';
 				}
 			break;
 
 			case STATE_PERMISSION_DENIED:
-				text = 'GPS DENIED';
+				text = t('gps.denied');
 				color = 'var(--red, #ff0000)';
 			break;
 
 			case STATE_POSITION_UNAVAILABLE:
-				text = 'GPS UNAVAIL';
+				text = t('gps.unavail');
 				color = 'var(--red, #ff0000)';
 			break;
 
 			case STATE_POSITION_TIMEOUT:
-				text = 'GPS TIMEOUT';
+				text = t('gps.timeout');
 				color = 'var(--amber, #ff9500)';
 			break;
 
 			case STATE_POSITION_ERROR:
-				text = 'GPS ERROR';
+				text = t('gps.error');
 				color = 'var(--red, #ff0000)';
 			break;
 
 			case STATE_POSITION_UNKNOWN:
 			default:
-				text = 'GPS WAIT';
+				text = t('gps.wait');
 				color = 'var(--text-ghost)';
 			break;
 		}

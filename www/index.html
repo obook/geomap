@@ -162,7 +162,7 @@
 					<div class="navbar">
 						<div class="navbar-bg"></div>
 						<div class="navbar-inner">
-							<div class="left"><a href="/about/" class="link" style="font-size:10px;letter-spacing:2px;">INTEL</a></div>
+							<div class="left"><a href="/about/" class="link" style="font-size:10px;letter-spacing:2px;" data-i18n="home.intel_link">INTEL</a></div>
 							<div class="title">GEOMAP-AIR</div>
 						</div>
 					</div>
@@ -170,31 +170,31 @@
 						<div class="classified-frame" style="width:100%; max-width:380px;">
 							<div style="text-align:center; margin-bottom:28px;">
 								<div style="font-family:var(--font-display); font-size:22px; font-weight:900; letter-spacing:6px; color:var(--cyan); text-shadow: 0 0 30px var(--cyan-glow-strong);">GEOMAP</div>
-								<div style="font-family:var(--font-mono); font-size:10px; letter-spacing:4px; color:var(--text-ghost); margin-top:6px;">SIGINT COMMAND TERMINAL v3.0</div>
+								<div style="font-family:var(--font-mono); font-size:10px; letter-spacing:4px; color:var(--text-ghost); margin-top:6px;" data-i18n="home.title_sub">SIGINT COMMAND TERMINAL v3.0</div>
 								<div style="width:60px; height:1px; background:var(--cyan-dim); margin:16px auto 0;"></div>
 							</div>
 							<div class="list inline-labels no-hairlines-md" style="margin:0;">
 								<ul>
 									<li class="item-content item-input">
 										<div class="item-inner">
-											<div class="item-title item-label">CALLSIGN</div>
+											<div class="item-title item-label" data-i18n="home.callsign_label">CALLSIGN</div>
 											<div class="item-input-wrap" style="display:flex; align-items:center; gap:8px;">
-												<input type="text" id="username-id" value="NEWBIE" maxlength="8" placeholder="Agent name" style="flex:1;" />
+												<input type="text" id="username-id" value="NEWBIE" maxlength="8" placeholder="Agent name" data-i18n="[placeholder]home.callsign_placeholder" style="flex:1;" />
 												<a href="#" id="random-callsign-id" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid var(--cyan-dim); border-radius:4px; color:var(--cyan); font-size:14px; text-decoration:none; opacity:0.6; transition:opacity 0.2s;" title="Random callsign">&#x21bb;</a>
 											</div>
 										</div>
 									</li>
 									<li class="item-content item-input">
 										<div class="item-inner">
-											<div class="item-title item-label">CHANNEL</div>
+											<div class="item-title item-label" data-i18n="home.channel_label">CHANNEL</div>
 											<div class="item-input-wrap">
-												<input type="number" id="select-choice-mission-id" value="1111" min="1111" max="99999" placeholder="Secure freq" />
+												<input type="number" id="select-choice-mission-id" value="1111" min="1111" max="99999" placeholder="Secure freq" data-i18n="[placeholder]home.channel_placeholder" />
 											</div>
 										</div>
 									</li>
 									<li class="item-content item-input">
 										<div class="item-inner">
-											<div class="item-title item-label">SERVER</div>
+											<div class="item-title item-label" data-i18n="home.server_label">SERVER</div>
 											<div class="item-input-wrap">
 												<input type="text" id="server-url-id" value="" placeholder="https://example.com/server-php" />
 											</div>
@@ -204,11 +204,11 @@
 							</div>
 							<div style="text-align:center; margin-top:24px;">
 								<a href="/map/" class="button button-fill button-large color-green disabled" id="submit-id" style="width:100%;">
-									<span id="blinker-id">ENGAGE</span>
+									<span id="blinker-id" data-i18n="home.engage_button">ENGAGE</span>
 								</a>
 							</div>
 							<div style="text-align:center; margin-top:20px;">
-								<span style="font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text-ghost);">ENCRYPTED // ZERO FOOTPRINT // NO LOGS</span>
+								<span style="font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text-ghost);" data-i18n="home.footer">ENCRYPTED // ZERO FOOTPRINT // NO LOGS</span>
 							</div>
 						</div>
 					</div>
@@ -321,15 +321,12 @@
 			{
 				path: '/share/',
 				url: './app/pages/mobile-share.html'
-			},
-			{
-				path: '/tests/',
-				url: './app/pages/mobile-tests.html'
 			}
 		],
 		on: {
 			init: function() {
 				console.log('Framework7 initialized');
+				I18n.init();
 				get_storage();
 				/* Check URL parameters ?server=&channel= */
 				var params = new URLSearchParams(window.location.search);
@@ -348,6 +345,15 @@
 				jQuery('#server-url-id').val( (sv === '.') ? '' : sv );
 				validateEngageButton();
 			}
+		}
+	});
+
+	/* Re-apply translations whenever a Framework7 page is rendered. Static
+	 * pages (mobile-*.html templates) carry data-i18n attributes that need
+	 * to be processed each time they enter the DOM. */
+	app.on('pageBeforeIn pageInit', function(page) {
+		if (typeof I18n !== 'undefined' && page && page.el) {
+			I18n.applyTo(page.el);
 		}
 	});
 
@@ -450,15 +456,15 @@
 			<div class="navbar-bg"></div>\
 			<div class="navbar-inner">\
 				<div class="left"><a href="/menu/" class="link"><span style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;"><span class="status-dot active"></span><span id="map_title_id"></span></span></a></div>\
-				<div class="title" style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;"><span id="gps_state_label" style="color:var(--text-ghost);">GPS WAIT</span></div>\
+				<div class="title" style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;"><span id="gps_state_label" data-i18n="gps.wait" style="color:var(--text-ghost);">GPS WAIT</span></div>\
 				<div class="right">\
-					<a href="#" class="link" id="btn-users" title="Zoom on all users">\
+					<a href="#" class="link" id="btn-users" data-i18n="[title]map.btn_users_title" title="Zoom on all users">\
 						<span id="usersnumbers" style="font-family:var(--font-mono);font-size:12px;color:var(--amber);">---</span>\
 					</a>\
-					<a href="#" class="link" id="button_GPS" title="Zoom on me">\
+					<a href="#" class="link" id="button_GPS" data-i18n="[title]map.btn_gps_title" title="Zoom on me">\
 						<i class="toolbar-icon icon-gps-error"></i>\
 					</a>\
-					<a href="#" class="link" id="button_network" title="Cleanup messages">\
+					<a href="#" class="link" id="button_network" data-i18n="[title]map.btn_network_title" title="Cleanup messages">\
 						<i class="toolbar-icon icon-data-error"></i>\
 					</a>\
 				</div>\
@@ -470,7 +476,7 @@
 		</div>\
 		<div class="toolbar toolbar-bottom">\
 			<div class="toolbar-inner">\
-				<span id="map_speed_id" role="button" tabindex="0" aria-label="Open help" title="Help" style="font-family:var(--font-mono);letter-spacing:3px;font-size:12px;cursor:pointer;">GEOMAP</span>\
+				<span id="map_speed_id" role="button" tabindex="0" data-i18n="[aria-label]map.help_aria; [title]map.help_title" aria-label="Open help" title="Help" style="font-family:var(--font-mono);letter-spacing:3px;font-size:12px;cursor:pointer;">GEOMAP</span>\
 			</div>\
 		</div>\
 	</div>';
@@ -518,43 +524,23 @@
 	jQuery(document).on('click', '#button_GPS', function() { ZoomToUserMarker(); });
 	jQuery(document).on('click', '#button_network', function() { CleanUpMessage(); });
 
-	/* Help popup. Strings are keyed by ISO 639-1 code (first 2 chars of
-	 * navigator.language). English is the only language shipped today; new
-	 * locales can be added under helpStrings without code changes. */
-	var helpStrings = {
-		en: {
-			title: 'GEOMAP-AIR HELP',
-			close: 'CLOSE',
-			sections: [
-				{h: 'WHAT IS THIS', p: 'Anonymous real-time geolocation sharing. Your GPS position is broadcast to other users on the same channel. No account, no persistent logs.'},
-				{h: 'GETTING STARTED', p: 'Enter a callsign and a channel code on the home page, then ENGAGE. Anyone using the same channel code can see you on the map.'},
-				{h: 'MAP HEADER', p: 'Left: channel and your callsign. Center: GPS state and signal quality (GPS LOCK in green, GPS WEAK in amber, GPS DENIED or UNAVAIL in red). Right: total users on your channel, zoom on all, zoom on me, clear messages.'},
-				{h: 'MARKERS', p: 'Each marker is another user on your channel. Tap a marker to see callsign, distance, accuracy, and the last message.'},
-				{h: 'PRIVACY', p: 'No account is created. No data persists after you stop pinging (one hour grace period). The channel code is the only group identifier; pick a hard-to-guess code if you want a private group.'},
-				{h: 'LICENSE', p: 'GPL v3. Source code on the project repository.'}
-			]
-		}
-	};
-
-	function getHelpStrings() {
-		var lang = (navigator.language || 'en').slice(0, 2).toLowerCase();
-		return helpStrings[lang] || helpStrings.en;
-	}
-
+	/* Help popup. Title, close label, and section content come from the
+	 * shared I18n dictionary so a single source of truth covers EN and FR. */
 	function buildHelpPopupHtml() {
-		var s = getHelpStrings();
+		var sections = (GEOMAP_I18N[GEOMAP_LANG] && GEOMAP_I18N[GEOMAP_LANG].help && GEOMAP_I18N[GEOMAP_LANG].help.sections)
+			|| GEOMAP_I18N.en.help.sections;
 		var html = '<div class="popup" id="help-popup-inst">';
 		html += '<div class="view">';
 		html += '<div class="page">';
 		html += '<div class="navbar"><div class="navbar-bg"></div><div class="navbar-inner">';
-		html += '<div class="title" style="font-family:var(--font-mono);letter-spacing:3px;color:var(--cyan);">' + s.title + '</div>';
-		html += '<div class="right"><a href="#" class="link popup-close" style="font-family:var(--font-mono);letter-spacing:2px;font-size:11px;">' + s.close + '</a></div>';
+		html += '<div class="title" style="font-family:var(--font-mono);letter-spacing:3px;color:var(--cyan);">' + I18n.t('help.title') + '</div>';
+		html += '<div class="right"><a href="#" class="link popup-close" style="font-family:var(--font-mono);letter-spacing:2px;font-size:11px;">' + I18n.t('common.close') + '</a></div>';
 		html += '</div></div>';
 		html += '<div class="page-content">';
 		html += '<div class="block">';
-		for (var i = 0; i < s.sections.length; i++) {
-			html += '<h3 style="font-family:var(--font-mono);letter-spacing:2px;color:var(--cyan);font-size:12px;margin-top:18px;">' + s.sections[i].h + '</h3>';
-			html += '<p style="font-size:14px;line-height:1.5;">' + s.sections[i].p + '</p>';
+		for (var i = 0; i < sections.length; i++) {
+			html += '<h3 style="font-family:var(--font-mono);letter-spacing:2px;color:var(--cyan);font-size:12px;margin-top:18px;">' + sections[i].h + '</h3>';
+			html += '<p style="font-size:14px;line-height:1.5;">' + sections[i].p + '</p>';
 		}
 		html += '</div>';
 		html += '</div>';
@@ -581,10 +567,10 @@
 		if(message != '') { SendMessage(message); jQuery('#text-id').val(''); }
 		app.views.main.router.back('/map/', { force: true });
 	});
-	jQuery(document).on('click', '#button-hello-id', function() { SendMessage('Bonjour à tous.'); });
-	jQuery(document).on('click', '#button-busy-id', function() { SendMessage('Je suis occupé.'); });
-	jQuery(document).on('click', '#button-later-id', function() { SendMessage('Je reviens plus tard.'); });
-	jQuery(document).on('click', '#button-bye-id', function() { SendMessage('au revoir.'); });
+	jQuery(document).on('click', '#button-hello-id', function() { SendMessage(t('messages.quick_hello_msg')); });
+	jQuery(document).on('click', '#button-busy-id', function() { SendMessage(t('messages.quick_busy_msg')); });
+	jQuery(document).on('click', '#button-later-id', function() { SendMessage(t('messages.quick_later_msg')); });
+	jQuery(document).on('click', '#button-bye-id', function() { SendMessage(t('messages.quick_bye_msg')); });
 
 	/* Field agents (connected users list) */
 	app.on('pageAfterIn', function(page) {
@@ -599,9 +585,13 @@
 		jQuery('#slider-network-id').val( get_netdelay() );
 		jQuery('#slider-network-value').text( get_netdelay() + 's' );
 		jQuery('#flipsound-id').val( get_sound() );
+		jQuery('#lang-select-id').val( I18n.getStored() );
 	});
 	jQuery(document).on('input', '#slider-network-id', function() {
 		jQuery('#slider-network-value').text( jQuery(this).val() + 's' );
+	});
+	jQuery(document).on('change', '#lang-select-id', function() {
+		I18n.setLang( jQuery(this).val() );
 	});
 	app.on('pageBeforeOut', function(page) {
 		if( page.name !== 'options' ) return;
@@ -637,21 +627,7 @@
 		});
 	});
 
-	/* Diagnostics page */
-	jQuery(document).on('click', '#tests-play-sound-id', function() {
-		soundManager.play('player_digital_beep_id');
-		jQuery('#debug-play-message-id').html('OGG // OK');
-	});
-	jQuery(document).on('click', '#tests-play-sound-id-wav', function() {
-		soundManager.play('player_digital_beep_id_wav');
-		jQuery('#debug-play-message-id').html('WAV // OK');
-	});
-	jQuery(document).on('click', '#tests-play-sound-id-mp3', function() {
-		soundManager.play('player_digital_beep_id_mp3');
-		jQuery('#debug-play-message-id').html('MP3 // OK');
-	});
-
-	/* Abort mission — stop map and return to home */
+	/* Abort mission - stop map and return to home */
 	jQuery(document).on('click', '#quit_map-id', function(e) {
 		e.preventDefault();
 		if( geomap != null )
