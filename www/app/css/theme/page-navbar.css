@@ -1,0 +1,145 @@
+@charset "utf-8";
+/*
+ * Project: GeoMap
+ * File: page-navbar.css
+ * Description: Framework7 page / view / navbar overrides, plus the map page navbar HUD layout
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
+
+/* Page / view */
+.page,
+.view,
+.views,
+.pages,
+.page-next,
+.page-previous,
+.router-transition .page {
+	--f7-page-bg-color: var(--bg-base) !important;
+	background: var(--bg-base) !important;
+}
+
+.page-content {
+	background: var(--bg-base) !important;
+	color: var(--text-primary) !important;
+}
+
+.block {
+	color: var(--text-primary) !important;
+}
+
+/* Navbar */
+.navbar {
+	--f7-navbar-bg-color: var(--bg-elevated) !important;
+	--f7-navbar-text-color: var(--text-primary) !important;
+	--f7-navbar-link-color: var(--accent) !important;
+	--f7-navbar-title-font-size: 15px !important;
+	--f7-navbar-height: 48px !important;
+	border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.navbar-bg {
+	background: var(--bg-elevated) !important;
+}
+
+.navbar .title {
+	font-family: var(--font-sans) !important;
+	font-weight: 600 !important;
+	font-size: 13.5px !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
+	color: var(--text-primary) !important;
+	text-shadow: none !important;
+}
+
+.navbar .link {
+	font-family: var(--font-sans) !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
+	color: var(--accent) !important;
+	transition: color var(--transition) !important;
+}
+
+.navbar .link:hover {
+	color: var(--accent-hover) !important;
+	text-shadow: none !important;
+}
+
+.navbar .link:active {
+	opacity: 0.7;
+}
+
+.icon-back {
+	color: var(--accent) !important;
+}
+
+/* Map page navbar: tighter layout for status pill + actions */
+.navbar-geomap .navbar-inner {
+	display: flex !important;
+	align-items: center !important;
+	padding: 0 12px !important;
+}
+
+.navbar-geomap .navbar-inner .title {
+	position: static !important;
+	transform: none !important;
+	margin: 0 !important;
+}
+
+.navbar-geomap .right {
+	display: flex !important;
+	align-items: center !important;
+	gap: 10px !important;
+}
+
+#map_title_id {
+	font-family: var(--font-sans) !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.5px !important;
+	text-transform: uppercase !important;
+	color: var(--text-primary) !important;
+}
+
+#usersnumbers {
+	font-family: var(--font-mono) !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	color: var(--text-secondary) !important;
+	letter-spacing: 0 !important;
+	text-shadow: none !important;
+	min-width: 24px;
+	text-align: center;
+}
+
+#gps_state_label {
+	font-family: var(--font-mono) !important;
+	font-size: 11.5px !important;
+	font-weight: 500 !important;
+	letter-spacing: 0.4px !important;
+	padding: 3px 9px;
+	border-radius: 999px;
+	background: var(--bg-base);
+	border: 1px solid var(--border-subtle);
+	transition: color var(--transition), background var(--transition), border-color var(--transition);
+}
+
+/* Subtle "active" dot on the channel link */
+.status-dot {
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--text-tertiary);
+	margin-right: 8px;
+	vertical-align: middle;
+	transition: background var(--transition);
+}
+
+.status-dot.active {
+	background: var(--status-ok);
+	box-shadow: 0 0 0 3px var(--status-ok-soft);
+}

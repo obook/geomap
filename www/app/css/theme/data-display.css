@@ -1,0 +1,88 @@
+@charset "utf-8";
+/*
+ * Project: GeoMap
+ * File: data-display.css
+ * Description: Connected-users table and the channel chat overlay shown on top of the map
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
+
+.data-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+	background: var(--bg-elevated);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+}
+
+.data-table th {
+	font-family: var(--font-sans);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.4px;
+	text-transform: uppercase;
+	color: var(--text-secondary);
+	padding: 10px 12px;
+	background: var(--bg-surface);
+	border-bottom: 1px solid var(--border-subtle);
+	text-align: left;
+}
+
+.data-table td {
+	padding: 10px 12px;
+	border-bottom: 1px solid var(--border-subtle);
+	color: var(--text-primary);
+	font-family: var(--font-mono);
+	font-size: 12.5px;
+}
+
+.data-table tbody tr:last-child th,
+.data-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.data-table th a {
+	color: var(--accent);
+	font-family: var(--font-sans);
+	font-weight: 500;
+}
+
+.data-table th[scope="col"],
+.data-table thead th {
+	font-family: var(--font-sans);
+}
+
+/* Message overlay shown on top of the map */
+#messages_toolbar {
+	position: absolute;
+	left: 50%;
+	top: 12px;
+	transform: translateX(-50%);
+	z-index: 999;
+	max-width: calc(100% - 24px);
+	display: none;
+}
+
+#messages_toolbar:not(:empty),
+#messages_toolbar[style*="display: block"] {
+	display: block;
+}
+
+#messages_id {
+	display: inline-block;
+	padding: 8px 14px;
+	background: var(--bg-overlay);
+	color: var(--text-primary);
+	border: 1px solid var(--border-default);
+	border-radius: 999px;
+	font-size: 13px;
+	font-weight: 500;
+	box-shadow: var(--shadow-md);
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

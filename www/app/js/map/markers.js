@@ -1,7 +1,7 @@
 /*
  * Project: GeoMap
- * File: geomap-markers.js
- * Description: Marker rendering and updates (Class_AirMarkers)
+ * File: markers.js
+ * Description: Marker rendering and updates (Class_Markers)
  * Author: Olivier Booklage
  * License: GPL v3
  * Date: April 2026
@@ -9,7 +9,7 @@
 
 var iColor = 1; /* 0 is reserved to local user */
 
-function Class_AirMarkers(map,mission,id)
+function Class_Markers(map,mission,id)
 {
 var guser_id = id;
 
@@ -19,7 +19,7 @@ var master_clock;
 var follow_marker_id = null;
 
 var intervalID = null;
-/* var data_timer_refresh = 2000;  2 secondes -> see Class_AirUser for set the same value */
+/* var data_timer_refresh = 2000;  2 secondes -> see Class_User for set the same value */
 TEMPORARY_GLOBAL_NETWORK_GETDATA = 10; /* seconds */
 var request_data_number = 0;
 
@@ -1148,5 +1148,5 @@ var accuracy_layer = null;
 	
 	
 	
-} /* Class_AirMarkers(map,mission,id) */
+} /* Class_Markers(map,mission,id) */
 

@@ -1,0 +1,98 @@
+@charset "utf-8";
+/*
+ * Project: GeoMap
+ * File: hud-icons.css
+ * Description: GPS / network status icons (radar sweep + chat bubble) embedded as inline SVG data URLs
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
+
+/* Shared layout for every HUD icon. State transitions are handled by
+ * toggling the class from the JS code. */
+.icon-gps-inactive,
+.icon-gps-active,
+.icon-gps-error,
+.icon-gps-bad-conditions,
+.icon-data-inactive,
+.icon-data-active-senestre,
+.icon-data-active-dextre,
+.icon-data-error {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: filter var(--transition), opacity var(--transition);
+}
+
+.toolbar-icon {
+	width: 20px;
+	height: 20px;
+}
+
+.navbar-geomap .toolbar-icon {
+	width: 20px !important;
+	height: 20px !important;
+}
+
+.navbar-geomap .right .link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: var(--radius-sm);
+	transition: background var(--transition);
+}
+
+.navbar-geomap .right .link:hover {
+	background: var(--accent-soft);
+}
+
+.navbar-geomap .right .link#btn-users {
+	width: auto;
+	padding: 0 8px;
+}
+
+@keyframes gps-pulse {
+	0%, 100% { opacity: 0.85; }
+	50%      { opacity: 1; }
+}
+
+/* GPS radar - geometry preserved across states; stroke colour follows
+ * the state. Active and bad-conditions rotate the sweep indicator. */
+
+.icon-gps-inactive {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='10' cy='10' r='8' stroke='%236b7785' stroke-width='1' stroke-opacity='0.45'/%3E%3Ccircle cx='10' cy='10' r='4.5' stroke='%236b7785' stroke-width='0.5' stroke-opacity='0.35'/%3E%3Cline x1='10' y1='2' x2='10' y2='18' stroke='%236b7785' stroke-width='0.5' stroke-opacity='0.25'/%3E%3Cline x1='2' y1='10' x2='18' y2='10' stroke='%236b7785' stroke-width='0.5' stroke-opacity='0.25'/%3E%3Ccircle cx='10' cy='10' r='1.2' fill='%236b7785'/%3E%3C/svg%3E");
+}
+
+.icon-gps-active {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='10' cy='10' r='8' stroke='%2310b981' stroke-width='1' stroke-opacity='0.45'/%3E%3Ccircle cx='10' cy='10' r='4.5' stroke='%2310b981' stroke-width='0.5' stroke-opacity='0.35'/%3E%3Cline x1='10' y1='2' x2='10' y2='18' stroke='%2310b981' stroke-width='0.5' stroke-opacity='0.25'/%3E%3Cline x1='2' y1='10' x2='18' y2='10' stroke='%2310b981' stroke-width='0.5' stroke-opacity='0.25'/%3E%3Ccircle cx='10' cy='10' r='1.4' fill='%2310b981'/%3E%3Cg%3E%3Cpath d='M10 10 L18 10 A8 8 0 0 1 12.76 17.54 Z' fill='%2310b981' fill-opacity='0.22'/%3E%3Cline x1='10' y1='10' x2='12.76' y2='17.54' stroke='%2310b981' stroke-width='1.2' stroke-linecap='round' stroke-opacity='0.85'/%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 10 10' to='360 10 10' dur='4s' repeatCount='indefinite'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.icon-gps-bad-conditions {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='10' cy='10' r='8' stroke='%23f59e0b' stroke-width='1' stroke-opacity='0.45'/%3E%3Ccircle cx='10' cy='10' r='4.5' stroke='%23f59e0b' stroke-width='0.5' stroke-opacity='0.35'/%3E%3Cline x1='10' y1='2' x2='10' y2='18' stroke='%23f59e0b' stroke-width='0.5' stroke-opacity='0.25'/%3E%3Cline x1='2' y1='10' x2='18' y2='10' stroke='%23f59e0b' stroke-width='0.5' stroke-opacity='0.25'/%3E%3Ccircle cx='10' cy='10' r='1.4' fill='%23f59e0b'/%3E%3Cg%3E%3Cpath d='M10 10 L18 10 A8 8 0 0 1 12.76 17.54 Z' fill='%23f59e0b' fill-opacity='0.22'/%3E%3Cline x1='10' y1='10' x2='12.76' y2='17.54' stroke='%23f59e0b' stroke-width='1.2' stroke-linecap='round' stroke-opacity='0.85'/%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 10 10' to='360 10 10' dur='6s' repeatCount='indefinite'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.icon-gps-error {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='10' cy='10' r='8' stroke='%23ef4444' stroke-width='1' stroke-opacity='0.5'/%3E%3Ccircle cx='10' cy='10' r='4.5' stroke='%23ef4444' stroke-width='0.5' stroke-opacity='0.4'/%3E%3Cline x1='10' y1='2' x2='10' y2='18' stroke='%23ef4444' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Cline x1='2' y1='10' x2='18' y2='10' stroke='%23ef4444' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Cline x1='5' y1='5' x2='15' y2='15' stroke='%23ef4444' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='15' y1='5' x2='5' y2='15' stroke='%23ef4444' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+	animation: gps-pulse 1.4s ease-in-out infinite;
+}
+
+/* Network / messages icon - chat bubble. Click target is "clear current
+ * message"; the colour reflects network activity (active vs error). */
+
+.icon-data-inactive {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%236b7785' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 5.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H8.5l-3 3v-3a2 2 0 0 1-2-2z'/%3E%3C/svg%3E");
+}
+
+.icon-data-active-senestre,
+.icon-data-active-dextre {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%2314b8a6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 5.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H8.5l-3 3v-3a2 2 0 0 1-2-2z'/%3E%3Ccircle cx='10' cy='8.5' r='1' fill='%2314b8a6' stroke='none'/%3E%3C/svg%3E");
+}
+
+.icon-data-error {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23ef4444' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 5.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H8.5l-3 3v-3a2 2 0 0 1-2-2z'/%3E%3Cline x1='8' y1='6.5' x2='12' y2='10.5'/%3E%3Cline x1='12' y1='6.5' x2='8' y2='10.5'/%3E%3C/svg%3E");
+}

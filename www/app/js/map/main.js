@@ -30,7 +30,6 @@ var count_server_animation = -1;
 var gps = null;
 var airuser = null;
 var markers = null;
-var airbot = null;
 
 	/*
 	 *  Constructor
@@ -262,12 +261,12 @@ var airbot = null;
 		gps = new Class_GPS(gmap,guser_id,guser_name);
 		gps.start();
 
-		airuser = new Class_AirUser(gmap,gmission_id,guser_id,guser_name);
+		airuser = new Class_User(gmap,gmission_id,guser_id,guser_name);
 		airuser.start();
 
 		/* Put online users as markers 'on' the map */
 
-		markers = new Class_AirMarkers(gmap,gmission_id,guser_id);
+		markers = new Class_Markers(gmap,gmission_id,guser_id);
 		markers.start(markers_layer,accuracy_layer);
 
 		/* Run the timer */
@@ -424,11 +423,6 @@ var airbot = null;
 		if( airuser != null )
 		{
 			airuser.stop();
-		}
-
-		if( airbot != null )
-		{
-			//
 		}
 
 		/* FAIT dans map.php mais PAS idéal */

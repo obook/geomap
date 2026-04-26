@@ -1,0 +1,139 @@
+@charset "utf-8";
+/*
+ * Project: GeoMap
+ * File: forms.css
+ * Description: Form list, item labels, text/number/select inputs, range slider
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
+
+.list ul {
+	background: transparent !important;
+}
+
+.list .item-content {
+	--f7-list-item-border-color: var(--border-subtle) !important;
+}
+
+.item-label,
+.item-title {
+	font-family: var(--font-sans) !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	color: var(--text-secondary) !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.6px !important;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+select,
+textarea {
+	font-family: var(--font-sans) !important;
+	font-size: 15px !important;
+	font-weight: 400 !important;
+	color: var(--text-primary) !important;
+	background: var(--bg-input) !important;
+	border: 1px solid var(--border-default) !important;
+	border-radius: var(--radius-md) !important;
+	padding: 9px 12px !important;
+	caret-color: var(--accent);
+	transition: border-color var(--transition), box-shadow var(--transition);
+	min-height: 38px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+	border-color: var(--accent) !important;
+	box-shadow: 0 0 0 3px var(--accent-soft) !important;
+	outline: none !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--text-tertiary) !important;
+	font-style: normal;
+	opacity: 1;
+}
+
+select {
+	-webkit-appearance: none !important;
+	appearance: none !important;
+	min-height: 38px !important;
+	line-height: 38px !important;
+	padding: 0 36px 0 12px !important;
+	background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%239aa4b1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+	background-repeat: no-repeat !important;
+	background-position: right 12px center !important;
+	overflow: visible !important;
+	cursor: pointer;
+}
+
+select option {
+	background: var(--bg-elevated);
+	color: var(--text-primary);
+}
+
+/* Range slider */
+input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 4px;
+	background: var(--bg-surface) !important;
+	border: none !important;
+	padding: 0 !important;
+	border-radius: 2px;
+	min-height: auto;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: var(--accent);
+	border: 2px solid var(--bg-base);
+	box-shadow: var(--shadow-sm);
+	cursor: pointer;
+	transition: transform var(--transition);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+	transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: var(--accent);
+	border: 2px solid var(--bg-base);
+	cursor: pointer;
+}
+
+/* Random callsign helper button on the landing page */
+#random-callsign-id {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border: 1px solid var(--border-default) !important;
+	border-radius: var(--radius-md) !important;
+	color: var(--text-secondary) !important;
+	font-size: 16px;
+	text-decoration: none;
+	transition: background var(--transition), color var(--transition), border-color var(--transition);
+	opacity: 1;
+}
+
+#random-callsign-id:hover {
+	background: var(--accent-soft) !important;
+	border-color: var(--accent) !important;
+	color: var(--accent) !important;
+}

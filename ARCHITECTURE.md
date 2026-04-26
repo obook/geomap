@@ -105,7 +105,7 @@ These constants control timing and are also adjusted at runtime via `Class_GeoMa
 
 - `/` (inline `home` page) - callsign / channel / server form
 - `/map/` (inline `map` page, `keepAlive: true`) - the Leaflet view, preserved across navigations
-- `/about/`, `/menu/`, `/options/`, `/messages/`, `/connected/`, `/share/` - loaded from `www/app/pages/mobile-*.html`
+- `/about/`, `/menu/`, `/options/`, `/messages/`, `/connected/`, `/share/` - loaded from `www/app/pages/*.html`
 
 Because `/map/` uses `keepAlive`, the `Class_GeoMap` instance is created once per session in `pageAfterIn` and re-used. Subsequent visits only call `map.invalidateSize()`. `Class_GeoMap` exposes `SaveState()` and `RestoreState()` (center, zoom, active base and overlay layers) used to preserve the map view across navigations. `Class_GeoMap.skipLocate` is a static flag that suppresses the auto-locate when restoring a saved view.
 

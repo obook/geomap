@@ -1,0 +1,114 @@
+@charset "utf-8";
+/*
+ * Project: GeoMap
+ * File: buttons.css
+ * Description: Button variants (fill, outline, primary, destructive) and disabled state
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
+
+.button {
+	font-family: var(--font-sans) !important;
+	font-weight: 600 !important;
+	font-size: 13px !important;
+	letter-spacing: 0.7px !important;
+	text-transform: uppercase !important;
+	border-radius: var(--radius-md) !important;
+	transition: background var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition) !important;
+	height: 40px !important;
+	line-height: 38px !important;
+	padding: 0 16px !important;
+}
+
+.button-large {
+	height: 44px !important;
+	line-height: 42px !important;
+	font-size: 13.5px !important;
+}
+
+.button-fill {
+	--f7-button-fill-bg-color: var(--accent) !important;
+	--f7-button-fill-text-color: #ffffff !important;
+	background: var(--accent) !important;
+	color: #ffffff !important;
+	border: 1px solid transparent !important;
+	box-shadow: var(--shadow-sm);
+}
+
+.button-fill:hover {
+	background: var(--accent-hover) !important;
+	box-shadow: var(--shadow-md);
+}
+
+.button-fill:active {
+	background: var(--accent) !important;
+	transform: translateY(1px);
+}
+
+.button-fill.disabled,
+.button-fill.disabled:hover,
+.button.disabled {
+	background: var(--bg-surface) !important;
+	color: var(--text-disabled) !important;
+	cursor: not-allowed;
+	opacity: 1;
+	pointer-events: none;
+	box-shadow: none;
+}
+
+/* Primary action (kept the .color-green class intact for the Connect button) */
+.button-fill.color-green,
+.button.color-green {
+	--f7-button-fill-text-color: #ffffff !important;
+	background: var(--accent) !important;
+	border-color: transparent !important;
+	color: #ffffff !important;
+	box-shadow: var(--shadow-sm);
+}
+
+.button-fill.color-green:hover {
+	background: var(--accent-hover) !important;
+	box-shadow: var(--shadow-md);
+	text-shadow: none;
+}
+
+/* Destructive action (Disconnect) */
+.button-fill.color-red,
+.button.color-red {
+	--f7-button-fill-text-color: var(--status-error) !important;
+	background: transparent !important;
+	color: var(--status-error) !important;
+	border: 1px solid var(--status-error) !important;
+	box-shadow: none !important;
+}
+
+.button-fill.color-red:hover {
+	background: var(--status-error-soft) !important;
+	box-shadow: none !important;
+}
+
+.button-fill.color-blue {
+	background: var(--accent) !important;
+	color: #ffffff !important;
+	border-color: transparent !important;
+}
+
+/* Outline / secondary buttons */
+.button-outline {
+	background: transparent !important;
+	border: 1px solid var(--border-strong) !important;
+	color: var(--text-primary) !important;
+	box-shadow: none !important;
+}
+
+.button-outline:hover {
+	background: var(--bg-elevated) !important;
+	border-color: var(--accent) !important;
+	color: var(--accent) !important;
+}
+
+.button:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}

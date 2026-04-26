@@ -1,0 +1,70 @@
+@charset "utf-8";
+/*
+ * Project: GeoMap
+ * File: base.css
+ * Description: Base typography (html, body, links, code, selection)
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
+
+html, body {
+	background: var(--bg-base) !important;
+	color: var(--text-primary) !important;
+	font-family: var(--font-sans) !important;
+	font-size: 14px;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+::selection {
+	background: var(--accent-medium);
+	color: var(--text-primary);
+}
+
+a {
+	color: var(--accent);
+	text-decoration: none;
+	transition: color var(--transition);
+}
+
+a:hover {
+	color: var(--accent-hover);
+}
+
+code, pre, kbd, samp {
+	font-family: var(--font-mono);
+	font-size: 12.5px;
+	color: var(--text-secondary);
+	background: var(--bg-elevated);
+	padding: 2px 6px;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--border-subtle);
+}
+
+pre, code {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.block code {
+	display: block;
+	padding: 14px 16px;
+	background: var(--bg-elevated);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--radius-md);
+	color: var(--text-secondary);
+	font-size: 12px;
+	line-height: 1.55;
+}
+
+.section-hint {
+	color: var(--text-secondary) !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.7px !important;
+	text-transform: uppercase !important;
+	margin-bottom: 12px !important;
+}

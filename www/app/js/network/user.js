@@ -1,13 +1,13 @@
 /*
  * Project: GeoMap
- * File: geomap-user.js
- * Description: User session and server sync (Class_AirUser)
+ * File: user.js
+ * Description: User session and server sync (Class_User)
  * Author: Olivier Booklage
  * License: GPL v3
  * Date: April 2026
  */
 
-function Class_AirUser(map,mission,id,name)
+function Class_User(map,mission,id,name)
 {
 var gmap = map;
 var gmission = mission;

@@ -1,0 +1,48 @@
+@charset "utf-8";
+/*
+ * Project: GeoMap
+ * File: toolbar.css
+ * Description: Bottom Framework7 toolbar overrides plus the GeoMap chip in the map page
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
+
+.toolbar {
+	--f7-toolbar-bg-color: var(--bg-elevated) !important;
+	--f7-toolbar-text-color: var(--text-secondary) !important;
+	--f7-toolbar-height: 36px !important;
+	border-top: 1px solid var(--border-subtle) !important;
+}
+
+.toolbar-inner {
+	font-family: var(--font-sans) !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
+	text-shadow: none !important;
+	justify-content: center !important;
+}
+
+#map_speed_id {
+	color: var(--text-secondary) !important;
+	font-family: var(--font-sans) !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
+	padding: 4px 12px;
+	border-radius: var(--radius-sm);
+	transition: background var(--transition), color var(--transition);
+}
+
+#map_speed_id:hover {
+	background: var(--accent-soft);
+	color: var(--accent) !important;
+}
+
+#map_speed_id:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}

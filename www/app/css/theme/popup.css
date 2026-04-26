@@ -1,0 +1,93 @@
+@charset "utf-8";
+/*
+ * Project: GeoMap
+ * File: popup.css
+ * Description: Classified-frame card, Framework7 popup / modal, and toast styling
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
+
+/* Card / panel (legacy "classified-frame" class kept for layout hooks) */
+.classified-frame {
+	background: var(--bg-elevated);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--radius-lg);
+	padding: 28px;
+	box-shadow: var(--shadow-md);
+	position: relative;
+}
+
+.classified-frame .item-label,
+.classified-frame .item-title {
+	color: var(--text-secondary) !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
+}
+
+.classified-frame p {
+	margin: 0 0 14px;
+	color: var(--text-secondary);
+	font-size: 14.5px;
+	line-height: 1.65;
+}
+
+.classified-frame p:last-child {
+	margin-bottom: 0;
+}
+
+.classified-frame p strong,
+.classified-frame p b {
+	color: var(--text-primary);
+	font-weight: 600;
+}
+
+/* Popup / modal */
+.popup {
+	--f7-popup-bg-color: var(--bg-base) !important;
+	background: var(--bg-base) !important;
+}
+
+.popup .navbar,
+.popup .navbar-bg {
+	background: var(--bg-elevated) !important;
+	border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.popup .page-content {
+	background: var(--bg-base) !important;
+}
+
+.popup h3 {
+	font-family: var(--font-sans) !important;
+	font-size: 11px !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.7px !important;
+	color: var(--accent) !important;
+	text-transform: uppercase !important;
+	margin: 22px 0 8px !important;
+}
+
+.popup p {
+	color: var(--text-secondary) !important;
+	font-size: 14px;
+	line-height: 1.55;
+	margin: 0;
+}
+
+/* Toast */
+.toast,
+.toast-text {
+	font-family: var(--font-sans) !important;
+	font-size: 14px !important;
+}
+
+.toast {
+	background: var(--bg-overlay) !important;
+	color: var(--text-primary) !important;
+	border: 1px solid var(--border-default) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-lg) !important;
+}
