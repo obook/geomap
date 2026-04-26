@@ -67,7 +67,11 @@ var airbot = null;
 		var osmAttribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
 
 		var normal = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: osmAttribution});
-		var terrain = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {attribution: osmAttribution + ', &copy; OpenTopoMap'});
+		var terrain = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+			attribution: osmAttribution + ', &copy; OpenTopoMap',
+			maxZoom: 19,
+			maxNativeZoom: 17 /* OpenTopoMap returns 403 above zoom 17 */
+		});
 		var hybrid = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; Esri'});
 		var midnight = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {attribution: '&copy; CartoDB'});
 		var tactical = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; CartoDB'});
