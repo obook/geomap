@@ -76,54 +76,22 @@
 	pointer-events: auto !important;
 }
 
-/* Class MarkerWithLabel */
-
+/* Marker label fallback used by Leaflet.label */
 .labels {
- color: white;
- background-color: #333333;
- font-family: monospace;
- font-size: 12px;
- text-align: center;
- white-space: nowrap;
+	color: var(--text-primary);
+	background-color: var(--bg-elevated);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	text-align: center;
+	white-space: nowrap;
+	padding: 2px 6px;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--border-subtle);
 }
 
-/* Blink gadget */
-
-#blinker-id
-{
-	display:block;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
-	animation-duration: 1s;
-	animation-name: blinked;
-	color: white;
-}
-
-@keyframes blinked
-{
-	0% {opacity:0;}
-	100% {opacity:1;}
-}
-
-#blinker-id:hover
-{
-	animation-play-state: paused;
-}
-
-/* Data table for user list */
-
-.data-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-.data-table th,
-.data-table td {
-	padding: 4px 8px;
-	text-align: left;
-	border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-.data-table th {
-	font-weight: 600;
+/* Connect button label (no blink, just a static label). */
+#blinker-id {
+	display: block;
+	color: inherit;
+	font-weight: 500;
 }

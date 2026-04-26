@@ -40,113 +40,37 @@
 	<title>GeoMap</title>
 
 	<style>
-		/* =============================================
-		   TACTICAL HUD ICONS — SVG inline, states
-		   ============================================= */
+		/* GPS and network status icons. Single colour per state, simple
+		 * geometry, no glow shadows or radar sweeps. State transitions are
+		 * handled by toggling the class from the JS code. */
 
-		/* GPS icon — crosshair/target reticle */
-		.icon-gps-inactive,
-		.icon-gps-active,
-		.icon-gps-error,
-		.icon-gps-bad-conditions {
-			width: 22px; height: 22px;
-			background-size: contain;
-			background-repeat: no-repeat;
-			background-position: center;
-			transition: filter 0.3s ease;
-		}
-
-		/* GPS : error — radar rouge, pulsant, pas de balayage */
-		.icon-gps-error {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23ff0000' stroke-width='1' stroke-opacity='0.3' fill='none'/%3E%3Ccircle cx='12' cy='12' r='6' stroke='%23ff0000' stroke-width='0.5' stroke-opacity='0.2' fill='none'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%23ff0000' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%23ff0000' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23ff0000'/%3E%3Cline x1='5' y1='5' x2='19' y2='19' stroke='%23ff0000' stroke-width='2' stroke-linecap='round' stroke-opacity='0.8'/%3E%3Cline x1='19' y1='5' x2='5' y2='19' stroke='%23ff0000' stroke-width='2' stroke-linecap='round' stroke-opacity='0.8'/%3E%3C/svg%3E");
-			filter: drop-shadow(0 0 10px rgba(255,0,0,1));
-			animation: hud-pulse-red 1s ease-in-out infinite;
-		}
-
-		/* GPS : inactive — radar cyan atténué, pas de balayage */
 		.icon-gps-inactive {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23007a82' stroke-width='1' stroke-opacity='0.3' fill='none'/%3E%3Ccircle cx='12' cy='12' r='6' stroke='%23007a82' stroke-width='0.5' stroke-opacity='0.2' fill='none'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%23007a82' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%23007a82' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23007a82'/%3E%3C/svg%3E");
-			filter: drop-shadow(0 0 3px rgba(0,240,255,0.2));
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%236b7785' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='10' y1='2' x2='10' y2='5'/%3E%3Cline x1='10' y1='15' x2='10' y2='18'/%3E%3Cline x1='2' y1='10' x2='5' y2='10'/%3E%3Cline x1='15' y1='10' x2='18' y2='10'/%3E%3Ccircle cx='10' cy='10' r='1.4' fill='%236b7785' stroke='none'/%3E%3C/svg%3E");
 		}
 
-		/* GPS : active — radar vert avec balayage tournant */
 		.icon-gps-active {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%2300ff41' stroke-width='1' stroke-opacity='0.3' fill='none'/%3E%3Ccircle cx='12' cy='12' r='6' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.2' fill='none'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%2300ff41'/%3E%3Cg%3E%3Cpath d='M12 12 L22 12 A10 10 0 0 1 15.42 21.40 Z' fill='%2300ff41' fill-opacity='0.2'/%3E%3Cpath d='M12 12 L20.5 12 A8.5 8.5 0 0 1 14.11 20.19 Z' fill='%2300ff41' fill-opacity='0.12'/%3E%3Cline x1='12' y1='12' x2='15.42' y2='21.40' stroke='%2300ff41' stroke-width='1.5' stroke-linecap='round' stroke-opacity='0.9'/%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 12 12' to='360 12 12' dur='3s' repeatCount='indefinite'/%3E%3C/g%3E%3C/svg%3E");
-			filter: drop-shadow(0 0 8px rgba(0,255,65,0.7));
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%2310b981' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='10' y1='2' x2='10' y2='5'/%3E%3Cline x1='10' y1='15' x2='10' y2='18'/%3E%3Cline x1='2' y1='10' x2='5' y2='10'/%3E%3Cline x1='15' y1='10' x2='18' y2='10'/%3E%3Ccircle cx='10' cy='10' r='1.6' fill='%2310b981' stroke='none'/%3E%3C/svg%3E");
 		}
 
-		/* GPS : bad conditions — radar ambre avec balayage lent */
 		.icon-gps-bad-conditions {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23ff9500' stroke-width='1' stroke-opacity='0.3' fill='none'/%3E%3Ccircle cx='12' cy='12' r='6' stroke='%23ff9500' stroke-width='0.5' stroke-opacity='0.2' fill='none'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%23ff9500' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%23ff9500' stroke-width='0.5' stroke-opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23ff9500'/%3E%3Cg%3E%3Cpath d='M12 12 L22 12 A10 10 0 0 1 15.42 21.40 Z' fill='%23ff9500' fill-opacity='0.2'/%3E%3Cpath d='M12 12 L20.5 12 A8.5 8.5 0 0 1 14.11 20.19 Z' fill='%23ff9500' fill-opacity='0.12'/%3E%3Cline x1='12' y1='12' x2='15.42' y2='21.40' stroke='%23ff9500' stroke-width='1.5' stroke-linecap='round' stroke-opacity='0.9'/%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 12 12' to='360 12 12' dur='6s' repeatCount='indefinite'/%3E%3C/g%3E%3C/svg%3E");
-			filter: drop-shadow(0 0 6px rgba(255,149,0,0.7));
-			animation: hud-pulse-amber 1.2s ease-in-out infinite;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23f59e0b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='10' y1='2' x2='10' y2='5'/%3E%3Cline x1='10' y1='15' x2='10' y2='18'/%3E%3Cline x1='2' y1='10' x2='5' y2='10'/%3E%3Cline x1='15' y1='10' x2='18' y2='10'/%3E%3Ccircle cx='10' cy='10' r='1.6' fill='%23f59e0b' stroke='none'/%3E%3C/svg%3E");
 		}
 
-		/* DATA/NETWORK icon — signal/antenna */
-		.icon-data-inactive,
-		.icon-data-active-senestre,
-		.icon-data-active-dextre,
-		.icon-data-error {
-			width: 22px; height: 22px;
-			background-size: contain;
-			background-repeat: no-repeat;
-			background-position: center;
-			transition: filter 0.3s ease;
+		.icon-gps-error {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23ef4444' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='10' y1='2' x2='10' y2='5'/%3E%3Cline x1='10' y1='15' x2='10' y2='18'/%3E%3Cline x1='2' y1='10' x2='5' y2='10'/%3E%3Cline x1='15' y1='10' x2='18' y2='10'/%3E%3Cline x1='7' y1='7' x2='13' y2='13'/%3E%3Cline x1='13' y1='7' x2='7' y2='13'/%3E%3C/svg%3E");
 		}
 
-		/* DATA/MESSAGES : error — terminal rouge avec X */
-		.icon-data-error {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' stroke='%23ff0000' stroke-width='1.5' fill='%23ff0000' fill-opacity='0.08'/%3E%3Cline x1='3' y1='8' x2='21' y2='8' stroke='%23ff0000' stroke-width='0.5' stroke-opacity='0.4'/%3E%3Cline x1='8' y1='12' x2='16' y2='18' stroke='%23ff0000' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='16' y1='12' x2='8' y2='18' stroke='%23ff0000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
-			filter: drop-shadow(0 0 8px rgba(255,0,0,0.8));
-			animation: hud-pulse-red 1s ease-in-out infinite;
-		}
-
-		/* DATA/MESSAGES : inactive — terminal cyan éteint */
 		.icon-data-inactive {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' stroke='%23007a82' stroke-width='1.5' fill='%23007a82' fill-opacity='0.05'/%3E%3Cline x1='3' y1='8' x2='21' y2='8' stroke='%23007a82' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Cline x1='6' y1='11' x2='14' y2='11' stroke='%23007a82' stroke-width='1' stroke-linecap='round' stroke-opacity='0.4'/%3E%3Cline x1='6' y1='14' x2='11' y2='14' stroke='%23007a82' stroke-width='1' stroke-linecap='round' stroke-opacity='0.3'/%3E%3Cline x1='6' y1='17' x2='9' y2='17' stroke='%23007a82' stroke-width='1' stroke-linecap='round' stroke-opacity='0.2'/%3E%3C/svg%3E");
-			filter: drop-shadow(0 0 3px rgba(0,240,255,0.2));
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%236b7785' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10a9 9 0 0 1 14 0'/%3E%3Cpath d='M5.5 12.5a5 5 0 0 1 9 0'/%3E%3Ccircle cx='10' cy='15' r='1' fill='%236b7785' stroke='none'/%3E%3C/svg%3E");
 		}
 
-		/* DATA/MESSAGES : active senestre — terminal vert, flux entrant */
-		.icon-data-active-senestre {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' stroke='%2300ff41' stroke-width='1.5' fill='%2300ff41' fill-opacity='0.06'/%3E%3Cline x1='3' y1='8' x2='21' y2='8' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Cline x1='6' y1='11' x2='14' y2='11' stroke='%2300ff41' stroke-width='1' stroke-linecap='round'/%3E%3Cline x1='6' y1='14' x2='11' y2='14' stroke='%2300ff41' stroke-width='1' stroke-linecap='round' stroke-opacity='0.7'/%3E%3Cline x1='6' y1='17' x2='9' y2='17' stroke='%2300ff41' stroke-width='1' stroke-linecap='round' stroke-opacity='0.4'/%3E%3Cpath d='M17 13l2 2-2 2' stroke='%2300ff41' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.8'/%3E%3C/svg%3E");
-			filter: drop-shadow(0 0 8px rgba(0,255,65,0.7));
-			animation: hud-data-blink 0.6s ease-in-out infinite alternate;
-		}
-
-		/* DATA/MESSAGES : active dextre — terminal vert, flux sortant */
+		.icon-data-active-senestre,
 		.icon-data-active-dextre {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' stroke='%2300ff41' stroke-width='1.5' fill='%2300ff41' fill-opacity='0.06'/%3E%3Cline x1='3' y1='8' x2='21' y2='8' stroke='%2300ff41' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Cline x1='6' y1='11' x2='14' y2='11' stroke='%2300ff41' stroke-width='1' stroke-linecap='round'/%3E%3Cline x1='6' y1='14' x2='11' y2='14' stroke='%2300ff41' stroke-width='1' stroke-linecap='round' stroke-opacity='0.7'/%3E%3Cline x1='6' y1='17' x2='9' y2='17' stroke='%2300ff41' stroke-width='1' stroke-linecap='round' stroke-opacity='0.4'/%3E%3Cpath d='M19 13l-2 2 2 2' stroke='%2300ff41' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.8'/%3E%3C/svg%3E");
-			filter: drop-shadow(0 0 8px rgba(0,255,65,0.7));
-			animation: hud-data-blink 0.6s ease-in-out infinite alternate;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%2314b8a6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10a9 9 0 0 1 14 0'/%3E%3Cpath d='M5.5 12.5a5 5 0 0 1 9 0'/%3E%3Ccircle cx='10' cy='15' r='1.2' fill='%2314b8a6' stroke='none'/%3E%3C/svg%3E");
 		}
 
-		/* =============================================
-		   HUD ICON ANIMATIONS
-		   ============================================= */
-		@keyframes hud-pulse-red {
-			0%, 100% { filter: drop-shadow(0 0 6px rgba(255,0,0,0.6)); opacity: 0.6; }
-			50% { filter: drop-shadow(0 0 16px rgba(255,0,0,1)); opacity: 1; }
-		}
-
-		@keyframes hud-pulse-green {
-			0%, 100% { filter: drop-shadow(0 0 4px rgba(0,255,65,0.4)); }
-			50% { filter: drop-shadow(0 0 12px rgba(0,255,65,0.9)); }
-		}
-
-		@keyframes hud-radar-sweep {
-			0% { transform: rotate(0deg); }
-			100% { transform: rotate(360deg); }
-		}
-
-		@keyframes hud-pulse-amber {
-			0%, 100% { filter: drop-shadow(0 0 4px rgba(255,149,0,0.4)); opacity: 0.6; }
-			50% { filter: drop-shadow(0 0 10px rgba(255,149,0,1)); opacity: 1; }
-		}
-
-		@keyframes hud-data-blink {
-			0% { filter: drop-shadow(0 0 4px rgba(0,255,65,0.4)); }
-			100% { filter: drop-shadow(0 0 12px rgba(0,255,65,0.9)); }
+		.icon-data-error {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23ef4444' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10a9 9 0 0 1 14 0'/%3E%3Cpath d='M5.5 12.5a5 5 0 0 1 9 0'/%3E%3Ccircle cx='10' cy='15' r='1.2' fill='%23ef4444' stroke='none'/%3E%3Cline x1='4' y1='4' x2='16' y2='16' stroke-opacity='0.6'/%3E%3C/svg%3E");
 		}
 	</style>
 </head>
@@ -162,39 +86,38 @@
 					<div class="navbar">
 						<div class="navbar-bg"></div>
 						<div class="navbar-inner">
-							<div class="left"><a href="/about/" class="link" style="font-size:10px;letter-spacing:2px;" data-i18n="home.intel_link">INTEL</a></div>
-							<div class="title">GEOMAP</div>
+							<div class="left"><a href="/about/" class="link" data-i18n="home.intel_link">About</a></div>
+							<div class="title">GeoMap</div>
 						</div>
 					</div>
-					<div class="page-content" style="display:flex; align-items:center; justify-content:center; min-height:100vh;">
-						<div class="classified-frame" style="width:100%; max-width:380px;">
-							<div style="text-align:center; margin-bottom:28px;">
-								<div style="font-family:var(--font-display); font-size:22px; font-weight:900; letter-spacing:6px; color:var(--cyan); text-shadow: 0 0 30px var(--cyan-glow-strong);">GEOMAP</div>
-								<div style="font-family:var(--font-mono); font-size:10px; letter-spacing:4px; color:var(--text-ghost); margin-top:6px;" data-i18n="home.title_sub">SIGINT COMMAND TERMINAL v3.0</div>
-								<div style="width:60px; height:1px; background:var(--cyan-dim); margin:16px auto 0;"></div>
+					<div class="page-content" style="display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px 16px;">
+						<div class="classified-frame" style="width:100%; max-width:420px;">
+							<div style="text-align:center; margin-bottom:24px;">
+								<div style="font-size:26px; font-weight:600; letter-spacing:-0.01em; color:var(--text-primary);">GeoMap</div>
+								<div style="font-size:13px; color:var(--text-secondary); margin-top:4px;" data-i18n="home.title_sub">Real-time location sharing</div>
 							</div>
 							<div class="list inline-labels no-hairlines-md" style="margin:0;">
 								<ul>
 									<li class="item-content item-input">
 										<div class="item-inner">
-											<div class="item-title item-label" data-i18n="home.callsign_label">CALLSIGN</div>
+											<div class="item-title item-label" data-i18n="home.callsign_label">Username</div>
 											<div class="item-input-wrap" style="display:flex; align-items:center; gap:8px;">
-												<input type="text" id="username-id" value="NEWBIE" maxlength="8" placeholder="Agent name" data-i18n="[placeholder]home.callsign_placeholder" style="flex:1;" />
-												<a href="#" id="random-callsign-id" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid var(--cyan-dim); border-radius:4px; color:var(--cyan); font-size:14px; text-decoration:none; opacity:0.6; transition:opacity 0.2s;" title="Random callsign">&#x21bb;</a>
+												<input type="text" id="username-id" value="NEWBIE" maxlength="8" placeholder="Pick a name" data-i18n="[placeholder]home.callsign_placeholder" style="flex:1;" />
+												<a href="#" id="random-callsign-id" title="Generate a random username" aria-label="Generate a random username">&#x21bb;</a>
 											</div>
 										</div>
 									</li>
 									<li class="item-content item-input">
 										<div class="item-inner">
-											<div class="item-title item-label" data-i18n="home.channel_label">CHANNEL</div>
+											<div class="item-title item-label" data-i18n="home.channel_label">Channel</div>
 											<div class="item-input-wrap">
-												<input type="number" id="select-choice-mission-id" value="1111" min="1111" max="99999" placeholder="Secure freq" data-i18n="[placeholder]home.channel_placeholder" />
+												<input type="number" id="select-choice-mission-id" value="1111" min="1111" max="99999" placeholder="1111 - 99999" data-i18n="[placeholder]home.channel_placeholder" />
 											</div>
 										</div>
 									</li>
 									<li class="item-content item-input">
 										<div class="item-inner">
-											<div class="item-title item-label" data-i18n="home.server_label">SERVER</div>
+											<div class="item-title item-label" data-i18n="home.server_label">Server</div>
 											<div class="item-input-wrap">
 												<input type="text" id="server-url-id" value="" placeholder="https://example.com/server-php" />
 											</div>
@@ -202,13 +125,13 @@
 									</li>
 								</ul>
 							</div>
-							<div style="text-align:center; margin-top:24px;">
+							<div style="margin-top:18px;">
 								<a href="/map/" class="button button-fill button-large color-green disabled" id="submit-id" style="width:100%;">
-									<span id="blinker-id" data-i18n="home.engage_button">ENGAGE</span>
+									<span id="blinker-id" data-i18n="home.engage_button">Connect</span>
 								</a>
 							</div>
-							<div style="text-align:center; margin-top:20px;">
-								<span style="font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text-ghost);" data-i18n="home.footer">ENCRYPTED // ZERO FOOTPRINT // NO LOGS</span>
+							<div style="text-align:center; margin-top:18px;">
+								<span style="font-size:12px; color:var(--text-tertiary);" data-i18n="home.footer">No account. No tracking. No logs.</span>
 							</div>
 						</div>
 					</div>
@@ -455,16 +378,16 @@
 		<div class="navbar navbar-geomap">\
 			<div class="navbar-bg"></div>\
 			<div class="navbar-inner">\
-				<div class="left"><a href="/menu/" class="link"><span style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;"><span class="status-dot active"></span><span id="map_title_id"></span></span></a></div>\
-				<div class="title" style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;"><span id="gps_state_label" data-i18n="gps.wait" style="color:var(--text-ghost);">GPS WAIT</span></div>\
+				<div class="left"><a href="/menu/" class="link"><span class="status-dot active"></span><span id="map_title_id"></span></a></div>\
+				<div class="title"><span id="gps_state_label" data-i18n="gps.wait">GPS WAIT</span></div>\
 				<div class="right">\
 					<a href="#" class="link" id="btn-users" data-i18n="[title]map.btn_users_title" title="Zoom on all users">\
-						<span id="usersnumbers" style="font-family:var(--font-mono);font-size:12px;color:var(--amber);">---</span>\
+						<span id="usersnumbers">---</span>\
 					</a>\
 					<a href="#" class="link" id="button_GPS" data-i18n="[title]map.btn_gps_title" title="Zoom on me">\
 						<i class="toolbar-icon icon-gps-error"></i>\
 					</a>\
-					<a href="#" class="link" id="button_network" data-i18n="[title]map.btn_network_title" title="Cleanup messages">\
+					<a href="#" class="link" id="button_network" data-i18n="[title]map.btn_network_title" title="Clear messages">\
 						<i class="toolbar-icon icon-data-error"></i>\
 					</a>\
 				</div>\
@@ -476,7 +399,7 @@
 		</div>\
 		<div class="toolbar toolbar-bottom">\
 			<div class="toolbar-inner">\
-				<span id="map_speed_id" role="button" tabindex="0" data-i18n="[aria-label]map.help_aria; [title]map.help_title" aria-label="Open help" title="Help" style="font-family:var(--font-mono);letter-spacing:3px;font-size:12px;cursor:pointer;">GEOMAP</span>\
+				<span id="map_speed_id" role="button" tabindex="0" data-i18n="[aria-label]map.help_aria; [title]map.help_title" aria-label="Open help" title="Help">GeoMap</span>\
 			</div>\
 		</div>\
 	</div>';
@@ -533,14 +456,14 @@
 		html += '<div class="view">';
 		html += '<div class="page">';
 		html += '<div class="navbar"><div class="navbar-bg"></div><div class="navbar-inner">';
-		html += '<div class="title" style="font-family:var(--font-mono);letter-spacing:3px;color:var(--cyan);">' + I18n.t('help.title') + '</div>';
-		html += '<div class="right"><a href="#" class="link popup-close" style="font-family:var(--font-mono);letter-spacing:2px;font-size:11px;">' + I18n.t('common.close') + '</a></div>';
+		html += '<div class="title">' + I18n.t('help.title') + '</div>';
+		html += '<div class="right"><a href="#" class="link popup-close">' + I18n.t('common.close') + '</a></div>';
 		html += '</div></div>';
 		html += '<div class="page-content">';
 		html += '<div class="block">';
 		for (var i = 0; i < sections.length; i++) {
-			html += '<h3 style="font-family:var(--font-mono);letter-spacing:2px;color:var(--cyan);font-size:12px;margin-top:18px;">' + sections[i].h + '</h3>';
-			html += '<p style="font-size:14px;line-height:1.5;">' + sections[i].p + '</p>';
+			html += '<h3>' + sections[i].h + '</h3>';
+			html += '<p>' + sections[i].p + '</p>';
 		}
 		html += '</div>';
 		html += '</div>';

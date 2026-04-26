@@ -1,12 +1,18 @@
 # GeoMap
 
-<p align="center">
-  <img src="media/20260426_060042.png" alt="GeoMap tactical map view with markers on an interactive Dark Ops themed map" width="480" />
+<p>
+  <img src="media/badges/license-gpl-v3.svg" alt="License: GPL v3" />
+  <img src="media/badges/privacy-gdpr.svg" alt="Privacy: GDPR ready" />
+  <img src="media/badges/no-tracking.svg" alt="Tracking: none" />
+  <img src="media/badges/status-active.svg" alt="Status: Active" />
+  <img src="media/badges/platform-web.svg" alt="Platform: Web" />
 </p>
 
-Anonymous, real-time geolocation sharing on an interactive map. Join a channel, share your position, exchange messages - no account required, no data stored.
+<p align="center">
+  <img src="media/20260426_060042.png" alt="GeoMap map view with users on a shared channel" width="480" />
+</p>
 
-**License:** [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html) | **Status:** Active
+Anonymous, real-time location sharing on an interactive map. Join a channel, share your position, exchange short messages - no account required, no data stored.
 
 ## Overview
 

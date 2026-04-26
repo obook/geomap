@@ -2,772 +2,879 @@
 /*
  * Project: GeoMap
  * File: theme-darkops.css
- * Description: Dark Ops theme - covert operations / SIGINT command terminal aesthetic
+ * Description: Default theme - calm slate dark mode with a single restrained teal accent
  * Author: Olivier Booklage
  * License: GPL v3
  * Date: April 2026
  */
 
 /* ========================================
-   FONTS
-   ======================================== */
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap');
-
-/* ========================================
    CSS VARIABLES
    ======================================== */
 :root {
-  --bg-abyss: #050508;
-  --bg-deep: #0a0a0f;
-  --bg-panel: #0d0d14;
-  --bg-elevated: #12121c;
-  --bg-surface: #181824;
+	/* Surfaces */
+	--bg-base: #0d1117;
+	--bg-deep: #0a0d12;
+	--bg-elevated: #161b22;
+	--bg-surface: #1c222b;
+	--bg-overlay: #232a33;
+	--bg-input: #0d1117;
 
-  --cyan: #00f0ff;
-  --cyan-dim: #007a82;
-  --cyan-glow: rgba(0, 240, 255, 0.15);
-  --cyan-glow-strong: rgba(0, 240, 255, 0.4);
+	/* Aliases used by legacy inline styles */
+	--bg-abyss: var(--bg-base);
+	--bg-panel: var(--bg-elevated);
 
-  --green: #00ff41;
-  --green-dim: #00802a;
-  --green-glow: rgba(0, 255, 65, 0.12);
+	/* Borders */
+	--border-subtle: rgba(255, 255, 255, 0.06);
+	--border-default: rgba(255, 255, 255, 0.10);
+	--border-strong: rgba(255, 255, 255, 0.16);
 
-  --amber: #ff9500;
-  --amber-dim: #804b00;
-  --amber-glow: rgba(255, 149, 0, 0.12);
+	/* Text */
+	--text-primary: #e6edf3;
+	--text-secondary: #9aa4b1;
+	--text-tertiary: #6b7785;
+	--text-ghost: #5a6573;
+	--text-disabled: #475160;
 
-  --red: #ff2d55;
-  --red-dim: #801730;
-  --red-glow: rgba(255, 45, 85, 0.15);
+	/* Accent (slate teal) */
+	--accent: #14b8a6;
+	--accent-hover: #2dd4bf;
+	--accent-soft: rgba(20, 184, 166, 0.12);
+	--accent-medium: rgba(20, 184, 166, 0.22);
+	--accent-strong: rgba(20, 184, 166, 0.42);
 
-  --text-primary: #c8d6e5;
-  --text-secondary: #6b7a8d;
-  --text-ghost: #3a4556;
+	/* Aliases used by legacy inline styles */
+	--cyan: var(--accent);
+	--cyan-dim: rgba(20, 184, 166, 0.55);
+	--cyan-glow: rgba(20, 184, 166, 0.18);
+	--cyan-glow-strong: rgba(20, 184, 166, 0.32);
+	--border-active: rgba(20, 184, 166, 0.30);
 
-  --border-subtle: rgba(0, 240, 255, 0.08);
-  --border-active: rgba(0, 240, 255, 0.3);
+	/* Status (muted, accessible) */
+	--status-ok: #10b981;
+	--status-ok-soft: rgba(16, 185, 129, 0.14);
+	--status-warn: #f59e0b;
+	--status-warn-soft: rgba(245, 158, 11, 0.14);
+	--status-error: #ef4444;
+	--status-error-soft: rgba(239, 68, 68, 0.14);
 
-  --font-display: 'Orbitron', sans-serif;
-  --font-body: 'Rajdhani', sans-serif;
-  --font-mono: 'Share Tech Mono', monospace;
+	/* Aliases used by legacy inline styles and JS */
+	--green: var(--status-ok);
+	--amber: var(--status-warn);
+	--red: var(--status-error);
 
-  --radius: 2px;
-  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	/* Typography - system stacks only (no remote font fetch) */
+	--font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+	/* Aliases used by legacy inline styles */
+	--font-display: var(--font-sans);
+	--font-body: var(--font-sans);
+
+	/* Shadows */
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.32);
+	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.40);
+	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.50);
+
+	/* Radius */
+	--radius-sm: 4px;
+	--radius-md: 8px;
+	--radius-lg: 12px;
+	--radius: var(--radius-md);
+
+	/* Motion */
+	--transition: 160ms cubic-bezier(0.2, 0, 0, 1);
+	--transition-slow: 280ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+	}
 }
 
 /* ========================================
-   BASE & SCANLINE OVERLAY
+   BASE
    ======================================== */
 html, body {
-  background: var(--bg-abyss) !important;
-  color: var(--text-primary) !important;
-  font-family: var(--font-body) !important;
-  -webkit-font-smoothing: antialiased;
+	background: var(--bg-base) !important;
+	color: var(--text-primary) !important;
+	font-family: var(--font-sans) !important;
+	font-size: 14px;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 }
 
-/* CRT scanline overlay — the signature effect */
-#app::after {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 240, 255, 0.015) 2px,
-    rgba(0, 240, 255, 0.015) 4px
-  );
-  pointer-events: none;
-  z-index: 99999;
+::selection {
+	background: var(--accent-medium);
+	color: var(--text-primary);
 }
 
-/* Hex grid background for pages */
-.page-content::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  opacity: 0.03;
-  background-image:
-    linear-gradient(30deg, var(--cyan) 12%, transparent 12.5%, transparent 87%, var(--cyan) 87.5%, var(--cyan)),
-    linear-gradient(150deg, var(--cyan) 12%, transparent 12.5%, transparent 87%, var(--cyan) 87.5%, var(--cyan)),
-    linear-gradient(30deg, var(--cyan) 12%, transparent 12.5%, transparent 87%, var(--cyan) 87.5%, var(--cyan)),
-    linear-gradient(150deg, var(--cyan) 12%, transparent 12.5%, transparent 87%, var(--cyan) 87.5%, var(--cyan)),
-    linear-gradient(60deg, rgba(0,240,255,0.5) 25%, transparent 25.5%, transparent 75%, rgba(0,240,255,0.5) 75%, rgba(0,240,255,0.5)),
-    linear-gradient(60deg, rgba(0,240,255,0.5) 25%, transparent 25.5%, transparent 75%, rgba(0,240,255,0.5) 75%, rgba(0,240,255,0.5));
-  background-size: 40px 70px;
-  background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
-  pointer-events: none;
-  z-index: 0;
+a {
+	color: var(--accent);
+	text-decoration: none;
+	transition: color var(--transition);
 }
 
-/* ========================================
-   FRAMEWORK7 OVERRIDES — NAVBAR
-   ======================================== */
-.navbar {
-  --f7-navbar-bg-color: var(--bg-deep) !important;
-  --f7-navbar-text-color: var(--cyan) !important;
-  --f7-navbar-link-color: var(--cyan) !important;
-  --f7-navbar-title-font-size: 11px !important;
-  --f7-navbar-height: 40px !important;
-  border-bottom: 1px solid var(--border-active) !important;
-  backdrop-filter: blur(12px);
+a:hover {
+	color: var(--accent-hover);
 }
 
-.navbar-geomap .navbar-inner {
-  display: flex !important;
-  align-items: center !important;
+code, pre, kbd, samp {
+	font-family: var(--font-mono);
+	font-size: 12.5px;
+	color: var(--text-secondary);
+	background: var(--bg-elevated);
+	padding: 2px 6px;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--border-subtle);
 }
 
-.navbar-geomap .navbar-inner .title {
-  position: static !important;
-  transform: none !important;
-  margin: 0 !important;
+pre, code {
+	white-space: pre-wrap;
+	word-break: break-word;
 }
 
-.navbar-bg {
-  background: linear-gradient(180deg, var(--bg-deep) 0%, rgba(10,10,15,0.95) 100%) !important;
-}
-
-.navbar .title {
-  font-family: var(--font-mono) !important;
-  font-weight: 400 !important;
-  letter-spacing: 2px !important;
-  text-transform: uppercase !important;
-  font-size: 11px !important;
-  text-shadow: 0 0 20px var(--cyan-glow-strong);
-}
-
-.navbar .link {
-  font-family: var(--font-mono) !important;
-  font-size: 11px !important;
-  text-transform: uppercase !important;
-  letter-spacing: 2px !important;
-  color: var(--cyan) !important;
-  opacity: 1;
-  transition: var(--transition);
-}
-
-.navbar .link:hover,
-.navbar .link:active {
-  opacity: 1;
-  text-shadow: 0 0 12px var(--cyan);
-}
-
-.icon-back {
-  color: var(--cyan) !important;
+.block code {
+	display: block;
+	padding: 14px 16px;
+	background: var(--bg-elevated);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--radius-md);
+	color: var(--text-secondary);
+	font-size: 12px;
+	line-height: 1.55;
 }
 
 /* ========================================
-   FRAMEWORK7 OVERRIDES — TOOLBAR / FOOTER
+   FRAMEWORK7 OVERRIDES - PAGE / VIEW
    ======================================== */
-.toolbar {
-  --f7-toolbar-bg-color: var(--bg-deep) !important;
-  --f7-toolbar-text-color: var(--green) !important;
-  --f7-toolbar-height: 28px !important;
-  border-top: 1px solid var(--border-active) !important;
-}
-
-.toolbar-inner {
-  font-family: var(--font-mono) !important;
-  font-size: 13px !important;
-  letter-spacing: 2px !important;
-  text-transform: uppercase !important;
-  text-shadow: 0 0 15px var(--green-glow);
-  justify-content: center !important;
-}
-
-/* ========================================
-   FRAMEWORK7 OVERRIDES — PAGE
-   ======================================== */
-.page {
-  --f7-page-bg-color: var(--bg-abyss) !important;
-  background: var(--bg-abyss) !important;
-}
-
+.page,
 .view,
 .views,
 .pages,
 .page-next,
 .page-previous,
 .router-transition .page {
-  background: var(--bg-abyss) !important;
+	--f7-page-bg-color: var(--bg-base) !important;
+	background: var(--bg-base) !important;
 }
 
 .page-content {
-  background: var(--bg-abyss) !important;
-  color: var(--text-primary) !important;
+	background: var(--bg-base) !important;
+	color: var(--text-primary) !important;
 }
 
 .block {
-  color: var(--text-primary) !important;
+	color: var(--text-primary) !important;
 }
 
 /* ========================================
-   BUTTONS — Tactical style
+   FRAMEWORK7 OVERRIDES - NAVBAR
+   ======================================== */
+.navbar {
+	--f7-navbar-bg-color: var(--bg-elevated) !important;
+	--f7-navbar-text-color: var(--text-primary) !important;
+	--f7-navbar-link-color: var(--accent) !important;
+	--f7-navbar-title-font-size: 15px !important;
+	--f7-navbar-height: 48px !important;
+	border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.navbar-bg {
+	background: var(--bg-elevated) !important;
+}
+
+.navbar .title {
+	font-family: var(--font-sans) !important;
+	font-weight: 600 !important;
+	font-size: 15px !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+	color: var(--text-primary) !important;
+	text-shadow: none !important;
+}
+
+.navbar .link {
+	font-family: var(--font-sans) !important;
+	font-size: 14px !important;
+	font-weight: 500 !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+	color: var(--accent) !important;
+	transition: color var(--transition) !important;
+}
+
+.navbar .link:hover {
+	color: var(--accent-hover) !important;
+	text-shadow: none !important;
+}
+
+.navbar .link:active {
+	opacity: 0.7;
+}
+
+.icon-back {
+	color: var(--accent) !important;
+}
+
+/* Map page navbar - tighter layout for status pill + actions */
+.navbar-geomap .navbar-inner {
+	display: flex !important;
+	align-items: center !important;
+	padding: 0 12px !important;
+}
+
+.navbar-geomap .navbar-inner .title {
+	position: static !important;
+	transform: none !important;
+	margin: 0 !important;
+}
+
+.navbar-geomap .right {
+	display: flex !important;
+	align-items: center !important;
+	gap: 10px !important;
+}
+
+#map_title_id {
+	font-family: var(--font-sans) !important;
+	font-size: 13px !important;
+	font-weight: 500 !important;
+	letter-spacing: 0 !important;
+	color: var(--text-primary) !important;
+}
+
+#usersnumbers {
+	font-family: var(--font-mono) !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	color: var(--text-secondary) !important;
+	letter-spacing: 0 !important;
+	text-shadow: none !important;
+	min-width: 24px;
+	text-align: center;
+}
+
+#gps_state_label {
+	font-family: var(--font-mono) !important;
+	font-size: 11.5px !important;
+	font-weight: 500 !important;
+	letter-spacing: 0.4px !important;
+	padding: 3px 9px;
+	border-radius: 999px;
+	background: var(--bg-base);
+	border: 1px solid var(--border-subtle);
+	transition: color var(--transition), background var(--transition), border-color var(--transition);
+}
+
+/* Subtle "active" dot on the channel link */
+.status-dot {
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--text-tertiary);
+	margin-right: 8px;
+	vertical-align: middle;
+	transition: background var(--transition);
+}
+
+.status-dot.active {
+	background: var(--status-ok);
+	box-shadow: 0 0 0 3px var(--status-ok-soft);
+}
+
+/* ========================================
+   FRAMEWORK7 OVERRIDES - TOOLBAR
+   ======================================== */
+.toolbar {
+	--f7-toolbar-bg-color: var(--bg-elevated) !important;
+	--f7-toolbar-text-color: var(--text-secondary) !important;
+	--f7-toolbar-height: 36px !important;
+	border-top: 1px solid var(--border-subtle) !important;
+}
+
+.toolbar-inner {
+	font-family: var(--font-sans) !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+	text-shadow: none !important;
+	justify-content: center !important;
+}
+
+#map_speed_id {
+	color: var(--text-secondary) !important;
+	font-family: var(--font-sans) !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	letter-spacing: 0 !important;
+	padding: 4px 12px;
+	border-radius: var(--radius-sm);
+	transition: background var(--transition), color var(--transition);
+}
+
+#map_speed_id:hover {
+	background: var(--accent-soft);
+	color: var(--accent) !important;
+}
+
+#map_speed_id:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+/* ========================================
+   BUTTONS
    ======================================== */
 .button {
-  font-family: var(--font-display) !important;
-  font-weight: 600 !important;
-  font-size: 12px !important;
-  letter-spacing: 3px !important;
-  text-transform: uppercase !important;
-  border-radius: var(--radius) !important;
-  transition: all var(--transition) !important;
-  position: relative;
-  overflow: hidden;
-}
-
-.button::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0,240,255,0.08), transparent);
-  transition: left 0.5s ease;
-}
-
-.button:hover::before,
-.button:active::before {
-  left: 100%;
-}
-
-.button-fill {
-  --f7-button-fill-bg-color: transparent !important;
-  --f7-button-fill-text-color: var(--cyan) !important;
-  border: 1px solid var(--cyan-dim) !important;
-  background: linear-gradient(180deg, rgba(0,240,255,0.06) 0%, rgba(0,240,255,0.02) 100%) !important;
-  box-shadow: inset 0 1px 0 rgba(0,240,255,0.1), 0 0 20px rgba(0,240,255,0.05) !important;
-}
-
-.button-fill:hover,
-.button-fill:active {
-  border-color: var(--cyan) !important;
-  box-shadow: inset 0 1px 0 rgba(0,240,255,0.2), 0 0 30px rgba(0,240,255,0.15) !important;
-  text-shadow: 0 0 10px var(--cyan);
-}
-
-.button-fill.color-green,
-.button.color-green {
-  --f7-button-fill-text-color: var(--green) !important;
-  border-color: var(--green-dim) !important;
-  background: linear-gradient(180deg, rgba(0,255,65,0.08) 0%, rgba(0,255,65,0.02) 100%) !important;
-  box-shadow: inset 0 1px 0 rgba(0,255,65,0.1), 0 0 20px rgba(0,255,65,0.05) !important;
-  color: var(--green) !important;
-}
-
-.button-fill.color-green:hover,
-.button-fill.color-green:active {
-  border-color: var(--green) !important;
-  box-shadow: inset 0 1px 0 rgba(0,255,65,0.2), 0 0 40px rgba(0,255,65,0.2) !important;
-  text-shadow: 0 0 15px var(--green);
-}
-
-.button-fill.color-blue {
-  --f7-button-fill-text-color: var(--cyan) !important;
-  border-color: var(--cyan-dim) !important;
-  color: var(--cyan) !important;
-}
-
-.button-fill.color-red,
-.button.color-red {
-  --f7-button-fill-text-color: var(--red) !important;
-  border-color: var(--red-dim) !important;
-  background: linear-gradient(180deg, rgba(255,45,85,0.08) 0%, rgba(255,45,85,0.02) 100%) !important;
-  box-shadow: inset 0 1px 0 rgba(255,45,85,0.1), 0 0 20px rgba(255,45,85,0.05) !important;
-  color: var(--red) !important;
-}
-
-.button-fill.color-red:hover {
-  border-color: var(--red) !important;
-  box-shadow: inset 0 1px 0 rgba(255,45,85,0.2), 0 0 40px rgba(255,45,85,0.2) !important;
-}
-
-.button-outline {
-  border-color: var(--cyan-dim) !important;
-  color: var(--cyan) !important;
-}
-
-.button-outline:hover {
-  border-color: var(--cyan) !important;
-  background: var(--cyan-glow) !important;
+	font-family: var(--font-sans) !important;
+	font-weight: 500 !important;
+	font-size: 14px !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+	border-radius: var(--radius-md) !important;
+	transition: background var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition) !important;
+	height: 40px !important;
+	line-height: 38px !important;
+	padding: 0 16px !important;
 }
 
 .button-large {
-  height: 44px !important;
-  line-height: 42px !important;
+	height: 44px !important;
+	line-height: 42px !important;
+	font-size: 14.5px !important;
+}
+
+.button-fill {
+	--f7-button-fill-bg-color: var(--accent) !important;
+	--f7-button-fill-text-color: #ffffff !important;
+	background: var(--accent) !important;
+	color: #ffffff !important;
+	border: 1px solid transparent !important;
+	box-shadow: var(--shadow-sm);
+}
+
+.button-fill:hover {
+	background: var(--accent-hover) !important;
+	box-shadow: var(--shadow-md);
+}
+
+.button-fill:active {
+	background: var(--accent) !important;
+	transform: translateY(1px);
+}
+
+.button-fill.disabled,
+.button-fill.disabled:hover,
+.button.disabled {
+	background: var(--bg-surface) !important;
+	color: var(--text-disabled) !important;
+	cursor: not-allowed;
+	opacity: 1;
+	pointer-events: none;
+	box-shadow: none;
+}
+
+/* Primary action override (kept the .color-green class intact for the ENGAGE button) */
+.button-fill.color-green,
+.button.color-green {
+	--f7-button-fill-text-color: #ffffff !important;
+	background: var(--accent) !important;
+	border-color: transparent !important;
+	color: #ffffff !important;
+	box-shadow: var(--shadow-sm);
+}
+
+.button-fill.color-green:hover {
+	background: var(--accent-hover) !important;
+	box-shadow: var(--shadow-md);
+	text-shadow: none;
+}
+
+/* Destructive action (Disconnect) */
+.button-fill.color-red,
+.button.color-red {
+	--f7-button-fill-text-color: var(--status-error) !important;
+	background: transparent !important;
+	color: var(--status-error) !important;
+	border: 1px solid var(--status-error) !important;
+	box-shadow: none !important;
+}
+
+.button-fill.color-red:hover {
+	background: var(--status-error-soft) !important;
+	box-shadow: none !important;
+}
+
+.button-fill.color-blue {
+	background: var(--accent) !important;
+	color: #ffffff !important;
+	border-color: transparent !important;
+}
+
+/* Outline / secondary buttons */
+.button-outline {
+	background: transparent !important;
+	border: 1px solid var(--border-strong) !important;
+	color: var(--text-primary) !important;
+	box-shadow: none !important;
+}
+
+.button-outline:hover {
+	background: var(--bg-elevated) !important;
+	border-color: var(--accent) !important;
+	color: var(--accent) !important;
+}
+
+.button:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
 }
 
 /* ========================================
-   INPUTS — Terminal style
+   FORMS
    ======================================== */
 .list ul {
-  background: transparent !important;
+	background: transparent !important;
 }
 
 .list .item-content {
-  --f7-list-item-border-color: var(--border-subtle) !important;
+	--f7-list-item-border-color: var(--border-subtle) !important;
 }
 
 .item-label,
 .item-title {
-  font-family: var(--font-mono) !important;
-  font-size: 11px !important;
-  color: var(--cyan-dim) !important;
-  text-transform: uppercase !important;
-  letter-spacing: 2px !important;
+	font-family: var(--font-sans) !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	color: var(--text-secondary) !important;
+	text-transform: none !important;
+	letter-spacing: 0 !important;
 }
 
 input[type="text"],
 input[type="number"],
-input[type="range"],
-select {
-  font-family: var(--font-mono) !important;
-  font-size: 16px !important;
-  color: var(--green) !important;
-  background: var(--bg-panel) !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: var(--radius) !important;
-  padding: 8px 12px !important;
-  caret-color: var(--cyan);
-  transition: var(--transition);
+input[type="email"],
+input[type="password"],
+input[type="search"],
+select,
+textarea {
+	font-family: var(--font-sans) !important;
+	font-size: 15px !important;
+	font-weight: 400 !important;
+	color: var(--text-primary) !important;
+	background: var(--bg-input) !important;
+	border: 1px solid var(--border-default) !important;
+	border-radius: var(--radius-md) !important;
+	padding: 9px 12px !important;
+	caret-color: var(--accent);
+	transition: border-color var(--transition), box-shadow var(--transition);
+	min-height: 38px;
 }
 
 input:focus,
-select:focus {
-  border-color: var(--cyan) !important;
-  box-shadow: 0 0 15px var(--cyan-glow), inset 0 0 10px var(--cyan-glow) !important;
-  outline: none !important;
+select:focus,
+textarea:focus {
+	border-color: var(--accent) !important;
+	box-shadow: 0 0 0 3px var(--accent-soft) !important;
+	outline: none !important;
 }
 
-input::placeholder {
-  color: var(--text-ghost) !important;
-  font-style: italic;
+input::placeholder,
+textarea::placeholder {
+	color: var(--text-tertiary) !important;
+	font-style: normal;
+	opacity: 1;
 }
 
 select {
-  -webkit-appearance: menulist !important;
-  appearance: menulist !important;
-  min-height: 36px !important;
-  line-height: 36px !important;
-  padding: 0 12px !important;
-  overflow: visible !important;
+	-webkit-appearance: none !important;
+	appearance: none !important;
+	min-height: 38px !important;
+	line-height: 38px !important;
+	padding: 0 36px 0 12px !important;
+	background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%239aa4b1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+	background-repeat: no-repeat !important;
+	background-position: right 12px center !important;
+	overflow: visible !important;
+	cursor: pointer;
 }
 
 select option {
-  background: var(--bg-panel);
-  color: var(--text-primary);
+	background: var(--bg-elevated);
+	color: var(--text-primary);
 }
 
 /* Range slider */
 input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 4px;
-  background: var(--bg-surface) !important;
-  border: none !important;
-  padding: 0 !important;
-  border-radius: 2px;
+	-webkit-appearance: none;
+	appearance: none;
+	height: 4px;
+	background: var(--bg-surface) !important;
+	border: none !important;
+	padding: 0 !important;
+	border-radius: 2px;
+	min-height: auto;
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 1px;
-  background: var(--cyan);
-  border: 2px solid var(--bg-deep);
-  box-shadow: 0 0 10px var(--cyan-glow-strong);
-  cursor: pointer;
-  transform: rotate(45deg);
+	-webkit-appearance: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: var(--accent);
+	border: 2px solid var(--bg-base);
+	box-shadow: var(--shadow-sm);
+	cursor: pointer;
+	transition: transform var(--transition);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+	transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: var(--accent);
+	border: 2px solid var(--bg-base);
+	cursor: pointer;
 }
 
 /* ========================================
-   MAP NAVBAR — Tactical HUD
+   PANEL / CARD - "classified-frame" legacy class repurposed
    ======================================== */
-.navbar-geomap .right {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
+.classified-frame {
+	background: var(--bg-elevated);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--radius-lg);
+	padding: 28px;
+	box-shadow: var(--shadow-md);
+	position: relative;
+}
+
+.classified-frame .item-label,
+.classified-frame .item-title {
+	color: var(--text-secondary) !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	letter-spacing: 0.2px !important;
+}
+
+/* ========================================
+   POPUP / MODAL
+   ======================================== */
+.popup {
+	--f7-popup-bg-color: var(--bg-base) !important;
+	background: var(--bg-base) !important;
+}
+
+.popup .navbar,
+.popup .navbar-bg {
+	background: var(--bg-elevated) !important;
+	border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.popup .page-content {
+	background: var(--bg-base) !important;
+}
+
+.popup h3 {
+	font-family: var(--font-sans) !important;
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0 !important;
+	color: var(--text-primary) !important;
+	text-transform: none !important;
+	margin: 22px 0 8px !important;
+}
+
+.popup p {
+	color: var(--text-secondary) !important;
+	font-size: 14px;
+	line-height: 1.55;
+	margin: 0;
+}
+
+/* ========================================
+   TOAST
+   ======================================== */
+.toast,
+.toast-text {
+	font-family: var(--font-sans) !important;
+	font-size: 14px !important;
+}
+
+.toast {
+	background: var(--bg-overlay) !important;
+	color: var(--text-primary) !important;
+	border: 1px solid var(--border-default) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-lg) !important;
+}
+
+/* ========================================
+   GPS / NETWORK HUD ICONS
+   The actual SVG data URLs live in www/index.html so they can use
+   the new palette. Here we only handle layout, not artwork.
+   ======================================== */
+.icon-gps-inactive,
+.icon-gps-active,
+.icon-gps-error,
+.icon-gps-bad-conditions,
+.icon-data-inactive,
+.icon-data-active-senestre,
+.icon-data-active-dextre,
+.icon-data-error {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: filter var(--transition), opacity var(--transition);
+}
+
+.toolbar-icon {
+	width: 20px;
+	height: 20px;
 }
 
 .navbar-geomap .toolbar-icon {
-  width: 24px !important;
-  height: 24px !important;
-  display: inline-block;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+	width: 20px !important;
+	height: 20px !important;
 }
 
-.navbar-geomap .toolbar-icon:hover {
-  transform: scale(1.2);
+.navbar-geomap .right .link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: var(--radius-sm);
+	transition: background var(--transition);
 }
 
-#usersnumbers {
-  font-family: var(--font-mono) !important;
-  font-size: 12px !important;
-  color: var(--amber) !important;
-  text-shadow: 0 0 8px var(--amber-glow);
-  letter-spacing: 1px;
+.navbar-geomap .right .link:hover {
+	background: var(--accent-soft);
 }
 
-#map_title_id {
-  font-family: var(--font-mono) !important;
-  font-size: 11px !important;
-  letter-spacing: 2px !important;
+.navbar-geomap .right .link#btn-users {
+	width: auto;
+	padding: 0 8px;
 }
 
-/* ========================================
-   MAP CANVAS
-   ======================================== */
-#map_canvas {
-  width: 100%;
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+@keyframes gps-pulse {
+	0%, 100% { opacity: 0.85; }
+	50%      { opacity: 1; }
 }
 
-/* ========================================
-   MESSAGES TOOLBAR — Intel overlay
-   ======================================== */
-#messages_toolbar {
-  position: absolute;
-  bottom: 50px;
-  right: 4px;
-  z-index: 100;
-  background: rgba(5,5,10,0.95) !important;
-  border: 1px solid var(--cyan-dim);
-  color: var(--cyan) !important;
-  font-family: var(--font-mono) !important;
-  font-size: 12px !important;
-  padding: 10px 14px;
-  border-radius: var(--radius);
-  display: none;
-  box-shadow: 0 0 30px rgba(0,240,255,0.1);
-  backdrop-filter: blur(8px);
-  letter-spacing: 1px;
+.icon-gps-error {
+	animation: gps-pulse 1.4s ease-in-out infinite;
 }
 
 /* ========================================
-   LEAFLET OVERRIDES — Dark tactical map
-   ======================================== */
-.leaflet-control-container {
-  z-index: 10000 !important;
-  position: relative !important;
-}
-
-.leaflet-top, .leaflet-bottom {
-  z-index: 10000 !important;
-}
-
-/* Descendre les contrôles Leaflet du haut sous la navbar Framework7 */
-.leaflet-top {
-  top: var(--f7-navbar-height, 44px) !important;
-}
-
-.leaflet-control-layers {
-  background: var(--bg-panel) !important;
-  border: 1px solid var(--cyan) !important;
-  border-radius: var(--radius) !important;
-  color: var(--text-primary) !important;
-  box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 10px var(--cyan-glow-strong) !important;
-}
-
-.leaflet-control-layers-toggle {
-  /* Remplacer l'image par un fond opaque + icone SVG inline cyan */
-  background-color: var(--bg-deep) !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300f0ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'/%3E%3Cpolyline points='2 17 12 22 22 17'/%3E%3Cpolyline points='2 12 12 17 22 12'/%3E%3C/svg%3E") !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px 20px !important;
-  border: 2px solid var(--cyan) !important;
-  border-radius: var(--radius) !important;
-  width: 40px !important;
-  height: 40px !important;
-  box-shadow: 0 0 15px var(--cyan-glow-strong), inset 0 0 8px rgba(0,240,255,0.1) !important;
-  opacity: 1 !important;
-}
-
-.leaflet-control-layers-toggle:hover {
-  background-color: var(--bg-elevated) !important;
-  box-shadow: 0 0 25px var(--cyan-glow-strong), 0 0 6px var(--cyan) !important;
-}
-
-.leaflet-control-layers-expanded {
-  padding: 8px 12px !important;
-  font-family: var(--font-mono) !important;
-  font-size: 11px !important;
-  letter-spacing: 1px;
-}
-
-.leaflet-control-layers label {
-  color: var(--text-primary) !important;
-}
-
-.leaflet-control-zoom a {
-  background: var(--bg-panel) !important;
-  color: var(--cyan) !important;
-  border-color: var(--cyan-dim) !important;
-  font-weight: 700;
-}
-
-.leaflet-control-zoom a:hover {
-  background: var(--bg-elevated) !important;
-  color: var(--cyan) !important;
-  box-shadow: 0 0 10px var(--cyan-glow);
-}
-
-.leaflet-bar {
-  border: 1px solid var(--cyan-dim) !important;
-  border-radius: var(--radius) !important;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5) !important;
-}
-
-.leaflet-popup-content-wrapper {
-  background: var(--bg-panel) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--cyan-dim) !important;
-  border-radius: var(--radius) !important;
-  font-family: var(--font-mono) !important;
-  font-size: 12px !important;
-  box-shadow: 0 0 25px rgba(0,0,0,0.6) !important;
-}
-
-.leaflet-popup-tip {
-  background: var(--bg-panel) !important;
-  border: 1px solid var(--cyan-dim) !important;
-}
-
-/* ========================================
-   MARKER LABELS
-   ======================================== */
-.labels {
-  color: var(--cyan) !important;
-  background: rgba(5, 5, 8, 0.85) !important;
-  font-family: var(--font-mono) !important;
-  font-size: 10px !important;
-  text-align: center;
-  white-space: nowrap;
-  border: 1px solid var(--cyan-dim);
-  padding: 2px 6px;
-  border-radius: var(--radius);
-  text-shadow: 0 0 6px var(--cyan-glow);
-  letter-spacing: 1px;
-}
-
-.leaflet-label {
-  background: rgba(5, 5, 8, 0.9) !important;
-  border: 1px solid var(--cyan-dim) !important;
-  border-radius: var(--radius) !important;
-  color: var(--cyan) !important;
-  font-family: var(--font-mono) !important;
-  font-size: 10px !important;
-  padding: 2px 8px !important;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5) !important;
-  white-space: nowrap !important;
-  letter-spacing: 1px;
-}
-
-.leaflet-label-left:before,
-.leaflet-label-right:before {
-  border-right-color: var(--cyan-dim) !important;
-}
-
-/* ========================================
-   DATA TABLE — Intel report style
+   USER LIST / DATA TABLE
    ======================================== */
 .data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-mono) !important;
-  font-size: 11px;
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+	background: var(--bg-elevated);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--radius-md);
+	overflow: hidden;
 }
 
 .data-table th {
-  color: var(--cyan) !important;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 10px;
-  padding: 8px;
-  border-bottom: 1px solid var(--cyan-dim);
-  text-shadow: 0 0 8px var(--cyan-glow);
+	font-family: var(--font-sans);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.4px;
+	text-transform: uppercase;
+	color: var(--text-secondary);
+	padding: 10px 12px;
+	background: var(--bg-surface);
+	border-bottom: 1px solid var(--border-subtle);
+	text-align: left;
 }
 
 .data-table td {
-  padding: 6px 8px;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border-subtle);
+	padding: 10px 12px;
+	border-bottom: 1px solid var(--border-subtle);
+	color: var(--text-primary);
+	font-family: var(--font-mono);
+	font-size: 12.5px;
 }
 
-.data-table tr:hover td {
-  background: var(--cyan-glow);
+.data-table tbody tr:last-child th,
+.data-table tbody tr:last-child td {
+	border-bottom: none;
 }
 
-.data-table a {
-  color: var(--amber) !important;
-  text-decoration: none;
+.data-table th a {
+	color: var(--accent);
+	font-family: var(--font-sans);
+	font-weight: 500;
 }
 
-.data-table a:hover {
-  text-shadow: 0 0 8px var(--amber);
-}
-
-/* ========================================
-   BLINKER — Pulse animation
-   ======================================== */
-#blinker-id {
-  display: block;
-  animation: pulse-glow 1.5s ease-in-out infinite;
-  color: var(--green) !important;
-  font-family: var(--font-display) !important;
-  font-weight: 900 !important;
-  font-size: 16px !important;
-  letter-spacing: 6px !important;
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 1;
-    text-shadow: 0 0 10px var(--green), 0 0 30px var(--green-glow);
-  }
-  50% {
-    opacity: 0.4;
-    text-shadow: 0 0 5px var(--green-glow);
-  }
-}
-
-#blinker-id:hover {
-  animation-play-state: paused;
+.data-table th[scope="col"],
+.data-table thead th {
+	font-family: var(--font-sans);
 }
 
 /* ========================================
-   CODE BLOCK — Classified document style
+   MESSAGE TOOLBAR (channel chat overlay on the map)
    ======================================== */
-code {
-  font-family: var(--font-mono) !important;
-  font-size: 10px !important;
-  color: var(--text-secondary) !important;
-  background: var(--bg-panel) !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: var(--radius) !important;
-  padding: 12px 16px !important;
-  display: block;
-  line-height: 1.6;
-  letter-spacing: 0.5px;
+#messages_toolbar {
+	position: absolute;
+	left: 50%;
+	top: 12px;
+	transform: translateX(-50%);
+	z-index: 999;
+	max-width: calc(100% - 24px);
+	display: none;
+}
+
+#messages_toolbar:not(:empty),
+#messages_toolbar[style*="display: block"] {
+	display: block;
+}
+
+#messages_id {
+	display: inline-block;
+	padding: 8px 14px;
+	background: var(--bg-overlay);
+	color: var(--text-primary);
+	border: 1px solid var(--border-default);
+	border-radius: 999px;
+	font-size: 13px;
+	font-weight: 500;
+	box-shadow: var(--shadow-md);
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /* ========================================
-   TOAST — Encrypted comms style
+   LEAFLET CUSTOMIZATION
    ======================================== */
-.toast {
-  --f7-toast-bg-color: var(--bg-panel) !important;
-  --f7-toast-text-color: var(--cyan) !important;
-  border: 1px solid var(--cyan-dim) !important;
-  font-family: var(--font-mono) !important;
-  letter-spacing: 2px !important;
-  text-transform: uppercase !important;
-  font-size: 11px !important;
+.leaflet-control-attribution {
+	background: rgba(13, 17, 23, 0.85) !important;
+	color: var(--text-tertiary) !important;
+	font-size: 10px !important;
+	font-family: var(--font-sans) !important;
+	padding: 2px 6px !important;
+	border-radius: var(--radius-sm) 0 0 0 !important;
+}
+
+.leaflet-control-attribution a {
+	color: var(--accent) !important;
+}
+
+.leaflet-control-zoom a {
+	background: var(--bg-elevated) !important;
+	color: var(--text-primary) !important;
+	border: 1px solid var(--border-default) !important;
+	width: 32px !important;
+	height: 32px !important;
+	line-height: 32px !important;
+	font-size: 18px !important;
+	font-weight: 400 !important;
+}
+
+.leaflet-control-zoom a:hover {
+	background: var(--bg-surface) !important;
+	color: var(--accent) !important;
+	border-color: var(--accent) !important;
+}
+
+.leaflet-control-layers {
+	background: var(--bg-elevated) !important;
+	color: var(--text-primary) !important;
+	border: 1px solid var(--border-default) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-md) !important;
+}
+
+.leaflet-control-layers-toggle {
+	background-color: var(--bg-elevated) !important;
+}
+
+.leaflet-control-layers-expanded {
+	padding: 12px 14px !important;
+	font-size: 13px;
+	font-family: var(--font-sans);
+}
+
+.leaflet-control-layers-expanded label {
+	color: var(--text-primary);
+	margin: 4px 0;
+	cursor: pointer;
+}
+
+.leaflet-popup-content-wrapper {
+	background: var(--bg-elevated) !important;
+	color: var(--text-primary) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-md) !important;
+	border: 1px solid var(--border-default) !important;
+}
+
+.leaflet-popup-tip {
+	background: var(--bg-elevated) !important;
+	border: 1px solid var(--border-default) !important;
 }
 
 /* ========================================
-   SCROLLBAR — Minimal tactical
+   FORM HELPERS USED BY THE LANDING PAGE
    ======================================== */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+#random-callsign-id {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border: 1px solid var(--border-default) !important;
+	border-radius: var(--radius-md) !important;
+	color: var(--text-secondary) !important;
+	font-size: 16px;
+	text-decoration: none;
+	transition: background var(--transition), color var(--transition), border-color var(--transition);
+	opacity: 1;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-abyss);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--cyan-dim);
-  border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--cyan);
+#random-callsign-id:hover {
+	background: var(--accent-soft) !important;
+	border-color: var(--accent) !important;
+	color: var(--accent) !important;
 }
 
 /* ========================================
-   PAGE TRANSITION — Classified entry
+   ABOUT / SHARE / HELP TYPOGRAPHY
    ======================================== */
-.page-current {
+.classified-frame p {
+	margin: 0 0 14px;
+	color: var(--text-secondary);
+	font-size: 14.5px;
+	line-height: 1.65;
 }
 
-@keyframes page-reveal {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.classified-frame p:last-child {
+	margin-bottom: 0;
 }
 
-/* ========================================
-   SELECTION
-   ======================================== */
-::selection {
-  background: var(--cyan-dim);
-  color: var(--bg-abyss);
-}
-
-/* ========================================
-   CORNER BRACKETS — Classified frame on home
-   ======================================== */
-.classified-frame {
-  position: relative;
-  padding: 24px;
-}
-
-.classified-frame::before,
-.classified-frame::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-color: var(--cyan-dim);
-  border-style: solid;
-}
-
-.classified-frame::before {
-  top: 0; left: 0;
-  border-width: 1px 0 0 1px;
-}
-
-.classified-frame::after {
-  bottom: 0; right: 0;
-  border-width: 0 1px 1px 0;
-}
-
-/* ========================================
-   STATUS INDICATOR DOTS
-   ======================================== */
-.status-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-right: 6px;
-  animation: dot-pulse 2s ease-in-out infinite;
-}
-
-.status-dot.active {
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
-}
-
-.status-dot.warning {
-  background: var(--amber);
-  box-shadow: 0 0 8px var(--amber);
-}
-
-.status-dot.error {
-  background: var(--red);
-  box-shadow: 0 0 8px var(--red);
-}
-
-@keyframes dot-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+.classified-frame p strong,
+.classified-frame p b {
+	color: var(--text-primary);
+	font-weight: 600;
 }
