@@ -548,6 +548,7 @@ var accuracy_layer = null;
 			var lon2 = gps_lastposition_longitude;
 
 			var distKm = GetDistance(lat1,lon1,lat2,lon2);
+			var distance;
 			if( distKm < 0 || isNaN(distKm) )
 			{
 				distance = '-';
@@ -733,7 +734,7 @@ var accuracy_layer = null;
 					console.log('[GeoMap] Following: ' + name)
 				}
 				
-				follow_marker_id = myid;;
+				follow_marker_id = myid;
 				toast("Following " + name);
 		
 			}
@@ -1016,15 +1017,19 @@ var accuracy_layer = null;
 		/* When a remote user reports anything other than STATE_POSITION_OK,
 		 * their last known position is stale. We hide the pin icon (so the
 		 * map does not falsely place them at that point) but keep the
-		 * floating username label visible at the same lat/lon, signalling
-		 * "this person is connected but their location is unknown right
-		 * now". The accuracy circle is also hidden. */
+		 * floating username label visible at the same lat/lon when the
+		 * marker is otherwise visible (visible=true). When the marker has
+		 * already been faded out by SetVisible(false) (stale TTL or
+		 * accuracy beyond GLOBAL_MINIMUM_ACCURAY) we leave the label
+		 * hidden so we do not resurrect a ghost label. The accuracy
+		 * circle is hidden either way. */
 		function SetNoGpsMode(val)
 		{
 			if (val)
 			{
 				marker.setOpacity(0);
-				marker.showLabel();
+				if (visible) marker.showLabel();
+				else marker.hideLabel();
 				if (circle_accuracy != null)
 				{
 					circle_accuracy.setStyle({opacity: 0, fillOpacity: 0});
@@ -1034,6 +1039,11 @@ var accuracy_layer = null;
 			{
 				marker.setOpacity(visible ? 1.0 : 0.3);
 				if (visible) marker.showLabel();
+				else marker.hideLabel();
+				if (circle_accuracy != null && visible)
+				{
+					circle_accuracy.setStyle({opacity: 1, fillOpacity: 0.25});
+				}
 			}
 		}
 
