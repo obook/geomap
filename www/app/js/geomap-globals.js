@@ -1,13 +1,11 @@
 /*
- * Globals for geomap
- * 
- * Last commit by $Author: obooklage $
- * Date - $Date: 2012-07-12 08:36:00 +0200 (jeu. 12 juil. 2012) $
- * Revision - $Rev: 322 $
- * Id : $Id: geomap-globals.js 322 2012-07-12 06:36:00Z obooklage $ 
- * 
- * 
- * */
+ * Project: GeoMap-Air
+ * File: geomap-globals.js
+ * Description: Global constants and timing knobs
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 var GLOBAL_APPNAME	=	'GEOMAP';
 

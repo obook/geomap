@@ -1,9 +1,11 @@
 <?php
 /*
- * Project : GeoMap
- * Server write message from client (JSON file version)
- * Copyright (c) Olivier Booklage
- * Dual licensed under the MIT and GPL licenses.
+ * Project: GeoMap-Air
+ * File: geomap-server-message-write.php
+ * Description: Persist a chat message to JSON file
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
  */
 
 require_once('geomap-json-storage.php');

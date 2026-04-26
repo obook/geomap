@@ -3,18 +3,13 @@
 require("geomap-server-config.php");
 
 /*
- * Project : GeoMap
- * Maintenance cron for GeoMap server
- * Copyright (c) Olivier Booklage
- * Dual licensed under the MIT and GPL licenses.
- *
- * Last commit by $Author: obooklage $
- * Date - $Date: 2012-03-17 10:46:39 +0100 (sam. 17 mars 2012) $
- * Revision - $Rev: 317 $
- * Id : $Id: geomap-server-maintenance.php 317 2012-03-17 09:46:39Z obooklage $
- *
- *
- * */
+ * Project: GeoMap-Air
+ * File: geomap-server-maintenance.php
+ * Description: Cleanup inactive sessions and old messages (cron)
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 header("Content-Type: text/plain");
 

@@ -1,13 +1,11 @@
 /*
- * geomap.js
- * 
- * Last commit by $Author: obooklage $
- * Date - $Date: 2013-08-02 00:51:01 +0200 (ven., 02 août 2013) $
- * Revision - $Rev: 277 $
- * Id : $Id: geomap.js 277 2013-08-01 22:51:01Z obooklage $ 
- * 
- * 
- * */
+ * Project: GeoMap-Air
+ * File: geomap-soundplayer.js
+ * Description: SoundManager2 playback wrapper
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 function playaudio(src_id, src_url)
 {

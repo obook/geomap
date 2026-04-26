@@ -1,13 +1,11 @@
 /*
- * Class Class_AirMarkers
- * 
- * Last commit by $Author: obooklage $
- * Date - $Date: 2012-06-18 16:37:05 +0200 (lun. 18 juin 2012) $
- * Revision - $Rev: 319 $
- * Id : $Id: geomap-latlngctrl.js 319 2012-06-18 14:37:05Z obooklage $ 
- * 
- * 
- * */
+ * Project: GeoMap-Air
+ * File: geomap-latlngctrl.js
+ * Description: Latitude / longitude coordinate display control
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 function LatLngControl(map)
 {

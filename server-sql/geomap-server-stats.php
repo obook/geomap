@@ -3,18 +3,13 @@
 	require('geomap-server-config.php');
 
 /*
- * Project : GeoMap
- * Server give data to client
- * Copyright (c) Olivier Booklage
- * Dual licensed under the MIT and GPL licenses.
- *
- * Last commit by $Author: obooklage $
- * Date - $Date: 2012-01-09 14:28:18 +0100 (lun. 09 janv. 2012) $
- * Revision - $Rev: 223 $
- * Id : $Id: geomap-server-read.php 223 2012-01-09 13:28:18Z obooklage $
- *
- *
- * */
+ * Project: GeoMap-Air
+ * File: geomap-server-stats.php
+ * Description: Usage statistics endpoint
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 	if( isset( $_REQUEST['mission']) )
 	{

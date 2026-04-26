@@ -1,29 +1,20 @@
 <?php
-
 /*
- *
- *
- * Last commit by $Author: obooklage $
- * Date - $Date: 2012-01-24 10:09:02 +0100 (mar. 24 janv. 2012) $
- * Revision - $Rev: 276 $
- * Id : $Id: index.php 276 2012-01-24 09:09:02Z obooklage $
- *
- *
- * */
+ * Project: GeoMap-Air
+ * File: index.php
+ * Description: Legacy admin panel
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 
 
 	echo "<!DOCTYPE html>\n";
-	echo "<!--\n\n";	
-	echo "/*\n";	
-	echo "* GMA - GeoMap-Air © Olivier Booklage ".date("Y")." obooklage@free.fr all rights reserved.\n";
-	// echo "* user_id=$user_id user_name=$user_name mission_id=$mission_id theme=$theme\n";
-	echo "* \n";	
-	echo "* \$Author: obooklage $\n";	
-	echo "* \$Date: 2012-01-24 10:09:02 +0100 (mar. 24 janv. 2012) $\n";	
-	echo "* \$Rev: 276 $\n";	
-	echo "* \$Id: index.php 276 2012-01-24 09:09:02Z obooklage $\n";	
-	echo "* \n";	
+	echo "<!--\n\n";
+	echo "/*\n";
+	echo "* GMA - GeoMap-Air (c) Olivier Booklage ".date("Y")." obooklage@free.fr all rights reserved.\n";
+	echo "* Licensed under the GNU General Public License v3.\n";
 	echo "*/\n\n-->\n";
 
 ?>

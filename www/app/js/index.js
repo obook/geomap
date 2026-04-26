@@ -1,13 +1,11 @@
 /*
- * Javacript for index page
- * 
- * Last commit by $Author: obooklage $
- * Date - $Date: 2012-03-17 10:46:39 +0100 (sam. 17 mars 2012) $
- * Revision - $Rev: 317 $
- * Id : $Id: index.js 317 2012-03-17 09:46:39Z obooklage $ 
- * 
- * 
- * */
+ * Project: GeoMap-Air
+ * File: index.js
+ * Description: Home page entry script (sound init, storage retrieval)
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 /* HTML5 : storage : recall */
 

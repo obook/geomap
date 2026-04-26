@@ -1,13 +1,11 @@
 /*
- * Class Class_AirMarkers
- * 
- * Last commit by $Author: obooklage $
- * Date - $Date: 2012-07-31 12:32:12 +0200 (mar. 31 juil. 2012) $
- * Revision - $Rev: 326 $
- * Id : $Id: geomap-markers.js 326 2012-07-31 10:32:12Z obooklage $ 
- * 
- * 
- * */
+ * Project: GeoMap-Air
+ * File: geomap-markers.js
+ * Description: Marker rendering and updates (Class_AirMarkers)
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 var iColor = 1; /* 0 is reserved to local user */
 

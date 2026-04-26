@@ -1,13 +1,11 @@
 /*
- * Class Class_AirUser
- * 
- * Last commit by $Author: obooklage $
- * Date - $Date: 2012-06-18 16:37:05 +0200 (lun. 18 juin 2012) $
- * Revision - $Rev: 319 $
- * Id : $Id: geomap-user.js 319 2012-06-18 14:37:05Z obooklage $ 
- * 
- * 
- * */
+ * Project: GeoMap-Air
+ * File: geomap-user.js
+ * Description: User session and server sync (Class_AirUser)
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
+ */
 
 function Class_AirUser(map,mission,id,name)
 {

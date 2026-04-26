@@ -1,9 +1,11 @@
 <?php
 /*
- * Project : GeoMap
- * Server give data to client (JSON file version)
- * Copyright (c) Olivier Booklage
- * Dual licensed under the MIT and GPL licenses.
+ * Project: GeoMap-Air
+ * File: geomap-server-read.php
+ * Description: Read users and messages from JSON files
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
  */
 
 require_once('geomap-json-storage.php');

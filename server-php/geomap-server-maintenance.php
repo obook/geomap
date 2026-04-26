@@ -1,9 +1,11 @@
 <?php
 /*
- * Project : GeoMap
- * Maintenance cron (JSON file version)
- * Copyright (c) Olivier Booklage
- * Dual licensed under the MIT and GPL licenses.
+ * Project: GeoMap-Air
+ * File: geomap-server-maintenance.php
+ * Description: Cleanup inactive sessions and old messages (cron)
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
  */
 
 require_once('geomap-json-storage.php');

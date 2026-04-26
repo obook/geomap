@@ -1,9 +1,11 @@
 <?php
 /*
- * Project : GeoMap
- * Statistics endpoint (JSON file version)
- * Copyright (c) Olivier Booklage
- * Dual licensed under the MIT and GPL licenses.
+ * Project: GeoMap-Air
+ * File: geomap-server-stats.php
+ * Description: Usage statistics endpoint
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
  */
 
 require_once('geomap-json-storage.php');

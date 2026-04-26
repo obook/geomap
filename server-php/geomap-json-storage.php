@@ -1,9 +1,11 @@
 <?php
 /*
- * Project : GeoMap
- * JSON file storage helpers
- * Copyright (c) Olivier Booklage
- * Dual licensed under the MIT and GPL licenses.
+ * Project: GeoMap-Air
+ * File: geomap-json-storage.php
+ * Description: JSON file storage helpers (atomic writes, sanitisation)
+ * Author: Olivier Booklage
+ * License: GPL v3
+ * Date: April 2026
  */
 
 require_once(__DIR__ . '/geomap-server-config.php');
