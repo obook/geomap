@@ -386,10 +386,9 @@ function gps_clear_toast_state()
 		}
 		else
 		{
-			console.warn('[GeoMap] GPS bad conditions: acc=' + gps_lastposition_accuracy + 'm status=' + gps_lastposition_status);
 			if( toogle_animation != 2 )
 			{
-
+				console.warn('[GeoMap] GPS bad conditions: acc=' + gps_lastposition_accuracy + 'm status=' + gps_lastposition_status);
 				$('#button_GPS .toolbar-icon').attr('class', 'toolbar-icon icon-gps-bad-conditions');
 				
 								
