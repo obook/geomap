@@ -126,6 +126,23 @@ The front-end deploys to GitHub Pages automatically via the workflow in `.github
 
 The PHP server (`server-php/` or `server-sql/`) must be hosted separately on any PHP-compatible environment.
 
+## Local development
+
+Both the front-end and the JSON back-end can be served from a single PHP built-in server, with no other tooling required:
+
+```bash
+php -S localhost:8000
+```
+
+Run it from the project root, then open:
+
+- Front-end: <http://localhost:8000/www/>
+- Back-end:  <http://localhost:8000/server-php/>
+
+In the **Server** field of the front-end home page, set the back-end URL to `http://localhost:8000/server-php` and tap Connect.
+
+To smoke-test the back-end alone, request `http://localhost:8000/server-php/geomap-server-info.php?mission=1234` in any browser; it should return a JSON payload.
+
 ## Third-party libraries
 
 All third-party libraries are vendored locally under `www/vendor/`; no CDN is loaded at runtime. Each is used as released by its upstream author.
