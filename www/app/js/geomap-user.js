@@ -123,10 +123,9 @@ var elapsedTime = 0;
 		
 		/* random value = force NO cache via http-caches */
 		var random_id = GetRandomID();
-		var batterylevel = get_batterylevel();
-		
+
 		// console.log("Call ajax for geomap-server-write.php");
-		var obj = { active:active, frequency:frequency, mission:missionid, userid:id, username:name, state:state, latitude:latitude, longitude:longitude, accuracy:accuracy, speed:speed, altitude:altitude, altitudeAccuracy:altitudeAccuracy, heading:heading, battery:batterylevel, clsid:random_id };
+		var obj = { active:active, frequency:frequency, mission:missionid, userid:id, username:name, state:state, latitude:latitude, longitude:longitude, accuracy:accuracy, speed:speed, altitude:altitude, altitudeAccuracy:altitudeAccuracy, heading:heading, clsid:random_id };
 		$.ajax({
 			url: GLOBAL_SERVER +"/geomap-server-write.php",
 			crossDomain: true,

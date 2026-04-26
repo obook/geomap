@@ -104,19 +104,3 @@ function set_sound(sound)
 	localStorage.setItem('sound', sound);
 }
 
-/* Only for phonegap : batterylevel */
-function get_batterylevel()
-{
-var batterylevel = localStorage.getItem('batterylevel');
-if(!batterylevel)
-	batterylevel=-1;
-return(batterylevel);
-}
-
-function set_batterylevel(batterylevel)
-{
-	if(!batterylevel)
-		batterylevel=-1;
-	localStorage.setItem('batterylevel', batterylevel);
-}
-

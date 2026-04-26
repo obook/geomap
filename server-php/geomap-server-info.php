@@ -60,7 +60,6 @@ foreach ($users as $u) {
 		'username' => $u['username'],
 		'latitude' => floatval($u['latitude']),
 		'state' => intval($u['state']),
-		'battery' => intval(isset($u['battery']) ? $u['battery'] : -1),
 		'longitude' => floatval($u['longitude']),
 		'accuracy' => floatval($u['accuracy']),
 		'speed' => floatval($u['speed']),

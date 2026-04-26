@@ -48,11 +48,6 @@ if (isset($_REQUEST['heading'])) {
 	if ($heading === 'NaN') $heading = -1;
 }
 
-$battery = -1;
-if (isset($_REQUEST['battery'])) {
-	$battery = sanitize($_REQUEST['battery']);
-}
-
 $client = get_client_info();
 
 /* Load existing users for this mission */
@@ -73,7 +68,6 @@ foreach ($users as &$u) {
 		$u['altitude'] = floatval($altitude);
 		$u['altitudeAccuracy'] = floatval($altitudeAccuracy);
 		$u['heading'] = floatval($heading);
-		$u['battery'] = intval($battery);
 		$u['frequency'] = intval($frequency);
 		$u['time'] = time();
 		$u['ip'] = $client['ip'];
@@ -98,7 +92,6 @@ if (!$found) {
 		'altitude' => floatval($altitude),
 		'altitudeAccuracy' => floatval($altitudeAccuracy),
 		'heading' => floatval($heading),
-		'battery' => intval($battery),
 		'frequency' => intval($frequency),
 		'time' => time(),
 		'ip' => $client['ip'],

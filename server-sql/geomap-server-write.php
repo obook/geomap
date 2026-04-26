@@ -148,15 +148,6 @@ $httpuseragent = "";
 		}
 	}
 
-	if( !isset( $_REQUEST['battery']) )
-	{
-		$batterylevel = -1;
-	}
-	else
-	{
-		$batterylevel = htmlentities($_REQUEST['battery'], ENT_QUOTES, 'UTF-8');
-	}
-
 	$connexion = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 	if( !$connexion )
@@ -181,7 +172,6 @@ $httpuseragent = "";
 	$altitude = mysqli_real_escape_string($connexion, $altitude);
 	$altitudeAccuracy = mysqli_real_escape_string($connexion, $altitudeAccuracy);
 	$heading = mysqli_real_escape_string($connexion, $heading);
-	$batterylevel = mysqli_real_escape_string($connexion, $batterylevel);
 	$ip = mysqli_real_escape_string($connexion, $ip);
 	$hostname = mysqli_real_escape_string($connexion, $hostname);
 	$proxyip = mysqli_real_escape_string($connexion, $proxyip);
@@ -205,15 +195,15 @@ $httpuseragent = "";
 	{
 		$request =  "UPDATE geomap_users SET active=$active, ip='$ip', hostname='$hostname', proxyip='$proxyip', proxyhostname='$proxyhostname', httpuseragent='$httpuseragent',
 		 username='$username',latitude='$latitude',longitude='$longitude',accuracy='$accuracy',speed='$speed',altitude='$altitude',altitudeAccuracy='$altitudeAccuracy',
-		 heading='$heading',battery='$batterylevel',state='$state',frequency='$frequency',time=".time()."
+		 heading='$heading',state='$state',frequency='$frequency',time=".time()."
 		 WHERE (userid='$userid' AND mission='$mission');";
 	}
 	else /* insert */
 	{
 		$request =  "INSERT INTO geomap_users( active, ip, hostname, proxyip, proxyhostname, httpuseragent,
-		 mission, userid , username, latitude, longitude, accuracy, speed, altitude, altitudeAccuracy, heading, battery, state, frequency, time )
+		 mission, userid , username, latitude, longitude, accuracy, speed, altitude, altitudeAccuracy, heading, state, frequency, time )
 				VALUES( '$active', '$ip', '$hostname', '$proxyip', '$proxyhostname', '$httpuseragent',
-		 '$mission', '$userid', '$username', '$latitude', '$longitude', '$accuracy', '$speed', '$altitude', '$altitudeAccuracy', '$heading', '$batterylevel', '$state','$frequency', ".time().")";
+		 '$mission', '$userid', '$username', '$latitude', '$longitude', '$accuracy', '$speed', '$altitude', '$altitudeAccuracy', '$heading', '$state','$frequency', ".time().")";
 	}
 
 	$result = mysqli_query( $connexion, $request );
@@ -227,9 +217,9 @@ $httpuseragent = "";
 	/* Nouveau : on stocke dans une nouvelle table geomap_history */
 
 	$request =  "INSERT INTO geomap_history( active, ip, hostname, proxyip, proxyhostname, httpuseragent, mission, userid , username, latitude, longitude, accuracy,
-	 speed, altitude, altitudeAccuracy, heading, battery, state, frequency, time )
+	 speed, altitude, altitudeAccuracy, heading, state, frequency, time )
 				VALUES( '$active', '$ip', '$hostname', '$proxyip', '$proxyhostname', '$httpuseragent', '$mission', '$userid', '$username', '$latitude', '$longitude', '$accuracy',
-	'$speed', '$altitude', '$altitudeAccuracy', '$heading', '$batterylevel' , '$state','$frequency', ".time().")";
+	'$speed', '$altitude', '$altitudeAccuracy', '$heading', '$state','$frequency', ".time().")";
 
 	$result = mysqli_query( $connexion, $request );
 	if( !$result )

@@ -259,7 +259,7 @@ var accuracy_layer = null;
 					
 					if( item["state"] == STATE_POSITION_OK )
 					{
-						marker_exist.SetPosition(item["username"], newposition, item["accuracy"], item["heading"], item["speed"], item["battery"], item["time"]); /* bizarre pas de redraw si je le mets qu'en level 2 ?! */
+						marker_exist.SetPosition(item["username"], newposition, item["accuracy"], item["heading"], item["speed"], item["time"]);
 					}
 					
 					marker_exist.SetMarkerTTL(master_clock - item['time']);
@@ -279,7 +279,7 @@ var accuracy_layer = null;
 						unit_ttl = ' h';
 					}
 					
-					marker_exist.SetTitle( "TTL: " + format_ttl + unit_ttl + "\nACC: " + item["accuracy"] + "m\nBAT: "+item["battery"]+"%" );	
+					marker_exist.SetTitle( "TTL: " + format_ttl + unit_ttl + "\nACC: " + item["accuracy"] + "m" );
 					
 					/* Message present ? */
 
@@ -517,27 +517,25 @@ var accuracy_layer = null;
 		<th data-priority='1'>DISTANCE</th>\
 		<th data-priority='3'>ACC.</th>\
 		<th data-priority='2'>TIME</th>\
-		<th data-priority='4'>BATT.</th>\
 		</tr>\
 		</thead>\
 		<tbody>\
 		<tr>";
-		
+
 
 		for( var i = 0; i < markers_array.length; i++)
 		{
 			var marker = markers_array[i];
 			var username = marker.GetUsername();
 			var accuracy = marker.GetAccuracy();
-			var battery = marker.GetBatteryLevel();
 			var TTL = marker.GetMarkerTTL();
 			var unit_ttl = ' sec';
-			
+
 			var lat1 = marker.GetLat();
 			var lon1 = marker.GetLon();
 			var lat2 = gps_lastposition_latitude;
 			var lon2 = gps_lastposition_longitude;
-									
+
 			var distKm = GetDistance(lat1,lon1,lat2,lon2);
 			if( distKm < 0 || isNaN(distKm) )
 			{
@@ -564,35 +562,23 @@ var accuracy_layer = null;
 			{
 				accuracy = Math.round(accuracy) + " m";
 			}
-			
-			if( battery == -1 )
-			{
-				battery = '-';
-			}
-			else
-			{
-				battery = battery + " %";
-			}
-			
+
 			if( TTL > 60 )
 			{
 				TTL = Math.round(TTL / 60);
 				unit_ttl = ' m';
 			}
-			
+
 			if( TTL > 60 )
 			{
 				TTL = Math.round(TTL / 60);
 				unit_ttl = ' h';
 			}
-			
-			// jQuery('<li></li>').html('<a rel="external" target="_blank" href="https://maps.google.com/?daddr='+marker.GetLat()+','+marker.GetLon()+'">' + username + ' - ' + distance + ' km </a>').appendTo(id);
 
 			html = html +   "<th><a href=\"https://maps.google.com/?daddr="+lat1+","+lon1+"\" target='_blank' data-rel='external'>"+username+"</a></th>\
 							<td>"+distance+" km</td>\
 							<td>"+accuracy+"</td>\
 							<td>"+TTL+unit_ttl+"</td>\
-							<td>"+battery+"</td>\
 							</tr>";
 		}
 		
@@ -647,8 +633,7 @@ var accuracy_layer = null;
 	
 	var mylastspeed = 0;
 	var mylastaccuracy =0;
-	var mylastbatterylevel = 0;
-	
+
 	var visible = true;
 	
 	var gps_date = 0;		/* marker GPS clock : last time GPS send , field 'date' in JSON eg : 1326206896 */
@@ -918,12 +903,11 @@ var accuracy_layer = null;
 			return(marker);
 		}
 		
-		function SetPosition(name, LatLng, accuracy, heading, speed, battery, date)
+		function SetPosition(name, LatLng, accuracy, heading, speed, date)
 		{
 			myname = name; /* If name changed */
-			
+
 			marker.hideLabel();
-			// marker.unbindLabel();
 			if( circle_accuracy != null )
 			{
 				circle_accuracy.setLatLng(LatLng);
@@ -938,7 +922,6 @@ var accuracy_layer = null;
 				}
 			}
 			marker.setLatLng(LatLng);
-			// marker.bindLabel(myLabeLText,{noHide: true});
 			marker.showLabel();
 			marker.update();
 
@@ -947,7 +930,6 @@ var accuracy_layer = null;
 			mylastposition_longitude = LatLng.lng;
 			mylastspeed = speed;
 			mylastaccuracy = accuracy;
-			mylastbatterylevel = battery;
 
 			/*
 			 * 
@@ -1093,20 +1075,13 @@ var accuracy_layer = null;
 			return(mylastaccuracy);
 		}
 		
-		function GetBatteryLevel()
-		{
-			return(mylastbatterylevel);
-		}
-			
-		// gmarkerList[item['userid']].setIcon(guser_icon);
-		
 		return{update:update,GetId:GetId,GetUsername:GetUsername,
 		GetMarker:GetMarker,SetPosition:SetPosition,SetTitle:SetTitle,
 		SetMarkerTTL:SetMarkerTTL,GetMarkerTTL:GetMarkerTTL,GetServerTTL:GetServerTTL,
 		SetVisible:SetVisible,GetVisible:GetVisible,SetDefaultIcon:SetDefaultIcon,
 		SetReceptionLevel:SetReceptionLevel,SetGreenMarker:SetGreenMarker,
 		Remove:Remove,GetLastPosition:GetLastPosition,PrintMessage:PrintMessage,
-		GetLat:GetLat,GetLon:GetLon,GetAccuracy:GetAccuracy,GetBatteryLevel:GetBatteryLevel};
+		GetLat:GetLat,GetLon:GetLon,GetAccuracy:GetAccuracy};
 	} /* Class_Marker(map,position,id) */
 	
 	

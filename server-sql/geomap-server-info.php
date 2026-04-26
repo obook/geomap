@@ -88,7 +88,6 @@ header('Content-type: application/json; charset=utf-8');
 				'username' => $row->username,
 				'latitude' => floatval($row->latitude),
 				'state' => intval($row->state),
-				'battery' => intval($row->battery),
 				'longitude' => floatval($row->longitude),
 				'accuracy' => floatval($row->accuracy),
 				'speed' => floatval($row->speed),

@@ -79,7 +79,6 @@ require("geomap-server-config.php");
 				'username' => $row->username,
 				'latitude' => floatval($row->latitude),
 				'state' => intval($row->state),
-				'battery' => intval($row->battery),
 				'longitude' => floatval($row->longitude),
 				'accuracy' => floatval($row->accuracy),
 				'speed' => floatval($row->speed),
