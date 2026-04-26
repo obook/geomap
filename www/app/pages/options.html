@@ -6,45 +6,45 @@
 			<div class="title" data-i18n="options.title">Settings</div>
 		</div>
 	</div>
-	<div class="page-content">
-		<div class="block">
+	<div class="page-content" style="display:flex; align-items:flex-start; justify-content:center; padding:24px 16px;">
+		<div class="classified-frame" style="width:100%; max-width:420px; padding:20px;">
 			<div class="section-hint" data-i18n="options.params_label">Preferences</div>
-		</div>
-		<div class="list inline-labels" style="margin:0;">
-			<ul>
-				<li class="item-content item-input">
-					<div class="item-inner">
-						<div class="item-title item-label" data-i18n="options.net_delay">Network interval</div>
-						<div class="item-input-wrap" style="display:flex; align-items:center; gap:10px;">
-							<input type="range" id="slider-network-id" min="15" max="120" value="30" step="5" style="flex:1;" />
-							<span id="slider-network-value" style="font-family:var(--font-mono); font-size:12px; color:var(--text-primary); min-width:42px; text-align:right;"></span>
+			<div class="list inline-labels" style="margin:0;">
+				<ul>
+					<li class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label" data-i18n="options.net_delay">Network interval</div>
+							<div class="item-input-wrap" style="display:flex; align-items:center; gap:10px;">
+								<input type="range" id="slider-network-id" min="15" max="120" value="30" step="5" style="flex:1;" />
+								<span id="slider-network-value" style="font-family:var(--font-mono); font-size:12px; color:var(--text-primary); min-width:42px; text-align:right;"></span>
+							</div>
 						</div>
-					</div>
-				</li>
-				<li class="item-content item-input">
-					<div class="item-inner">
-						<div class="item-title item-label" data-i18n="options.audio">Sound</div>
-						<div class="item-input-wrap">
-							<select id="flipsound-id">
-								<option value="off" data-i18n="options.silent">Off</option>
-								<option value="on" selected data-i18n="options.active">On</option>
-							</select>
+					</li>
+					<li class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label" data-i18n="options.audio">Sound</div>
+							<div class="item-input-wrap">
+								<select id="flipsound-id">
+									<option value="off" data-i18n="options.silent">Off</option>
+									<option value="on" selected data-i18n="options.active">On</option>
+								</select>
+							</div>
 						</div>
-					</div>
-				</li>
-				<li class="item-content item-input">
-					<div class="item-inner">
-						<div class="item-title item-label" data-i18n="options.language">Language</div>
-						<div class="item-input-wrap">
-							<select id="lang-select-id">
-								<option value="auto" data-i18n="options.lang_auto">Auto</option>
-								<option value="en" data-i18n="options.lang_en">English</option>
-								<option value="fr" data-i18n="options.lang_fr">Francais</option>
-							</select>
+					</li>
+					<li class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label" data-i18n="options.language">Language</div>
+							<div class="item-input-wrap">
+								<select id="lang-select-id">
+									<option value="auto" data-i18n="options.lang_auto">Auto</option>
+									<option value="en" data-i18n="options.lang_en">English</option>
+									<option value="fr" data-i18n="options.lang_fr">Francais</option>
+								</select>
+							</div>
 						</div>
-					</div>
-				</li>
-			</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 

@@ -11,6 +11,8 @@
  * the per-page modules. Module files use document.write because the codebase
  * targets older mobile browsers (no native ES modules). */
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/globals.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/i18n/dict-en.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/i18n/dict-fr.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/i18n/i18n.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/storage.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/main.js"></script>');
