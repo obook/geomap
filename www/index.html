@@ -450,7 +450,7 @@
 			<div class="navbar-bg"></div>\
 			<div class="navbar-inner">\
 				<div class="left"><a href="/menu/" class="link"><span style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;"><span class="status-dot active"></span><span id="map_title_id"></span></span></a></div>\
-				<div class="title" style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--cyan);">TACTICAL</div>\
+				<div class="title" style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;"><span id="gps_state_label" style="color:var(--text-ghost);">GPS WAIT</span></div>\
 				<div class="right">\
 					<a href="#" class="link" id="btn-users" title="Zoom on all users">\
 						<span id="usersnumbers" style="font-family:var(--font-mono);font-size:12px;color:var(--amber);">---</span>\
@@ -470,7 +470,7 @@
 		</div>\
 		<div class="toolbar toolbar-bottom">\
 			<div class="toolbar-inner">\
-				<span id="map_speed_id" style="font-family:var(--font-mono);letter-spacing:3px;font-size:12px;">GEOMAP</span>\
+				<span id="map_speed_id" role="button" tabindex="0" aria-label="Open help" title="Help" style="font-family:var(--font-mono);letter-spacing:3px;font-size:12px;cursor:pointer;">GEOMAP</span>\
 			</div>\
 		</div>\
 	</div>';
@@ -517,6 +517,63 @@
 	jQuery(document).on('click', '#btn-users', function() { ZoomToFitAllMarkers(); });
 	jQuery(document).on('click', '#button_GPS', function() { ZoomToUserMarker(); });
 	jQuery(document).on('click', '#button_network', function() { CleanUpMessage(); });
+
+	/* Help popup. Strings are keyed by ISO 639-1 code (first 2 chars of
+	 * navigator.language). English is the only language shipped today; new
+	 * locales can be added under helpStrings without code changes. */
+	var helpStrings = {
+		en: {
+			title: 'GEOMAP-AIR HELP',
+			close: 'CLOSE',
+			sections: [
+				{h: 'WHAT IS THIS', p: 'Anonymous real-time geolocation sharing. Your GPS position is broadcast to other users on the same channel. No account, no persistent logs.'},
+				{h: 'GETTING STARTED', p: 'Enter a callsign and a channel code on the home page, then ENGAGE. Anyone using the same channel code can see you on the map.'},
+				{h: 'MAP HEADER', p: 'Left: channel and your callsign. Center: GPS state and signal quality (GPS LOCK in green, GPS WEAK in amber, GPS DENIED or UNAVAIL in red). Right: total users on your channel, zoom on all, zoom on me, clear messages.'},
+				{h: 'MARKERS', p: 'Each marker is another user on your channel. Tap a marker to see callsign, distance, accuracy, and the last message.'},
+				{h: 'PRIVACY', p: 'No account is created. No data persists after you stop pinging (one hour grace period). The channel code is the only group identifier; pick a hard-to-guess code if you want a private group.'},
+				{h: 'LICENSE', p: 'GPL v3. Source code on the project repository.'}
+			]
+		}
+	};
+
+	function getHelpStrings() {
+		var lang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+		return helpStrings[lang] || helpStrings.en;
+	}
+
+	function buildHelpPopupHtml() {
+		var s = getHelpStrings();
+		var html = '<div class="popup" id="help-popup-inst">';
+		html += '<div class="view">';
+		html += '<div class="page">';
+		html += '<div class="navbar"><div class="navbar-bg"></div><div class="navbar-inner">';
+		html += '<div class="title" style="font-family:var(--font-mono);letter-spacing:3px;color:var(--cyan);">' + s.title + '</div>';
+		html += '<div class="right"><a href="#" class="link popup-close" style="font-family:var(--font-mono);letter-spacing:2px;font-size:11px;">' + s.close + '</a></div>';
+		html += '</div></div>';
+		html += '<div class="page-content">';
+		html += '<div class="block">';
+		for (var i = 0; i < s.sections.length; i++) {
+			html += '<h3 style="font-family:var(--font-mono);letter-spacing:2px;color:var(--cyan);font-size:12px;margin-top:18px;">' + s.sections[i].h + '</h3>';
+			html += '<p style="font-size:14px;line-height:1.5;">' + s.sections[i].p + '</p>';
+		}
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+		return html;
+	}
+
+	jQuery(document).on('click', '#map_speed_id', function(e) {
+		e.preventDefault();
+		var popup = app.popup.create({
+			content: buildHelpPopupHtml(),
+			on: {
+				closed: function(p) { p.destroy(); }
+			}
+		});
+		popup.open();
+	});
 
 	/* Message actions */
 	jQuery(document).on('click', '#submit_message-id', function() {

@@ -1,10 +1,10 @@
 /*
- * geomap-main.js
- * Description: Main map controller — creates and manages the Leaflet map,
- *              layers, GPS, markers, and server communication.
- * Author: O. Booklage
+ * Project: GeoMap-Air
+ * File: geomap-main.js
+ * Description: Main map controller (Class_GeoMap)
+ * Author: Olivier Booklage
+ * License: GPL v3
  * Date: April 2026
- * License: MIT
  */
 
 function Class_GeoMap(map_id,server_url)
@@ -135,7 +135,7 @@ var airbot = null;
 			&& gps_lastposition_latitude != null
 			&& gps_lastposition_longitude != null )
 		{
-			gmap.setView([gps_lastposition_latitude, gps_lastposition_longitude], 13);
+			gmap.setView([gps_lastposition_latitude, gps_lastposition_longitude], 16);
 		}
 		Class_GeoMap.skipLocate = false;
 

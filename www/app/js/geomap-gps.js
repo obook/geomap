@@ -1,10 +1,10 @@
 /*
- * geomap-gps.js
- * Description: GPS geolocation wrapper — tracks user position via the
- *              W3C Geolocation API and updates the toolbar icon state.
- * Author: O. Booklage
+ * Project: GeoMap-Air
+ * File: geomap-gps.js
+ * Description: GPS geolocation wrapper (Class_GPS)
+ * Author: Olivier Booklage
+ * License: GPL v3
  * Date: April 2026
- * License: MIT
  */
 
 /*
@@ -173,7 +173,9 @@ function gps_clear_toast_state()
 		}
 		if (gmap && gps_lastposition_latitude != null && gps_lastposition_longitude != null)
 		{
-			gmap.setView([gps_lastposition_latitude, gps_lastposition_longitude], 13);
+			/* Zoom level matches ZoomToUserMarker so the manual button and
+			 * the automatic first-fix view are visually consistent. */
+			gmap.setView([gps_lastposition_latitude, gps_lastposition_longitude], 16);
 			first_fix_centered = true;
 		}
 	}
@@ -258,8 +260,75 @@ function gps_clear_toast_state()
 		if (toast_msg) gps_show_toast(toast_msg);
 	}
 	
+	function private_update_state_label()
+	{
+		var text = 'GPS WAIT';
+		var color = 'var(--text-ghost)';
+		switch (gps_lastposition_status)
+		{
+			case STATE_POSITION_OK:
+				if (gps_lastposition_accuracy != null && gps_lastposition_accuracy < GLOBAL_MINIMUM_ACCURAY)
+				{
+					if (gps_lastposition_accuracy < 50)
+					{
+						text = 'GPS LOCK ' + Math.round(gps_lastposition_accuracy) + 'M';
+						color = 'var(--green, #00ff41)';
+					}
+					else if (gps_lastposition_accuracy < 200)
+					{
+						text = 'GPS OK ' + Math.round(gps_lastposition_accuracy) + 'M';
+						color = 'var(--green, #00ff41)';
+					}
+					else
+					{
+						text = 'GPS WEAK ' + Math.round(gps_lastposition_accuracy) + 'M';
+						color = 'var(--amber, #ff9500)';
+					}
+				}
+				else
+				{
+					text = 'GPS WEAK';
+					color = 'var(--amber, #ff9500)';
+				}
+			break;
+
+			case STATE_PERMISSION_DENIED:
+				text = 'GPS DENIED';
+				color = 'var(--red, #ff0000)';
+			break;
+
+			case STATE_POSITION_UNAVAILABLE:
+				text = 'GPS UNAVAIL';
+				color = 'var(--red, #ff0000)';
+			break;
+
+			case STATE_POSITION_TIMEOUT:
+				text = 'GPS TIMEOUT';
+				color = 'var(--amber, #ff9500)';
+			break;
+
+			case STATE_POSITION_ERROR:
+				text = 'GPS ERROR';
+				color = 'var(--red, #ff0000)';
+			break;
+
+			case STATE_POSITION_UNKNOWN:
+			default:
+				text = 'GPS WAIT';
+				color = 'var(--text-ghost)';
+			break;
+		}
+		var $label = jQuery('#gps_state_label');
+		if ($label.length)
+		{
+			if ($label.text() !== text) $label.text(text);
+			$label.css('color', color);
+		}
+	}
+
 	this.update=function()
 	{
+		private_update_state_label();
 		if( (gps_lastposition_accuracy < GLOBAL_MINIMUM_ACCURAY) && (gps_lastposition_status == STATE_POSITION_OK) )
 		{
 			if( toogle_animation != 1 )
