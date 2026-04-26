@@ -126,6 +126,29 @@ The front-end deploys to GitHub Pages automatically via the workflow in `.github
 
 The PHP server (`server-php/` or `server-sql/`) must be hosted separately on any PHP-compatible environment.
 
+## Third-party libraries
+
+All third-party libraries are vendored locally under `www/vendor/`; no CDN is loaded at runtime. Each is used as released by its upstream author.
+
+| Library | Role | License | Project |
+|---------|------|---------|---------|
+| jQuery 1.9.1 | DOM and AJAX | MIT | [jquery.com](https://jquery.com/) |
+| Leaflet | Interactive map engine | BSD 2-Clause | [leafletjs.com](https://leafletjs.com/) |
+| Leaflet.label | Persistent marker labels | BSD 2-Clause | [github.com/Leaflet/Leaflet.label](https://github.com/Leaflet/Leaflet.label) |
+| Leaflet.markercluster | Marker clustering | MIT | [github.com/Leaflet/Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) |
+| Leaflet.awesome-markers | Coloured marker icons | MIT | [github.com/lvoogdt/Leaflet.awesome-markers](https://github.com/lvoogdt/Leaflet.awesome-markers) |
+| Leaflet.draw | Drawing tools | MIT | [github.com/Leaflet/Leaflet.draw](https://github.com/Leaflet/Leaflet.draw) |
+| Leaflet.GPX | GPX track overlay | BSD 2-Clause | [github.com/mpetazzoni/leaflet-gpx](https://github.com/mpetazzoni/leaflet-gpx) |
+| Leaflet GeoSearch | Address search | MIT | [github.com/smeijer/leaflet-geosearch](https://github.com/smeijer/leaflet-geosearch) |
+| Overlapping Marker Spiderfier | Spread overlapping markers | MIT | [github.com/jawj/OverlappingMarkerSpiderfier-Leaflet](https://github.com/jawj/OverlappingMarkerSpiderfier-Leaflet) |
+| Framework7 | Mobile UI framework | MIT | [framework7.io](https://framework7.io/) |
+| SoundManager 2 | Audio playback | BSD 2-Clause | [schillmania.com/projects/soundmanager2](http://www.schillmania.com/projects/soundmanager2/) |
+| QRCode.js | QR code rendering | MIT | [github.com/davidshimjs/qrcodejs](https://github.com/davidshimjs/qrcodejs) |
+| Font Awesome 4 | Icon set | MIT (code), SIL OFL 1.1 (font) | [fontawesome.com](https://fontawesome.com/v4/) |
+| dateFormat 1.2.3 | Date formatting helper (embedded in `geomap-javascript-tools.js`) | MIT | [blog.stevenlevithan.com](https://blog.stevenlevithan.com/archives/date-time-format) |
+
+Map tiles are fetched at runtime from the providers listed in [Map layers](#map-layers); they are not part of this repository. Each provider has its own usage policy and attribution requirements which are surfaced in the Leaflet attribution control on the map.
+
 ## License
 
 GNU General Public License v3.0 - see [gnu.org/licenses](https://www.gnu.org/licenses/) for details.
