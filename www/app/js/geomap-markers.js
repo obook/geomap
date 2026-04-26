@@ -260,8 +260,17 @@ var accuracy_layer = null;
 					if( item["state"] == STATE_POSITION_OK )
 					{
 						marker_exist.SetPosition(item["username"], newposition, item["accuracy"], item["heading"], item["speed"], item["time"]);
+						marker_exist.SetNoGpsMode(false);
 					}
-					
+					else
+					{
+						/* User has lost GPS; hide the pin but keep the
+						 * floating username label at the last known
+						 * position so the map shows "connected but no
+						 * current fix" instead of a misleading marker. */
+						marker_exist.SetNoGpsMode(true);
+					}
+
 					marker_exist.SetMarkerTTL(master_clock - item['time']);
 					
 					var format_ttl = marker_exist.GetMarkerTTL();
@@ -1004,6 +1013,30 @@ var accuracy_layer = null;
 			}
 		}
 
+		/* When a remote user reports anything other than STATE_POSITION_OK,
+		 * their last known position is stale. We hide the pin icon (so the
+		 * map does not falsely place them at that point) but keep the
+		 * floating username label visible at the same lat/lon, signalling
+		 * "this person is connected but their location is unknown right
+		 * now". The accuracy circle is also hidden. */
+		function SetNoGpsMode(val)
+		{
+			if (val)
+			{
+				marker.setOpacity(0);
+				marker.showLabel();
+				if (circle_accuracy != null)
+				{
+					circle_accuracy.setStyle({opacity: 0, fillOpacity: 0});
+				}
+			}
+			else
+			{
+				marker.setOpacity(visible ? 1.0 : 0.3);
+				if (visible) marker.showLabel();
+			}
+		}
+
 		function GetVisible(val)
 		{
 			return(visible);
@@ -1099,7 +1132,8 @@ var accuracy_layer = null;
 		SetVisible:SetVisible,GetVisible:GetVisible,SetDefaultIcon:SetDefaultIcon,
 		SetReceptionLevel:SetReceptionLevel,SetGreenMarker:SetGreenMarker,
 		Remove:Remove,GetLastPosition:GetLastPosition,PrintMessage:PrintMessage,
-		GetLat:GetLat,GetLon:GetLon,GetAccuracy:GetAccuracy,GetSpeed:GetSpeed};
+		GetLat:GetLat,GetLon:GetLon,GetAccuracy:GetAccuracy,GetSpeed:GetSpeed,
+		SetNoGpsMode:SetNoGpsMode};
 	} /* Class_Marker(map,position,id) */
 	
 	
