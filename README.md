@@ -29,7 +29,6 @@ The application follows a zero-footprint philosophy: no tracking, no persistent 
 - **Sound notifications** - audio alerts for new users joining and incoming messages
 - **Marker clustering** - overlapping markers are grouped for readability
 - **GPS status indicators** - animated HUD-style icons showing GPS and network state (active, inactive, error, degraded)
-- **Mobile-first design** - built on Framework7 with a tactical "Dark Ops" theme
 - **Offline fallback** - local marker displayed when the server is unreachable
 - **GPX support** - Leaflet GPX plugin available for track overlay
 
