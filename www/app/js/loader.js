@@ -25,7 +25,14 @@ document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/g
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/gps/state-label.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/network/user/user.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/network/user/sender.js"></script>');
-document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers/markers.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers/network.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers/process.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers/public.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers/marker.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers/marker-update.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers/marker-position.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers/marker-state.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/audio/sound-player.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/latlng-control.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/tools/tools.js"></script>');

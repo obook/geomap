@@ -40,9 +40,9 @@ The application follows a zero-footprint philosophy: no tracking, no persistent 
 
 ## Requirements
 
-### Front-end only (GitHub Pages)
+### Front-end (any static host)
 
-The `www/` directory is a static site deployed automatically to GitHub Pages on every push to `main`. No build step is required.
+The `www/` directory is a self-contained static site that runs on any web server able to serve plain files (Apache, Nginx, lighttpd, the PHP built-in server, GitHub Pages, etc.). No build step is required. The repository ships a workflow that publishes `www/` to GitHub Pages on every push to `main` as a convenience, but that path is optional.
 
 ### Full stack (with server)
 
