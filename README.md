@@ -1,8 +1,12 @@
 # GeoMap-Air
 
+<p align="center">
+  <img src="media/20260426_060042.png" alt="GeoMap-Air tactical map view with markers on an interactive Dark Ops themed map" width="480" />
+</p>
+
 Anonymous, real-time geolocation sharing on an interactive map. Join a channel, share your position, exchange messages - no account required, no data stored.
 
-![License](https://img.shields.io/badge/license-GPL--v3-blue)
+**License:** [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html) | **Status:** Active
 
 ## Overview
 
@@ -23,56 +27,11 @@ The application follows a zero-footprint philosophy: no tracking, no persistent 
 - **Offline fallback** - local marker displayed when the server is unreachable
 - **GPX support** - Leaflet GPX plugin available for track overlay
 
-## Architecture
+## Documentation
 
-```
-geomap/
-├── www/                    # Front-end (deployed to GitHub Pages)
-│   ├── index.html          # Single-page application entry point
-│   ├── app/
-│   │   ├── css/            # Application styles and Dark Ops theme
-│   │   ├── js/             # Application modules
-│   │   │   ├── geomap.js           # Module loader
-│   │   │   ├── geomap-main.js      # Map controller (Leaflet)
-│   │   │   ├── geomap-gps.js       # GPS management
-│   │   │   ├── geomap-markers.js   # Marker rendering and updates
-│   │   │   ├── geomap-user.js      # User session and server sync
-│   │   │   ├── geomap-storage.js   # localStorage persistence
-│   │   │   ├── geomap-bots.js      # Bot/automation support
-│   │   │   └── ...
-│   │   ├── images/         # App icons
-│   │   └── pages/          # Framework7 page templates
-│   ├── assets/sounds/      # Notification sound files
-│   └── vendor/             # Third-party libraries
-│       ├── framework7/     # Framework7 UI framework
-│       ├── leaflet/        # Leaflet + extensions
-│       ├── jquery/          # jQuery 1.9
-│       ├── font-awesome/   # Icon font
-│       └── soundmanager/   # SoundManager2 audio engine
-├── server-sql/             # Back-end PHP + MySQL (original)
-│   ├── geomap-server-config-sample.php  # Database config template
-│   ├── geomap-server-read.php           # Read users and messages
-│   ├── geomap-server-write.php          # Write user position
-│   ├── geomap-server-message-write.php  # Post a message
-│   ├── geomap-server-logout.php         # Disconnect a user
-│   ├── geomap-server-stats.php          # Usage statistics
-│   ├── geomap-server-maintenance.php    # Cleanup inactive sessions
-│   ├── geomap-server-info.php           # Server diagnostics
-│   ├── install.sql                      # Database schema
-│   └── index.php                        # Legacy admin panel
-├── server-php/             # Back-end PHP + JSON files (no database)
-│   ├── geomap-server-config-sample.php  # Data directory config
-│   ├── geomap-json-storage.php          # JSON file storage helpers
-│   ├── geomap-server-read.php           # Read users and messages
-│   ├── geomap-server-write.php          # Write user position
-│   ├── geomap-server-message-write.php  # Post a message
-│   ├── geomap-server-logout.php         # Disconnect a user
-│   ├── geomap-server-stats.php          # Usage statistics
-│   ├── geomap-server-maintenance.php    # Cleanup inactive sessions
-│   ├── geomap-server-info.php           # Server diagnostics
-│   └── data/                            # Runtime JSON storage
-└── .github/workflows/pages.yml  # GitHub Pages deployment
-```
+- [ARCHITECTURE.md](ARCHITECTURE.md) - module hierarchy, server endpoints, and tunable globals
+- [SECURITY.md](SECURITY.md) - attack surface, threat model, and ANSSI / OWASP compliance
+- [ACCESSIBILITY.md](ACCESSIBILITY.md) - RGAA 4.1 conformance statement and improvement plan
 
 ## Requirements
 
