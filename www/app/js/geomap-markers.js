@@ -516,6 +516,7 @@ var accuracy_layer = null;
 		<th>USER</th>\
 		<th data-priority='1'>DISTANCE</th>\
 		<th data-priority='3'>ACC.</th>\
+		<th data-priority='4'>SPEED</th>\
 		<th data-priority='2'>TIME</th>\
 		</tr>\
 		</thead>\
@@ -528,6 +529,7 @@ var accuracy_layer = null;
 			var marker = markers_array[i];
 			var username = marker.GetUsername();
 			var accuracy = marker.GetAccuracy();
+			var speed = marker.GetSpeed();
 			var TTL = marker.GetMarkerTTL();
 			var unit_ttl = ' sec';
 
@@ -563,6 +565,16 @@ var accuracy_layer = null;
 				accuracy = Math.round(accuracy) + " m";
 			}
 
+			/* Speed in m/s (server-side); below 1 m/s is GPS noise at rest. */
+			if( speed == null || isNaN(speed) || speed < 1 )
+			{
+				speed = '-';
+			}
+			else
+			{
+				speed = Math.round(speed * 3.6) + " km/h";
+			}
+
 			if( TTL > 60 )
 			{
 				TTL = Math.round(TTL / 60);
@@ -576,8 +588,9 @@ var accuracy_layer = null;
 			}
 
 			html = html +   "<th><a href=\"https://maps.google.com/?daddr="+lat1+","+lon1+"\" target='_blank' data-rel='external'>"+username+"</a></th>\
-							<td>"+distance+" km</td>\
+							<td>"+distance+"</td>\
 							<td>"+accuracy+"</td>\
+							<td>"+speed+"</td>\
 							<td>"+TTL+unit_ttl+"</td>\
 							</tr>";
 		}
@@ -1074,14 +1087,19 @@ var accuracy_layer = null;
 		{
 			return(mylastaccuracy);
 		}
-		
+
+		function GetSpeed()
+		{
+			return(mylastspeed);
+		}
+
 		return{update:update,GetId:GetId,GetUsername:GetUsername,
 		GetMarker:GetMarker,SetPosition:SetPosition,SetTitle:SetTitle,
 		SetMarkerTTL:SetMarkerTTL,GetMarkerTTL:GetMarkerTTL,GetServerTTL:GetServerTTL,
 		SetVisible:SetVisible,GetVisible:GetVisible,SetDefaultIcon:SetDefaultIcon,
 		SetReceptionLevel:SetReceptionLevel,SetGreenMarker:SetGreenMarker,
 		Remove:Remove,GetLastPosition:GetLastPosition,PrintMessage:PrintMessage,
-		GetLat:GetLat,GetLon:GetLon,GetAccuracy:GetAccuracy};
+		GetLat:GetLat,GetLon:GetLon,GetAccuracy:GetAccuracy,GetSpeed:GetSpeed};
 	} /* Class_Marker(map,position,id) */
 	
 	
