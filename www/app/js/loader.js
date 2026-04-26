@@ -16,8 +16,11 @@ document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/i18n/i18n.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/core/storage.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/main.js"></script>');
-document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/gps.js"></script>');
-document.write('<script type="text/javascript" charset="utf-8" src="app/js/network/user.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/gps/gps.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/gps/handlers.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/gps/state-label.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/network/user/user.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="app/js/network/user/sender.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/markers.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/audio/sound-player.js"></script>');
 document.write('<script type="text/javascript" charset="utf-8" src="app/js/map/latlng-control.js"></script>');
