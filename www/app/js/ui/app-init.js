@@ -85,7 +85,11 @@ var app = new Framework7({
 			jQuery('#select-choice-mission-id').val(get_channel());
 			var sv = get_server();
 			jQuery('#server-url-id').val((sv === '.') ? '' : sv);
-			validateEngageButton();
+			/* validateEngageButton is defined in page-home.js which loads
+			 * after this file; guard the call so the F7 instance is still
+			 * assigned to the var even if the helper is not yet loaded.
+			 * page-home.js also triggers it later via pageInit. */
+			if (typeof validateEngageButton === 'function') validateEngageButton();
 		}
 	}
 });
