@@ -413,6 +413,34 @@
 		set_server(serverUrl);
 		GLOBAL_SERVER = serverUrl;
 		if(typeof soundManager !== 'undefined') soundManager.play('player_digital_beep_id');
+
+		/* Trigger the geolocation permission prompt while we are still inside
+		 * the ENGAGE click handler. iOS Safari only reliably shows the prompt
+		 * when the call is made within an active user-gesture context. The
+		 * navigation to /map/ happens immediately via the link href, so the
+		 * success callback may resolve after Class_GeoMap is constructed: in
+		 * that case Class_GPS.private_center_on_first_fix takes over the
+		 * initial map centering on the next watchPosition update. */
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				function(pos) {
+					gps_lastposition_status = STATE_POSITION_OK;
+					gps_lastposition_latitude = pos.coords.latitude;
+					gps_lastposition_longitude = pos.coords.longitude;
+					gps_lastposition_accuracy = pos.coords.accuracy;
+					gps_lastposition_speed = pos.coords.speed;
+					gps_lastposition_altitude = pos.coords.altitude;
+					gps_lastposition_altitudeAccuracy = pos.coords.altitudeAccuracy;
+					gps_lastposition_heading = pos.coords.heading;
+					gps_lastposition_date = new Date();
+					console.log('[GeoMap] Pre-engage GPS fix: lat=' + pos.coords.latitude + ' lon=' + pos.coords.longitude);
+				},
+				function(err) {
+					console.warn('[GeoMap] Pre-engage geolocation failed: code=' + err.code + ' msg=' + err.message);
+				},
+				{ maximumAge: 0, enableHighAccuracy: true, timeout: 30000 }
+			);
+		}
 	});
 
 	/* MAP page template (injected dynamically) */

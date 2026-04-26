@@ -47,7 +47,29 @@ var shown_info_speed = false;
  * ! DONOT use enableHighAccuracy: false (tested on NexuS-S)
  * */
  
-var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, frequency: 600000 };
+var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 30000, frequency: 30000 };
+
+var first_fix_centered = false;
+var last_gps_error_shown = null;
+
+function gps_show_toast(msg)
+{
+	if (last_gps_error_shown === msg) return;
+	last_gps_error_shown = msg;
+	if (typeof app !== 'undefined' && app && app.toast)
+	{
+		app.toast.create({
+			text: msg,
+			position: 'center',
+			closeTimeout: 4000
+		}).open();
+	}
+}
+
+function gps_clear_toast_state()
+{
+	last_gps_error_shown = null;
+}
 
 	/*
 	 *  Constructor
@@ -135,38 +157,59 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 		gps_lastposition_altitudeAccuracy = currposition.coords.altitudeAccuracy;
 		gps_lastposition_heading = currposition.coords.heading;
 		gps_lastposition_date = new Date();
-				
+
 		console.log('[GeoMap] GPS fix: lat=' + gps_lastposition_latitude + ' lon=' + gps_lastposition_longitude + ' acc=' + gps_lastposition_accuracy + 'm');
+		gps_clear_toast_state();
+		private_center_on_first_fix();
+	}
+
+	function private_center_on_first_fix()
+	{
+		if (first_fix_centered) return;
+		if (typeof Class_GeoMap !== 'undefined' && Class_GeoMap.skipLocate)
+		{
+			first_fix_centered = true;
+			return;
+		}
+		if (gmap && gps_lastposition_latitude != null && gps_lastposition_longitude != null)
+		{
+			gmap.setView([gps_lastposition_latitude, gps_lastposition_longitude], 13);
+			first_fix_centered = true;
+		}
 	}
 	
 	function private_GetPosition_Error(error)
 	{
 		console.error('[GeoMap] GPS error: ' + error.message);
-		gps_lastposition_date = new Date();	
+		gps_lastposition_date = new Date();
+		var toast_msg = '';
 		switch(error.code)
 		{
 			case error.PERMISSION_DENIED:
-				gps_lastposition_status = STATE_PERMISSION_DENIED;	
+				gps_lastposition_status = STATE_PERMISSION_DENIED;
+				toast_msg = 'GPS permission denied. Enable Location Services for Safari in iOS Settings.';
 			break;
-			
-			case error.POSITION_UNAVAILABLE:	
-				gps_lastposition_status = STATE_POSITION_UNAVAILABLE;	
+
+			case error.POSITION_UNAVAILABLE:
+				gps_lastposition_status = STATE_POSITION_UNAVAILABLE;
+				toast_msg = 'GPS position unavailable. No signal.';
 			break;
-			
-			case error.TIMEOUT:	
-				gps_lastposition_status = STATE_POSITION_TIMEOUT;	
+
+			case error.TIMEOUT:
+				gps_lastposition_status = STATE_POSITION_TIMEOUT;
+				toast_msg = 'GPS timeout. Move to open sky and retry.';
 			break;
-			
-			default:		
-				gps_lastposition_status = STATE_POSITION_ERROR;	
+
+			default:
+				gps_lastposition_status = STATE_POSITION_ERROR;
+				toast_msg = 'GPS error: ' + (error.message || 'unknown');
 			break;
 		}
-	}	
+		gps_show_toast(toast_msg);
+	}
 
 	function private_watchPosition_Success(newposition)
 	{
-		// console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++ geomap-GPS : private_watchPosition_Success ');
-		
 		/* Memorize */
 		gps_lastposition_status = STATE_POSITION_OK;
 		gps_lastposition_latitude = newposition.coords.latitude;
@@ -177,33 +220,42 @@ var geoOptions = { maximumAge: 0, enableHighAccuracy: true, timeout: 600000, fre
 		gps_lastposition_altitudeAccuracy = newposition.coords.altitudeAccuracy;
 		gps_lastposition_heading = newposition.coords.heading;
 		gps_lastposition_date = new Date();
+
+		gps_clear_toast_state();
+		private_center_on_first_fix();
 	}
 
 	function private_watchPosition_Error(error)
 	{
 		gps_lastposition_date = new Date();
+		var toast_msg = '';
 		switch(error.code)
 		{
 			case error.PERMISSION_DENIED:
 				console.warn('[GeoMap] GPS watch: permission denied');
-				gps_lastposition_status = STATE_PERMISSION_DENIED;	
+				gps_lastposition_status = STATE_PERMISSION_DENIED;
+				toast_msg = 'GPS permission denied. Enable Location Services for Safari in iOS Settings.';
 			break;
-			
+
 			case error.POSITION_UNAVAILABLE:
 				console.warn('[GeoMap] GPS watch: position unavailable');
-				gps_lastposition_status = STATE_POSITION_UNAVAILABLE;	
+				gps_lastposition_status = STATE_POSITION_UNAVAILABLE;
+				toast_msg = 'GPS position unavailable. No signal.';
 			break;
-			
+
 			case error.TIMEOUT:
 				console.warn('[GeoMap] GPS watch: timeout');
-				gps_lastposition_status = STATE_POSITION_TIMEOUT;	
+				gps_lastposition_status = STATE_POSITION_TIMEOUT;
+				toast_msg = 'GPS timeout. Move to open sky and retry.';
 			break;
-			
-			default:		
+
+			default:
 				console.warn('[GeoMap] GPS watch: unknown error ' + error.code);
-				gps_lastposition_status = STATE_POSITION_ERROR;	
+				gps_lastposition_status = STATE_POSITION_ERROR;
+				toast_msg = 'GPS watch error: ' + (error.message || 'unknown');
 			break;
 		}
+		if (toast_msg) gps_show_toast(toast_msg);
 	}
 	
 	this.update=function()

@@ -125,10 +125,17 @@ var airbot = null;
 		/* Layer control */
 		L.control.layers(baseMaps,overlayMaps).addTo(gmap);
 
-		/* Auto-locate user position (skip when restoring a saved state) */
-		if( !Class_GeoMap.skipLocate )
+		/* Initial map centering. If a GPS fix was already obtained on the
+		 * home page (during the ENGAGE click, to keep iOS Safari's
+		 * user-gesture context), use it now. Otherwise Class_GPS will
+		 * center the map on its first fix. The skipLocate flag suppresses
+		 * both behaviors when restoring a saved view. */
+		if( !Class_GeoMap.skipLocate
+			&& gps_lastposition_status === STATE_POSITION_OK
+			&& gps_lastposition_latitude != null
+			&& gps_lastposition_longitude != null )
 		{
-			gmap.locate({setView: true, maxZoom: 10});
+			gmap.setView([gps_lastposition_latitude, gps_lastposition_longitude], 13);
 		}
 		Class_GeoMap.skipLocate = false;
 
@@ -624,3 +631,9 @@ var airbot = null;
 	}
 
 }
+
+/* Static flag: when true, the next Class_GeoMap construction must not
+ * recenter the map on the user position (used when restoring a saved view).
+ * Initialized once at module load so any reader that runs before the first
+ * construction sees a defined boolean. */
+Class_GeoMap.skipLocate = false;
