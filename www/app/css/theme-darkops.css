@@ -192,19 +192,19 @@ pre, code {
 .navbar .title {
 	font-family: var(--font-sans) !important;
 	font-weight: 600 !important;
-	font-size: 15px !important;
-	letter-spacing: 0 !important;
-	text-transform: none !important;
+	font-size: 13.5px !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
 	color: var(--text-primary) !important;
 	text-shadow: none !important;
 }
 
 .navbar .link {
 	font-family: var(--font-sans) !important;
-	font-size: 14px !important;
-	font-weight: 500 !important;
-	letter-spacing: 0 !important;
-	text-transform: none !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
 	color: var(--accent) !important;
 	transition: color var(--transition) !important;
 }
@@ -243,9 +243,10 @@ pre, code {
 
 #map_title_id {
 	font-family: var(--font-sans) !important;
-	font-size: 13px !important;
-	font-weight: 500 !important;
-	letter-spacing: 0 !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.5px !important;
+	text-transform: uppercase !important;
 	color: var(--text-primary) !important;
 }
 
@@ -302,9 +303,9 @@ pre, code {
 .toolbar-inner {
 	font-family: var(--font-sans) !important;
 	font-size: 12px !important;
-	font-weight: 500 !important;
-	letter-spacing: 0 !important;
-	text-transform: none !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
 	text-shadow: none !important;
 	justify-content: center !important;
 }
@@ -313,8 +314,9 @@ pre, code {
 	color: var(--text-secondary) !important;
 	font-family: var(--font-sans) !important;
 	font-size: 12px !important;
-	font-weight: 500 !important;
-	letter-spacing: 0 !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
 	padding: 4px 12px;
 	border-radius: var(--radius-sm);
 	transition: background var(--transition), color var(--transition);
@@ -335,10 +337,10 @@ pre, code {
    ======================================== */
 .button {
 	font-family: var(--font-sans) !important;
-	font-weight: 500 !important;
-	font-size: 14px !important;
-	letter-spacing: 0 !important;
-	text-transform: none !important;
+	font-weight: 600 !important;
+	font-size: 13px !important;
+	letter-spacing: 0.7px !important;
+	text-transform: uppercase !important;
 	border-radius: var(--radius-md) !important;
 	transition: background var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition) !important;
 	height: 40px !important;
@@ -349,7 +351,7 @@ pre, code {
 .button-large {
 	height: 44px !important;
 	line-height: 42px !important;
-	font-size: 14.5px !important;
+	font-size: 13.5px !important;
 }
 
 .button-fill {
@@ -452,11 +454,11 @@ pre, code {
 .item-label,
 .item-title {
 	font-family: var(--font-sans) !important;
-	font-size: 12px !important;
-	font-weight: 500 !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
 	color: var(--text-secondary) !important;
-	text-transform: none !important;
-	letter-spacing: 0 !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.6px !important;
 }
 
 input[type="text"],
@@ -564,9 +566,19 @@ input[type="range"]::-moz-range-thumb {
 .classified-frame .item-label,
 .classified-frame .item-title {
 	color: var(--text-secondary) !important;
-	font-size: 12px !important;
-	font-weight: 500 !important;
-	letter-spacing: 0.2px !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.6px !important;
+	text-transform: uppercase !important;
+}
+
+.section-hint {
+	color: var(--text-secondary) !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.7px !important;
+	text-transform: uppercase !important;
+	margin-bottom: 12px !important;
 }
 
 /* ========================================
@@ -589,11 +601,11 @@ input[type="range"]::-moz-range-thumb {
 
 .popup h3 {
 	font-family: var(--font-sans) !important;
-	font-size: 13px !important;
-	font-weight: 600 !important;
-	letter-spacing: 0 !important;
-	color: var(--text-primary) !important;
-	text-transform: none !important;
+	font-size: 11px !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.7px !important;
+	color: var(--accent) !important;
+	text-transform: uppercase !important;
 	margin: 22px 0 8px !important;
 }
 

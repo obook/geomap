@@ -80,6 +80,7 @@ var GEOMAP_I18N = {
 			compose_label: 'New message',
 			input_placeholder: 'Type a short message',
 			transmit: 'Send',
+			cleared_toast: 'Messages cleared',
 			quick_codes_label: 'Quick replies',
 			quick_hello: 'Hi',
 			quick_busy: 'Busy',
@@ -149,14 +150,17 @@ var GEOMAP_I18N = {
 			help_aria: 'Ouvrir l\'aide'
 		},
 		layers: {
+			/* Layer switcher names stay in English regardless of language:
+			 * map style and overlay labels are recognised by their English
+			 * spelling across communities. */
 			normal: 'Standard',
 			hybrid: 'Satellite',
-			terrain: 'Relief',
-			tactical: 'Clair',
-			night: 'Sombre',
-			markers: 'Utilisateurs',
-			accuracy: 'Precision',
-			tools: 'Outils'
+			terrain: 'Terrain',
+			tactical: 'Light',
+			night: 'Dark',
+			markers: 'Users',
+			accuracy: 'Accuracy',
+			tools: 'Tools'
 		},
 		gps: {
 			wait: 'GPS ATTENTE',
@@ -194,6 +198,7 @@ var GEOMAP_I18N = {
 			compose_label: 'Nouveau message',
 			input_placeholder: 'Saisir un message court',
 			transmit: 'Envoyer',
+			cleared_toast: 'Messages effaces',
 			quick_codes_label: 'Reponses rapides',
 			quick_hello: 'Salut',
 			quick_busy: 'Occupe',

@@ -69,8 +69,11 @@ var airbot = null;
 		var normal = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: osmAttribution});
 		var terrain = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
 			attribution: osmAttribution + ', &copy; OpenTopoMap',
-			maxZoom: 19,
-			maxNativeZoom: 17 /* OpenTopoMap returns 403 above zoom 17 */
+			/* OpenTopoMap returns 403 above zoom 17. The vendored Leaflet
+			 * (0.6.2) predates maxNativeZoom, so we hard-cap maxZoom on the
+			 * layer; above this zoom the terrain layer is hidden and the
+			 * user can either zoom back or switch to a higher-zoom basemap. */
+			maxZoom: 17
 		});
 		var hybrid = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; Esri'});
 		var midnight = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {attribution: '&copy; CartoDB'});
